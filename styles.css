@@ -1,0 +1,116 @@
+body::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.selector {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin: auto;
+    height: 30vh;
+}
+
+.selector button:hover {
+    cursor: pointer;
+    color: aquamarine;
+}
+
+.selector #list {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin: auto;
+    align-items: center;
+}
+
+.selector li {
+    position: absolute;
+    cursor: pointer;
+    transform-origin: 100px;
+    transform: rotate(calc(360deg/12 * var(--j)));
+    margin-left: -13em;
+    margin-top: -1em;
+}
+
+.btnOff {
+    background-color: black;
+    border-style: none;
+    border-radius: 50%;
+    transform: rotate(calc(-360deg/12 * var(--j)));
+    /* transform: rotate(-90deg); */
+    color: white;
+    text-align: center;
+    height: 30px;
+    width: 30px;
+}
+
+.btnOn {
+    background-color: gray;
+    color: aquamarine;
+    border-style: none;
+    border-radius: 50%;
+    transform: rotate(calc(-360deg/12 * var(--j)));
+    text-align: center;
+    height: 30px;
+    width: 30px;
+}
+
+.drawer {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-flow: wrap;
+    text-align: center;
+    justify-content: center;
+    margin: auto;
+    overflow: hidden;
+    position: absolute;
+}
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 90%;
+    text-align: center;
+    margin: auto;
+}
+
+.svg-content-responsive-diagrama {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    margin: auto;
+    width: 90%;
+}
+
+.svg-content-responsive-diapason {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    margin: auto;
+    width: 70%;
+}
+
+.svg-content-responsive-reloj {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    margin: auto;
+    width: 50%;
+}
+
+svg text {
+    pointer-events: none;
+}
