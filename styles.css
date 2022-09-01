@@ -17,19 +17,25 @@ h1 {
     justify-content: center;
     width: 90%;
     margin: auto;
-    height: 30vh;
+    margin-top: 2.5%;
+    margin-bottom: 1%;
+    height: 20vh;
 }
 
 .selector button:hover {
     cursor: pointer;
-    color: aquamarine;
+    /* color: #ffd6d1; */
+    border-color: rgba(255, 0, 0, 0.75);
+    border-style: solid;
+    border-width: 1px;
 }
 
 .selector #list {
+    position: absolute;
     display: flex;
     justify-content: center;
     width: 90%;
-    margin: auto;
+    margin-top: 6em;
     align-items: center;
 }
 
@@ -56,7 +62,7 @@ h1 {
 
 .btnOn {
     background-color: gray;
-    color: aquamarine;
+    color:azure;
     border-style: none;
     border-radius: 50%;
     transform: rotate(calc(-360deg/12 * var(--j)));

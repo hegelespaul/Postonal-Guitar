@@ -1,8 +1,5 @@
 
-var bsel = [];
 var fPrR = [];
-var fPrR = [];
-var fPrRval = [];
 
 var input = notas;
 /////////////////////////////////////////
@@ -45,7 +42,6 @@ function dodeca() {
 
         var formaPrimaIn = formaPrimaCal.indexOf(Math.min(...formaPrimaCal));
         fPrR = `(${formaPrimaSel[formaPrimaIn]}) ${formaPrimaOri[formaPrimaIn]}`;
-        //fPrRval = (formaPrimaSel[formaPrimaIn]);
         return permu;
     }
     console.log("permutaciones", permutaciones(), "</br>");

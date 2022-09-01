@@ -19,51 +19,64 @@ function init() {
 
 function dibujaTodo() {
 
-    //     var svgContainer = d3.select('.drawerDiapason').classed("svg-container", true).append("svg")
-    //         .attr("preserveAspectRatio", "xMidYMid meet")
-    //         .attr("viewBox", "0 0 400 100")
-    //         .classed("svg-content-responsive-reloj", true);
+    var formas = d3.select('.drawerForm').classed("svg-container", true).append("svg")
+        .attr("height", "500");
 
+    // formas.append('circle')
+    //     .attr('cx', 151)
+    //     .attr('cy', 88)
+    //     .attr('r', 68)
+    //     .attr('stroke', 'gray')
+    //     .attr('stroke-width', 0.5)
+    //     .attr('fill', 'gray')
+    //     .attr('opacity', 0.5)
 
-    //     var arcradius = 70 / 2;
-    //     var circleradius = 18.33 / 2;
+    var angle = 360 / 12;
+    var coord = [];
+    for (var i = 0; i < 12; i++) {
+        x = 151 + 68 * Math.sin(angle * i * Math.PI / 180);
+        y = 88 - 68 * Math.cos(angle * i * Math.PI / 180);
+        // formas.append('circle')
+        //     .attr('cx', x)
+        //     .attr('cy', y)
+        //     .attr('r', 8)
+        //     .attr('stroke', 'gray')
+        //     .attr('stroke-width', 0.5)
+        //     .attr('fill', 'gray')
+        //     .attr('opacity', 0.5);
+        coord.push([x, y]);
+    }
+    console.log(coord);
 
-    //     // Approx number of circles we can fit around the circumference
-    //     var n = (Math.PI * 2 * arcradius) / (2 * circleradius);
+    function polygon() {
+        var formas = d3.select('.drawerForm').classed("svg-container", true).append("svg")
+        .attr("height", "500");
+        var vert = []
+        for (var i = 0; i < 12; i++) {
+            if (buttons[i].className == 'btnOn') {
+                vert.push(coord[buttons[i].id])
+            }
+        }
 
-    //     for (var i = 0; i < 12; i++) {
-    //         var ang = - (Math.PI * 2 * i) / n;
-    //         var cx = arcradius * Math.sin(ang);
-    //         var cy = arcradius * Math.cos(ang);
-
-    //         svgContainer.append("circle")
-    //             .attr('cx', cx + 200)
-    //             .attr('cy', cy + 50)
-    //             .attr('r', circleradius) 
-    //             .on("mouseover", function (d) {
-    //                 d3.select(this).style("fill", "#a6a6a6").style("cursor", "pointer");
-    //             }).on("mouseout", function (d) {
-    //                 d3.select(this).style("fill", "black").style("cursor", "pointer");
-    //             });
-
-    //         svgContainer.append("text").
-    //             text((i + 6) % 12)
-    //             .attr('x', cx + 200)
-    //             .attr('y', cy + 53)
-    //             .attr('fill', 'white')
-    //             .style("text-anchor", "middle")
-    //             .attr("font-size", "7px");
-    //     }
+        if (vert.length > 1) {
+            vert = vert.flat();
+            formas.append("polygon")
+                .attr("points", vert)
+                .style("fill", "white")
+                .style("stroke", "black")
+                .style("strokeWidth", "10px");
+        }
+    }
 
     var ul = document.getElementById("list");
 
     for (var i = 0; i < 12; i++) {
         var li = document.createElement("li");
         let btn = document.createElement("button");
-        btn.innerHTML = (i+9)%12;
+        btn.innerHTML = (i + 9) % 12;
         li.appendChild(btn);
         li.setAttribute("style", "--j:" + i);
-        btn.setAttribute("id", (i+9)%12);
+        btn.setAttribute("id", (i + 9) % 12);
         btn.setAttribute("class", "btnOff");
         btn.setAttribute("value", 0);
         ul.appendChild(li);
@@ -81,6 +94,8 @@ function dibujaTodo() {
                 console.log(notas);
                 d3.select('.drawerDiagrama').selectAll("svg").remove();
                 d3.select('.drawerDiapason').selectAll("svg").remove();
+                d3.select('.drawerForm').selectAll("svg").remove();
+
                 pisadas = [];
                 mtx = [];
 
@@ -90,20 +105,25 @@ function dibujaTodo() {
                 generadorDiagramas();
                 dibujaMatrix();
                 formaPrima();
+                polygon();
             }
             else if (this.value == 1) {
                 this.setAttribute("value", 0);
                 this.setAttribute("class", "btnOff");
                 notas.splice(notas.indexOf(JSON.parse(this.id)), 1);
                 console.log(notas);
+
                 if (notas.length == 0) {
                     d3.select('.drawerDiagrama').selectAll("svg").remove();
                     d3.select('.drawerDiapason').selectAll("svg").remove();
+                    d3.select('.drawerForm').selectAll("svg").remove();
                     document.getElementById("forma").innerHTML = "&nbsp";
 
                 } else {
                     d3.select('.drawerDiagrama').selectAll("svg").remove();
                     d3.select('.drawerDiapason').selectAll("svg").remove();
+                    d3.select('.drawerForm').selectAll("svg").remove();
+
                     pisadas = [];
                     mtx = [];
 
@@ -113,14 +133,12 @@ function dibujaTodo() {
                     generadorDiagramas();
                     dibujaMatrix();
                     formaPrima();
+                    polygon();
                 }
             }
 
         };
     }
-
-
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -471,7 +489,7 @@ function playchord(coordenadas) {
         let audio1
         audio1 = new Audio;
         audio1.src = "../di/" + coordenadas[i] + ".mp3";
-        audio1.volume = 1/3;
+        audio1.volume = 1 / 3;
         let track1 = audioContext.createMediaElementSource(audio1);
         track1.connect(gainNode);
         gainNode.connect(audioContext.destination);

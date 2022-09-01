@@ -7,17 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
     <title>Guitarra Postonal en Línea</title>
-    <link rel="icon" type="image/x-icon" href="https://cdn.glitch.global/70964b8d-ef22-4c2d-8136-29d0fdc59108/android-chrome-192x192.png?v=1650666448695">
+    <link rel="icon" type="image/x-icon"
+        href="https://cdn.glitch.global/70964b8d-ef22-4c2d-8136-29d0fdc59108/android-chrome-192x192.png?v=1650666448695">
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
         integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        
+
 </head>
 
 <body>
+
     <h1 id="forma">&nbsp</h1>
-    <section class="selector" id="selector"><ul id="list" style="list-style: none;"></ul></section>
+    <section class="selector" id="selector">
+        <section class="drawerForm">
+        </section>
+        <ul id="list" style="list-style: none;"></ul>
+
+    </section>
     <section class="drawer">
         <section class="drawerDiapason">
         </section>
@@ -25,7 +32,7 @@
         </section>
     </section>
 
-    
+
     <script src="./scripts/drawer.js"></script>
     <script src="./scripts/calc.js"></script>
 </body>
