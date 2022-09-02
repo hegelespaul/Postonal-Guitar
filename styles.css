@@ -9,7 +9,8 @@ body {
 
 h1 {
     text-align: center;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+    font-size: 40px;
 }
 
 .selector {
@@ -49,7 +50,7 @@ h1 {
 }
 
 .btnOff {
-    background-color: black;
+    /* background-color: black; */
     border-style: none;
     border-radius: 50%;
     transform: rotate(calc(-360deg/12 * var(--j)));
@@ -61,14 +62,15 @@ h1 {
 }
 
 .btnOn {
-    background-color: gray;
+    /* background-color: gray; */
     color:azure;
     border-style: none;
     border-radius: 50%;
     transform: rotate(calc(-360deg/12 * var(--j)));
     text-align: center;
-    height: 30px;
-    width: 30px;
+    opacity: 0.20;
+    height: 25px;
+    width: 25px;
 }
 
 .drawer {

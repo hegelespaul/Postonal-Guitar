@@ -3,6 +3,7 @@ let pisadas = [];
 let mtx = [];
 let notas = [];
 let audioContext;
+let pallete = ["#00e706", "#00ffad", "#006bff", "#3101fa", "#8301cd", "#3f0057", "#670451", "#d70102", "#e34303", "#ff8800", "#ecff00", "#9af304"];
 
 window.addEventListener('load', init, false);
 function init() {
@@ -63,7 +64,7 @@ function dibujaTodo() {
             formas.append("polygon")
                 .attr("points", vert)
                 .style("fill", "white")
-                .style("stroke", "black")
+                .style("stroke", "gray")
                 .style("strokeWidth", "10px");
         }
     }
@@ -79,6 +80,7 @@ function dibujaTodo() {
         btn.setAttribute("id", (i + 9) % 12);
         btn.setAttribute("class", "btnOff");
         btn.setAttribute("value", 0);
+        btn.style.background = pallete[i];
         ul.appendChild(li);
     }
 
@@ -241,18 +243,18 @@ var dibujaDiapason = (notas) => {
             for (var j = 1; j < 23; j++) {
                 var posiciones = (afinacion[i] + j) % 12;
                 if (posiciones == notas[n]) {
-                    pisadas.push([i + 1, j, posiciones])
+                    pisadas.push([i + 1, j, posiciones]);
                     diapason.append('circle')
                         .attr('cx', 17.75 * j)
                         .attr('cy', 10 * i + 10)
                         .attr('r', 4.4)
-                        .attr('stroke', 'gray')
+                        .attr('stroke', 'none')
                         .attr('stroke-width', 0.5)
-                        .attr('fill', 'white')
+                        .attr('fill', pallete[(posiciones+3)%12])
                         .on("mouseover", function (d) {
-                            d3.select(this).style("stroke", "red").style("fill", "#ffd6d1").style("cursor", "pointer");
+                            d3.select(this).style("stroke", "red").style("cursor", "pointer");
                         }).on("mouseout", function (d) {
-                            d3.select(this).style("stroke", "gray").style("fill", "white").style("cursor", "pointer");
+                            d3.select(this).style("stroke", "none").style("cursor", "pointer");
                         }).on("click", function () {
                             self = d3.select(this);
                             var y = self.attr('cy') / 10;
@@ -267,6 +269,7 @@ var dibujaDiapason = (notas) => {
                         .attr('x', 17.75 * j)
                         .attr('y', 10 * i + 12.5)
                         .attr("font-size", "6px")
+                        .attr('fill', 'white')
                         .attr("font-family", "sans-serif")
                         .style("text-anchor", "middle")
                         .attr("stroke-width", 1);
@@ -438,27 +441,26 @@ function dibujaMatrix() {
                     .attr('cx', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
                     .attr('cy', 10 * pisada[i][0])
                     .attr('r', 6)
-                    .attr('stroke', 'gray')
+                    .attr('stroke', 'none')
                     .attr('stroke-width', 1)
-                    .attr('fill', '#ffffff')
+                    .attr('fill', pallete[(pisada[i][2]+3)%12])
 
                 diagramas.append("text")
                     .text(pisada[i][2])
                     .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
                     .attr('y', 10 * pisada[i][0] + 3.8)
+                    .attr('fill','white')
                     .attr("font-size", "10px")
                     .attr("font-family", "sans-serif")
-                    .style("text-anchor", "middle")
-                    .attr("stroke-width", 1);
-
+                    .style("text-anchor", "middle");
             }
 
             diagramas.on("mouseover", function (d) {
-                d3.select(this).selectAll("circle").style("stroke", "red").style("fill", "#ffd6d1");
+                d3.select(this).selectAll("circle").style("stroke", "red");
                 d3.select(this).style("cursor", "pointer")
 
             }).on("mouseout", function (d) {
-                d3.select(this).selectAll("circle").style("stroke", "gray").style("fill", "white").style("cursor", "pointer");
+                d3.select(this).selectAll("circle").style("stroke", "none").style("cursor", "pointer");
                 d3.select(this).style("cursor", "pointer")
 
             }).on("click", function () {
