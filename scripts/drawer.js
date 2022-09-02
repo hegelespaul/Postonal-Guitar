@@ -3,7 +3,7 @@ let pisadas = [];
 let mtx = [];
 let notas = [];
 let audioContext;
-let pallete = ["#00e706", "#00ffad", "#006bff", "#3101fa", "#8301cd", "#3f0057", "#670451", "#d70102", "#e34303", "#ff8800", "#ecff00", "#9af304"];
+let pallete = ["rgb(0,231,6,0.5)", "rgb(0,255,173,0.5)", "rgb(0,107,255,0.5)", "rgb(49,1,250,0.5)", "rgb(131,1,205,0.5)", "rgb(63,0,87,0.5)", "rgb(103,4,81,0.5)", "rgb(215,1,2,0.5)", "rgb(227,67,3,0.5)", "rgb(255,136,0,0.5)", "rgb(236,255,0,0.5)", "rgb(154,243,4,0.5)"];
 
 window.addEventListener('load', init, false);
 function init() {
@@ -14,7 +14,6 @@ function init() {
         alert('Web Audio API is not supported in this browser');
     }
 }
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -271,8 +270,7 @@ var dibujaDiapason = (notas) => {
                         .attr("font-size", "6px")
                         .attr('fill', 'white')
                         .attr("font-family", "sans-serif")
-                        .style("text-anchor", "middle")
-                        .attr("stroke-width", 1);
+                        .style("text-anchor", "middle");
                 }
 
             }
@@ -449,7 +447,7 @@ function dibujaMatrix() {
                     .text(pisada[i][2])
                     .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
                     .attr('y', 10 * pisada[i][0] + 3.8)
-                    .attr('fill','white')
+                    .attr('fill','white')                    
                     .attr("font-size", "10px")
                     .attr("font-family", "sans-serif")
                     .style("text-anchor", "middle");
