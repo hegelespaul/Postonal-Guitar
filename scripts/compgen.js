@@ -3,7 +3,7 @@ const afinacionMIDI = [64, 59, 55, 50, 45, 40];
 let pallete = ["rgb(0,231,6,0.5)", "rgb(0,255,173,0.5)", "rgb(0,107,255,0.5)", "rgb(49,1,250,0.5)", "rgb(131,1,205,0.5)", "rgb(63,0,87,0.5)", "rgb(103,4,81,0.5)", "rgb(215,1,2,0.5)", "rgb(227,67,3,0.5)", "rgb(255,136,0,0.5)", "rgb(236,255,0,0.5)", "rgb(154,243,4,0.5)"];
 
 
-let list = [[0, 4, 7, 11], [2, 5, 9, 0], [6, 8, 10, 0], [2, 5, 7, 9]]
+let list = [[0, 4, 7, 11], [2, 5, 9, 0], [6, 8, 10, 0], [2, 5, 7, 9],[1, 4, 6, 11], [2, 3, 7, 0], [6, 11, 10, 0], [2, 3, 5, 9] ]
 let diapason = [];
 let acordes = [];
 let cuadrantes = [];
@@ -133,11 +133,11 @@ for (var i = 0; i < result.length; i++) {
     for (var j = 0; j < result[i].length; j++) {
         topnoteArrEv[i].push([]);
         for (var k = 0; k < result[i][j].length; k++) {
-            var topnote = afinacionMIDI[(result[i][j][k][0]-1)] +  result[i][j][k][1];
+            var topnote = afinacionMIDI[(result[i][j][k][0] - 1)] + result[i][j][k][1];
             topnoteArrEv[i][j].push(topnote);
         }
         var max = topnoteArrEv[i][j].reduce((a, b) => { return Math.max(a, b) });
-        topnoteArr[i].push({ s: result[i][j][topnoteArrEv[i][j].indexOf(max)][0], f:result[i][j][topnoteArrEv[i][j].indexOf(max)][1]} ); 
+        topnoteArr[i].push({ s: result[i][j][topnoteArrEv[i][j].indexOf(max)][0], f: result[i][j][topnoteArrEv[i][j].indexOf(max)][1] });
     }
 }
 // console.log(topnoteArr);
@@ -160,13 +160,13 @@ var distance = function (a, b) {
 
 progresion.push(result[0][0])
 function genera() {
-    for (var i = 0; i < topnoteArr.length -1 ; i++) {
+    for (var i = 0; i < topnoteArr.length - 1; i++) {
         var previous = topnoteArr[(i + topnoteArr.length - 1) % topnoteArr.length];
         var next = topnoteArr[(i + 1) % topnoteArr.length];
 
         var treeP = new kdTree(next.flat(), distance, ["s", "f"]);
         var nearP = treeP.nearest(topnoteArr[0][0], 1);
-        progresion.push(result[(i +1) % result.length][next.flat().indexOf(nearP[0][0])]);
+        progresion.push(result[(i + 1) % result.length][next.flat().indexOf(nearP[0][0])]);
         console.log(progresion);
     }
 }
@@ -275,6 +275,16 @@ function dibujaMatrix() {
                 .attr('stroke-width', 1.8);
 
             for (var i = 0; i < pisada.length; i++) {
+                diagramas.append('text')
+                    .text('  ' + pisada[i][2] + '   ')
+                    .attr('x', 6 + i*15)
+                    .attr('y', 100)
+                    .attr("font-size", "12px")
+                    .attr("font-family", "sans-serif")
+                    .attr('stroke-width', 1.8);
+            }
+
+            for (var i = 0; i < pisada.length; i++) {
 
 
                 diagramas.append('circle')
@@ -283,13 +293,13 @@ function dibujaMatrix() {
                     .attr('r', 6)
                     .attr('stroke', 'none')
                     .attr('stroke-width', 1)
-                    .attr('fill', pallete[(pisada[i][2]+3)%12])
+                    .attr('fill', pallete[(pisada[i][2] + 3) % 12])
 
                 diagramas.append("text")
                     .text(pisada[i][2])
                     .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
                     .attr('y', 10 * pisada[i][0] + 3.8)
-                    .attr('fill','white')                    
+                    .attr('fill', 'white')
                     .attr("font-size", "10px")
                     .attr("font-family", "sans-serif")
                     .style("text-anchor", "middle");
