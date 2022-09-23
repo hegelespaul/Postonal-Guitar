@@ -3,7 +3,7 @@ const afinacionMIDI = [64, 59, 55, 50, 45, 40];
 let pallete = ["rgb(0,231,6,0.5)", "rgb(0,255,173,0.5)", "rgb(0,107,255,0.5)", "rgb(49,1,250,0.5)", "rgb(131,1,205,0.5)", "rgb(63,0,87,0.5)", "rgb(103,4,81,0.5)", "rgb(215,1,2,0.5)", "rgb(227,67,3,0.5)", "rgb(255,136,0,0.5)", "rgb(236,255,0,0.5)", "rgb(154,243,4,0.5)"];
 
 
-let list = [[0, 4, 7, 11], [2, 5, 9, 0], [6, 8, 10, 0], [2, 5, 7, 9],[1, 4, 6, 11], [2, 3, 7, 0], [6, 11, 10, 0], [2, 3, 5, 9] ]
+let list = [[0, 4, 7, 11], [2, 5, 9, 0], [6, 8, 10, 0], [2, 5, 7, 9], [1, 4, 6, 11], [2, 3, 7, 0], [6, 11, 10, 0], [2, 3, 5, 9]]
 let diapason = [];
 let acordes = [];
 let cuadrantes = [];
@@ -14,6 +14,10 @@ let result = [];
 let topnoteArr = [];
 let chordpoint = [];
 let progresion = [];
+
+for (var i = 0; i < list.length; i++) {
+    list[i].sort((a, b) => a - b);
+}                                        ///////////////SORT
 
 window.addEventListener('load', init, false);
 function init() {
@@ -126,6 +130,55 @@ for (var a = 0; a < acomodo.length; a++) {
 }
 console.log(result);
 
+///////////////////////////////////////////POR TOP NOTE DISTANCIA EUCLIDEANA  2D/////////////////////////////////////////////////////////////////////////////////
+// var topnoteArrEv = [];
+// for (var i = 0; i < result.length; i++) {
+//     topnoteArr.push([]);
+//     topnoteArrEv.push([]);
+//     for (var j = 0; j < result[i].length; j++) {
+//         topnoteArrEv[i].push([]);
+//         for (var k = 0; k < result[i][j].length; k++) {
+//             var topnote = afinacionMIDI[(result[i][j][k][0] - 1)] + result[i][j][k][1];
+//             topnoteArrEv[i][j].push(topnote);
+//         }
+//         var max = topnoteArrEv[i][j].reduce((a, b) => { return Math.max(a, b) });
+//         topnoteArr[i].push({ s: result[i][j][topnoteArrEv[i][j].indexOf(max)][0], f: result[i][j][topnoteArrEv[i][j].indexOf(max)][1] });
+//     }
+// }
+// // console.log(topnoteArr);
+
+// for (var i = 0; i < result.length; i++) {
+//     chordpoint.push([]);
+//     for (var j = 0; j < result[i].length; j++) {
+//         chordpoint[i].push([])
+//         for (var k = 0; k < result[i][j].length; k++) {
+//             var point = { s: result[i][j][k][0], f: result[i][j][k][1] }
+//             chordpoint[i][j].push(point);
+//         }
+//     }
+// }
+// // console.log(chordpoint);
+
+// var distance = function (a, b) {
+//     return Math.pow(a.f - b.f, 2) + Math.pow(a.s - b.s, 2);
+// }
+
+// progresion.push(result[0][0])
+// function genera() {
+//     for (var i = 0; i < topnoteArr.length - 1; i++) {
+//         var previous = topnoteArr[(i + topnoteArr.length - 1) % topnoteArr.length];
+//         var next = topnoteArr[(i + 1) % topnoteArr.length];
+
+//         var treeP = new kdTree(next.flat(), distance, ["s", "f"]);
+//         var nearP = treeP.nearest(topnoteArr[i+1][0], 1);
+//         progresion.push(result[(i + 1) % result.length][next.flat().indexOf(nearP[0][0])]);
+//     }
+//     console.log('Top Note 2D:',progresion);
+// }
+
+// genera()
+///////////////////////////////////////////POR TOP NOTE DISTANCIA EUCLIDEANA  3D y SIMILARIDAD COSENO/////////////////////////////////////////////////////////////////////////////////
+
 var topnoteArrEv = [];
 for (var i = 0; i < result.length; i++) {
     topnoteArr.push([]);
@@ -137,7 +190,7 @@ for (var i = 0; i < result.length; i++) {
             topnoteArrEv[i][j].push(topnote);
         }
         var max = topnoteArrEv[i][j].reduce((a, b) => { return Math.max(a, b) });
-        topnoteArr[i].push({ s: result[i][j][topnoteArrEv[i][j].indexOf(max)][0], f: result[i][j][topnoteArrEv[i][j].indexOf(max)][1] });
+        topnoteArr[i].push({ s: result[i][j][topnoteArrEv[i][j].indexOf(max)][0], f: result[i][j][topnoteArrEv[i][j].indexOf(max)][1], t: result[i][j][topnoteArrEv[i][j].indexOf(max)][2] });
     }
 }
 // console.log(topnoteArr);
@@ -147,7 +200,7 @@ for (var i = 0; i < result.length; i++) {
     for (var j = 0; j < result[i].length; j++) {
         chordpoint[i].push([])
         for (var k = 0; k < result[i][j].length; k++) {
-            var point = { s: result[i][j][k][0], f: result[i][j][k][1] }
+            var point = { s: result[i][j][k][0], f: result[i][j][k][1], t: result[i][j][k][2] }
             chordpoint[i][j].push(point);
         }
     }
@@ -155,43 +208,151 @@ for (var i = 0; i < result.length; i++) {
 // console.log(chordpoint);
 
 var distance = function (a, b) {
-    return Math.pow(a.f - b.f, 2) + Math.pow(a.s - b.s, 2);
+    var dx = (b.f - a.f);
+    var dy = (b.s - a.s);
+    var dz = (b.t - a.t);
+    return dist = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2) + Math.pow(dz, 2));
 }
 
-progresion.push(result[0][0])
-function genera() {
-    for (var i = 0; i < topnoteArr.length - 1; i++) {
-        var previous = topnoteArr[(i + topnoteArr.length - 1) % topnoteArr.length];
-        var next = topnoteArr[(i + 1) % topnoteArr.length];
-
-        var treeP = new kdTree(next.flat(), distance, ["s", "f"]);
-        var nearP = treeP.nearest(topnoteArr[0][0], 1);
-        progresion.push(result[(i + 1) % result.length][next.flat().indexOf(nearP[0][0])]);
-        console.log(progresion);
+function cosinesim(A, B) {
+    var dotproduct = 0;
+    var mA = 0;
+    var mB = 0;
+    for (j = 0; j < A.length; j++) {
+        dotproduct += (A[j] * B[j]);
+        mA += (A[j] * A[j]);
+        mB += (B[j] * B[j]);
     }
+    mA = Math.sqrt(mA);
+    mB = Math.sqrt(mB);
+    var similarity = (dotproduct) / ((mA) * (mB));
+    return similarity;
 }
 
-genera()
+function getAllIndexes(arr, val) {
+    var indexes = [], i;
+    for (i = 0; i < arr.length; i++)
+        if (arr[i] === val)
+            indexes.push(i);
+    return indexes;
+}
 
+function cosSimAcomodador(A) {
+    var resultado = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]];
+    for (var i = 0; i < A.length; i++) {
+        var cuerda = A[i][0];
+        resultado.splice(cuerda - 1, 1, A[i]);
+    }
+    resultado = resultado.flat();
+    return resultado
+}
 
-// var points = [
-//     { s: 1, f: 2 },
-//     { s: 3, f: 4 },
-//     { s: 5, f: 6 },
-//     { s: 7, f: 8 }
-// ];
+progresion.push(result[0][0]); //////////////EL DE MEDICION
 
-// var distance = function (a, b) {
-//     return Math.pow(a.f - b.f, 2) + Math.pow(a.s - b.s, 2);
+function genera3DCS() {
+    var minD = [];
+    var posChord = [];
+    var chordSim = [];
+
+    for (var i = 0; i < topnoteArr.length - 1; i++) {
+        minD.push([]);
+        var next = topnoteArr[(i + 1) % topnoteArr.length];
+        for (var j = 0; j < next.length; j++) {
+            minD[i].push(distance(topnoteArr[0][0], next[j])); //////////PROGRESIOONN
+        }
+    }
+
+    for (var i = 0; i < minD.length; i++) {
+        posChord.push([]);
+        var minVal = Math.min(...minD[i]);
+        // console.log(minVal);
+        // console.log(getAllIndexes(minD[i],minVal))
+        for (var j = 0; j < getAllIndexes(minD[i], minVal).length; j++) {
+            posChord[i].push(result[i + 1][getAllIndexes(minD[i], minVal)[j]])
+        }
+    }
+
+    for (var i = 0; i < posChord.length; i++) {
+        chordSim.push([])
+        for (var j = 0; j < posChord[i].length; j++) {
+            chordSim[i].push(cosinesim(cosSimAcomodador(result[0][0]), cosSimAcomodador(posChord[i][j])))
+            // console.log(cosSimAcomodador(result[0][0]), cosSimAcomodador(posChord[i][j])); //////////////PROGRESIOONN
+        }
+    }
+    console.log(chordSim);
+
+    for (var i = 0; i < chordSim.length; i++) {
+        var mostSim = Math.max(...chordSim[i]);
+        var defChord = posChord[i][chordSim[i].indexOf(mostSim)];
+        // console.log(defChord);
+        progresion.push(defChord);
+    }
+    // console.log(minD)
+    // console.log(posChord);
+    // console.log(chordSim);
+}
+genera3DCS();
+
+/////////////////////////////////////////////////////////POR COSINE SIMILARITY//////////////////////////////////////////////////////////
+
+// function generaCos() {
+//     progresion = [];
+//     progresion.push(result[0][0]);
+//     var cosSim = [];
+//     for (var i = 0; i < result.length - 1; i++) {
+//         cosSim.push([]);
+//         var previous = result[(i + result.length - 1) % result.length];
+//         var next = result[(i + 1) % result.length];
+
+//         function cosinesim(A, B) {
+//             var dotproduct = 0;
+//             var mA = 0;
+//             var mB = 0;
+//             for (j = 0; j < A.length; j++) {
+//                 dotproduct += (A[j] * B[j]);
+//                 mA += (A[j] * A[j]);
+//                 mB += (B[j] * B[j]);
+//             }
+//             mA = Math.sqrt(mA);
+//             mB = Math.sqrt(mB);
+//             var similarity = (dotproduct) / ((mA) * (mB));
+//             return similarity;
+//         }
+
+//         for (var c = 0; c < next.length; c++) {
+//             var array1 = result[i][0].flat();
+//             var array2 = next[c].flat();
+
+//             if (array1.length < 18) {
+//                 array1.push(Array(18 - array1.length).fill(0));
+//                 array1 = array1.flat();
+//             }
+
+//             if (array2.length < 18) {
+//                 array2.push(Array(18 - array2.length).fill(0));
+//                 array2 = array2.flat();
+//             }
+
+//             var p = cosinesim(array1, array2);
+//             cosSim[i].push(p);
+//         }
+//     }
+//     var cosSimIn = [];
+//     for (var k = 0; k < cosSim.length; k++) {
+//         // var Max = Math.max(...cosSim[k]);
+//         // console.log(Max);
+//         var indexOfMaxValue = cosSim[k].reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
+//         cosSimIn.push(indexOfMaxValue);
+//     }
+//     for (var i = 1; i < result.length; i++) {
+//         progresion.push(result[i][cosSimIn[i - 1]]);
+//     }
+//     console.log('CosSim:', progresion);
 // }
 
-// var tree = new kdTree(points, distance, ["s", "f"]);
+// generaCos();
 
-// var nearest = tree.nearest({ s: 5, f: 5 }, 1);
-
-// console.log(nearest);
-
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function dibujaMatrix() {
 
@@ -277,7 +438,7 @@ function dibujaMatrix() {
             for (var i = 0; i < pisada.length; i++) {
                 diagramas.append('text')
                     .text('  ' + pisada[i][2] + '   ')
-                    .attr('x', 6 + i*15)
+                    .attr('x', 6 + i * 15)
                     .attr('y', 100)
                     .attr("font-size", "12px")
                     .attr("font-family", "sans-serif")
@@ -333,6 +494,36 @@ function dibujaMatrix() {
 }
 
 dibujaMatrix();
+
+
+let data = `
+  options font-face='times' 
+  tabstave notation=true clef=treble key=C tuning=standard 
+`
+for (var i = 0; i < progresion.length; i++) {
+    var chord = '\n notes :w ('
+    for (var j = 0; j < progresion[i].length; j++) {
+        chord = chord + (progresion[i][j][1] + '/' + progresion[i][j][0] + '.');
+    }
+    chord = chord.slice(0, chord.length - 1) + chord.slice(chord.length);
+    chord = chord + ')';
+    data = data + chord
+}
+
+data = data + '=|=';
+data = data + '\n text :w,Cmaj7,Dm7,F#add9b5,Dmadd11,Esus2add13,Cmadd9,F#b5add11,Dmaddb9'
+
+const VF = vextab.Vex.Flow
+
+const renderer = new VF.Renderer($('#boo')[0],
+    VF.Renderer.Backends.SVG);
+
+// Initialize VexTab artist and parser.
+const artist = new vextab.Artist(10, 10, 750, { scale: 1 });
+const tab = new vextab.VexTab(artist);
+
+tab.parse(data);
+artist.render(renderer);
 
 function playchord(coordenadas) {
 
