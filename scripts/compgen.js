@@ -53,7 +53,7 @@ list.forEach((l) => {
 })
 
 for (var c = 0; c < afinacion.length; c++) {
-    for (var t = 1; t < 23; t++) {
+    for (var t = 0; t <= 22; t++) {
         diapason.push([c + 1, t, (afinacion[c] + t) % 12]);
     }
 }
@@ -190,7 +190,7 @@ for (var i = 0; i < result.length; i++) {
             topnoteArrEv[i][j].push(topnote);
         }
         var max = topnoteArrEv[i][j].reduce((a, b) => { return Math.max(a, b) });
-        topnoteArr[i].push({ s: result[i][j][topnoteArrEv[i][j].indexOf(max)][0], f: result[i][j][topnoteArrEv[i][j].indexOf(max)][1], t: result[i][j][topnoteArrEv[i][j].indexOf(max)][2] });
+        topnoteArr[i].push({ s: result[i][j][topnoteArrEv[i][j].indexOf(max)][0], f: result[i][j][topnoteArrEv[i][j].indexOf(max)][1], n: afinacionMIDI[result[i][j][topnoteArrEv[i][j].indexOf(max)][0] - 1] + result[i][j][topnoteArrEv[i][j].indexOf(max)][1] });
     }
 }
 console.log(topnoteArr);
@@ -198,7 +198,7 @@ console.log(topnoteArr);
 var distance = function (a, b) {
     var dx = (b.f - a.f);
     var dy = (b.s - a.s);
-    var dz = (b.t - a.t);
+    var dz = (b.n - a.n);
     return dist = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2) + Math.pow(dz, 2));
 }
 
@@ -225,27 +225,36 @@ function getAllIndexes(arr, val) {
     return indexes;
 }
 
+function sfnAcomodador(A) {
+    var resultado = [];
+    var resultadoEval = [];
+    for (var i = 0; i < A.length; i++) {
+        var midinote = afinacionMIDI[A[i][0] - 1] + A[i][1];
+        resultadoEval.push(midinote);
+        resultado.push({ s: A[i][0], f: A[i][1], n: midinote });
+    }
+    var max = resultadoEval.reduce((a, b) => { return Math.max(a, b) });
+    // console.log(resultado[resultadoEval.indexOf(max)]);
+    return resultado[resultadoEval.indexOf(max)]
+}
+
 function cosSimAcomodador(A) {
     var resultado = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]];
     for (var i = 0; i < A.length; i++) {
         var cuerda = A[i][0];
         resultado.splice(cuerda - 1, 1, A[i]);
     }
-    resultado = resultado.flat();
-    return resultado
-}
 
-function sftAcomodador(A) {
-    var resultado = [];
-    var resultadoEval = [];
-    for (var i = 0; i < A.length; i++) {
-        var topnote = afinacionMIDI[A[i][0] - 1] + A[i][1];
-        resultadoEval.push(topnote);
-        resultado.push({ s: A[i][0], f: A[i][1], t: A[i][2] });
-    }
-    var max = resultadoEval.reduce((a, b) => { return Math.max(a, b) });
-    // console.log(resultado[resultadoEval.indexOf(max)]);
-    return resultado[resultadoEval.indexOf(max)]
+    resultado = resultado.flat();
+    resultado.splice(2, 1);
+    resultado.splice(5, 1);
+    resultado.splice(8, 1);
+    resultado.splice(11, 1);
+    resultado.splice(14, 1);
+    resultado.splice(17, 1);
+
+    // console.log(resultado)
+    return resultado
 }
 
 progresion.push(result[0][0]); //////////////EL DE MEDICION
@@ -260,14 +269,16 @@ function genera3DCS() {
         var next = topnoteArr[(i + 1) % topnoteArr.length];
 
         for (var j = 0; j < next.length; j++) {
-            minD[i].push(distance(sftAcomodador(progresion[i]), next[j])); //////////PROGRESIOONN
+            minD[i].push(distance(sfnAcomodador(progresion[i]), next[j])); //////////PROGRESIOONN
+            // console.log(next[j])
         }
 
 
         posChord.push([]);
         var minVal = Math.min(...minD[i]);
-        // console.log(minVal);
-        // console.log(getAllIndexes(minD[i],minVal))
+        console.log(minVal);
+        console.log(getAllIndexes(minD[i], minVal))
+        console.log(minD);
         for (var j = 0; j < getAllIndexes(minD[i], minVal).length; j++) {
             posChord[i].push(result[i + 1][getAllIndexes(minD[i], minVal)[j]])
         }
@@ -284,6 +295,8 @@ function genera3DCS() {
         var defChord = posChord[i][chordSim[i].indexOf(mostSim)];
         // console.log(defChord);
         progresion.push(defChord);
+        // console.log(mostSim);
+
     }
     // console.log(minD)
     // console.log(posChord);
