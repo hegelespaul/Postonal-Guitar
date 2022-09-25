@@ -202,6 +202,25 @@ var distance = function (a, b) {
     return dist = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2) + Math.pow(dz, 2));
 }
 
+function roundTo(n, digits) {
+    var negative = false;
+    if (digits === undefined) {
+        digits = 0;
+    }
+    if (n < 0) {
+        negative = true;
+        n = n * -1;
+    }
+    var multiplicator = Math.pow(10, digits);
+    n = parseFloat((n * multiplicator).toFixed(11));
+    n = (Math.round(n) / multiplicator).toFixed(digits);
+    if (negative) {
+        n = (n * -1).toFixed(digits);
+    }
+    n = parseFloat(n)
+    return n;
+}
+
 function cosinesim(A, B) {
     var dotproduct = 0;
     var mA = 0;
@@ -214,7 +233,8 @@ function cosinesim(A, B) {
     mA = Math.sqrt(mA);
     mB = Math.sqrt(mB);
     var similarity = (dotproduct) / ((mA) * (mB));
-    return similarity;
+    var similarityR = roundTo(similarity,8);
+    return similarityR;
 }
 
 function getAllIndexes(arr, val) {
