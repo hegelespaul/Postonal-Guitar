@@ -10,8 +10,15 @@ let cualidades = [
     ['aug', [0, 0, 0, 3, 0, 0], [0, 4, 8]],
     ['sus2', [0, 1, 0, 0, 2, 0], [0, 2, 7]],
     ['sus4', [0, 1, 0, 0, 2, 0], [0, 5, 7]],
+    ['6sus2', [0, 1, 1, 0, 1, 0], [0, 2, 9]],
+    ['6sus4', [0, 0, 1, 1, 1, 0], [0, 5, 9]],
+    
+    //////////////////////////////3 NOTAS CASOS CON TENSIONES
+    ['sus4#5', [0, 0, 1, 1, 1, 0], [0, 5, 8]],
+    ['sus2#5', [0, 1, 0, 1, 0, 1], [0, 2, 8]],
+    ['sus2b5', [0, 1, 0, 1, 0, 1], [0, 2, 6]],
 
-    ///////////////////////////////4NOTAS
+    ///////////////////////////////4 NOTAS
     ['6', [0, 1, 2, 1, 2, 0], [0, 4, 7, 9]],
     ['m6', [0, 1, 2, 1, 1, 1], [0, 3, 7, 9]],
     ['maj7', [1, 0, 1, 2, 2, 0], [0, 4, 7, 11]],
@@ -23,9 +30,20 @@ let cualidades = [
     ['7sus4', [0, 2, 1, 0, 3, 0], [0, 5, 7, 10]],
     ['7sus2', [0, 2, 1, 1, 2, 0], [0, 2, 7, 10]],
     ['m7b5', [0, 1, 2, 1, 1, 1], [0, 3, 6, 10]],
-    ['dim7', [0, 0, 4, 0, 0, 2], [0, 3, 6, 9]]
+    ['dim7', [0, 0, 4, 0, 0, 2], [0, 3, 6, 9]],
+
+    //////////////////////////////////4 NOTAS CASOS CON TENSIONES
+    ['add11', [1, 1, 1, 1, 2, 0], [0, 4, 5, 7]],
+    ['madd11', [0, 2, 1, 1, 2, 0], [0, 3, 5, 7]],
+    ['6/9', [0, 2, 1, 1, 2, 0], [0, 2, 4, 9]],
+    ['m6/9', [1, 1, 2, 0, 1, 1], [0, 2, 3, 4, 9]]
 
 ]
+
+
+for (var i = 0; i < list.length; i++) {
+    list[i].sort((a, b) => a - b);
+}
 
 function roundTo(n, digits) {
     var negative = false;
@@ -134,10 +152,11 @@ function chordNm(chordValues) {
     var simAllOri = [];
     var result = [];
     var resultMax = [];
-
+    var Tr = [];
 
     cosinesim(vectorInt(chordValues), cualidades[0][1]);
     var permus = transA0(chordValues);
+    var permusR = [];
 
     for (var p = 0; p < permus[0].length; p++) {
         simAll.push([]);
@@ -149,25 +168,31 @@ function chordNm(chordValues) {
         // console.log(permus[0][p])
         // console.log(simAll[p]);
         var max = simAll[p].reduce((a, b) => { return Math.max(a, b) });
-        // console.log(max);
+        //console.log(max);
         // console.log(simAll[p].indexOf(max));
-        // console.log(cualidades[simAll[p].indexOf(max)]);
+        //console.log(cualidades[simAll[p].indexOf(max)]);
         var allMax = getAllIndexes(simAll[p], max);
         allMax.forEach((e) => { simAllEval.push(max); simAllCual.push(cualidades[e]); simAllOri.push(permus[1][p]) });
         // console.log(allMax);
     }
 
     for (var z = 0; z < simAllEval.length; z++) {
+        Tr.push([]);
         result.push(notes[simAllOri[z]] + simAllCual[z][0], simAllEval[z]);
+        for (var s = 0; s < simAllCual[z][2].length; s++) {
+            Tr[z].push(((simAllCual[z][2][s] + 12) + simAllOri[z]) % 12);
+        }
+        console.log(chordValues, Tr[z])
     }
 
     var maxAll = simAllEval.reduce((a, b) => { return Math.max(a, b) });
     var allChords = getAllIndexes(simAllEval, maxAll);
 
-    allChords.forEach((e) => {
-        resultMax.push(notes[simAllOri[e]] + simAllCual[e][0]);
-    })
+    for (var allCh = 0; allCh < allChords.length; allCh++) {
+        resultMax.push(notes[simAllOri[allChords[allCh]]] + simAllCual[allChords[allCh]][0]);
+    }
 
+    // console.log(permusR);
     // console.log([simAllEval, simAllCual, simAllOri]);
     console.log(result, resultMax);
     return [result, resultMax];
