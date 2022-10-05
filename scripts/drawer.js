@@ -1,7 +1,14 @@
 const afinacion = [4, 11, 7, 2, 9, 4];
-let pisadas = [];
+// let notas = amplify.store("pisadas");
+notas = []
+console.log(notas);
+var buttons;
+var coord = [];
+
+
+
 let mtx = [];
-let notas = [];
+let pisadas = [];
 let audioContext;
 let pallete = ["rgb(0,231,6,0.5)", "rgb(0,255,173,0.5)", "rgb(0,107,255,0.5)", "rgb(49,1,250,0.5)", "rgb(131,1,205,0.5)", "rgb(63,0,87,0.5)", "rgb(103,4,81,0.5)", "rgb(215,1,2,0.5)", "rgb(227,67,3,0.5)", "rgb(255,136,0,0.5)", "rgb(236,255,0,0.5)", "rgb(154,243,4,0.5)"];
 
@@ -32,7 +39,6 @@ function dibujaTodo() {
     //     .attr('opacity', 0.5)
 
     var angle = 360 / 12;
-    var coord = [];
     for (var i = 0; i < 12; i++) {
         x = 151 + 68 * Math.sin(angle * i * Math.PI / 180);
         y = 88 - 68 * Math.cos(angle * i * Math.PI / 180);
@@ -50,7 +56,7 @@ function dibujaTodo() {
 
     function polygon() {
         var formas = d3.select('.drawerForm').classed("svg-container", true).append("svg")
-        .attr("height", "500");
+            .attr("height", "500");
         var vert = []
         for (var i = 0; i < 12; i++) {
             if (buttons[i].className == 'btnOn') {
@@ -83,9 +89,13 @@ function dibujaTodo() {
         ul.appendChild(li);
     }
 
-    var buttons = document.getElementsByTagName("button");
+    buttons = document.getElementsByTagName("button");
+
+
 
     for (var i = 0; i < 12; i++) {
+
+
         buttons[i].onclick = function () {
 
             if (this.value == 0 && notas.length < 6) {
@@ -139,8 +149,12 @@ function dibujaTodo() {
             }
 
         };
+
+
     }
+
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -249,7 +263,7 @@ var dibujaDiapason = (notas) => {
                         .attr('r', 4.4)
                         .attr('stroke', 'none')
                         .attr('stroke-width', 0.5)
-                        .attr('fill', pallete[(posiciones+3)%12])
+                        .attr('fill', pallete[(posiciones + 3) % 12])
                         .on("mouseover", function (d) {
                             d3.select(this).style("stroke", "red").style("cursor", "pointer");
                         }).on("mouseout", function (d) {
@@ -407,30 +421,31 @@ function dibujaMatrix() {
                     .attr('stroke', 'gray')
                     .attr('stroke-width', 1);
             }
+            if (fretMin <= 1) {
+                diagramas.append('line')
+                    .attr('x1', 5)
+                    .attr('y1', 9.8)
+                    .attr('x2', 5)
+                    .attr('y2', 60.9)
+                    .attr('stroke', 'black')
+                    .attr('stroke-width', 1);
 
-            diagramas.append('line')
-                .attr('x1', 5)
-                .attr('y1', 9.8)
-                .attr('x2', 5)
-                .attr('y2', 60.9)
-                .attr('stroke', 'black')
-                .attr('stroke-width', 1);
+                diagramas.append('line')
+                    .attr('x1', 5)
+                    .attr('y1', 10)
+                    .attr('x2', 10.5)
+                    .attr('y2', 10)
+                    .attr('stroke', 'black')
+                    .attr('stroke-width', 0.3);
 
-            diagramas.append('line')
-                .attr('x1', 5)
-                .attr('y1', 10)
-                .attr('x2', 10.5)
-                .attr('y2', 10)
-                .attr('stroke', 'black')
-                .attr('stroke-width', 0.3);
-
-            diagramas.append('line')
-                .attr('x1', 5)
-                .attr('y1', 10 * i)
-                .attr('x2', 9.5)
-                .attr('y2', 10 * 6)
-                .attr('stroke', 'black')
-                .attr('stroke-width', 1.8);
+                diagramas.append('line')
+                    .attr('x1', 5)
+                    .attr('y1', 10 * i)
+                    .attr('x2', 9.5)
+                    .attr('y2', 10 * 6)
+                    .attr('stroke', 'black')
+                    .attr('stroke-width', 1.8);
+            }
 
             for (var i = 0; i < pisada.length; i++) {
 
@@ -441,13 +456,13 @@ function dibujaMatrix() {
                     .attr('r', 6)
                     .attr('stroke', 'none')
                     .attr('stroke-width', 1)
-                    .attr('fill', pallete[(pisada[i][2]+3)%12])
+                    .attr('fill', pallete[(pisada[i][2] + 3) % 12])
 
                 diagramas.append("text")
                     .text(pisada[i][2])
                     .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
                     .attr('y', 10 * pisada[i][0] + 3.8)
-                    .attr('fill','white')                    
+                    .attr('fill', 'white')
                     .attr("font-size", "10px")
                     .attr("font-family", "sans-serif")
                     .style("text-anchor", "middle");
@@ -504,10 +519,16 @@ function playchord(coordenadas) {
 
 function formaPrima() {
     var paragraph = document.getElementById("forma");
+    var paragraph2 = document.getElementById("acorde");
     var text = document.createTextNode(fPrR);
+    var chordtext = document.createTextNode(chordNm(notas)[1])
 
     document.getElementById("forma").innerHTML = "";
+    document.getElementById("acorde").innerHTML = "";
     paragraph.appendChild(text);
+    if (notas.length >= 3) {
+        paragraph2.appendChild(chordtext);
+    }
     var res = fPrR;
     return res;
 }
@@ -516,4 +537,14 @@ function formaPrima() {
 
 dibujaTodo();
 
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
+let inputN = amplify.store("pisadas");
+for (var i = 0; i < inputN.length; i++) {
+    var id = inputN[i];
+    // console.log(notas[i], buttons[(notas[i] + 3) % 12])
+    if (inputN[i] = buttons[(inputN[i] + 3) % 12]) {
+        var btnprsd = document.getElementById(id);
+        btnprsd.click();
+    }
+}

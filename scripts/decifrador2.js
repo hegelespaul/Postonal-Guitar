@@ -1,5 +1,5 @@
-let list = [[0, 4, 7, 11], [2, 5, 9, 0], [6, 8, 10, 0], [2, 5, 7, 9], [1, 4, 6, 11], [2, 3, 7, 0], [6, 11, 10, 0], [2, 3, 5, 9]]
-let notes = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
+// let list = [[0, 4, 7, 11], [2, 5, 9, 0], [6, 8, 10, 0], [2, 5, 7, 9], [1, 4, 6, 11], [2, 3, 7, 0], [6, 11, 10, 0], [2, 3, 5, 9]]
+let notesName = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
 
 let cualidades = [
     //////////////////////////////3 NOTAS
@@ -10,11 +10,9 @@ let cualidades = [
     ['aug', [0, 0, 0, 3, 0, 0], [0, 4, 8]],
     ['sus2', [0, 1, 0, 0, 2, 0], [0, 2, 7]],
     ['sus4', [0, 1, 0, 0, 2, 0], [0, 5, 7]],
-    ['6sus2', [0, 1, 1, 0, 1, 0], [0, 2, 9]],
-    ['6sus4', [0, 0, 1, 1, 1, 0], [0, 5, 9]],
+  
     
     //////////////////////////////3 NOTAS CASOS CON TENSIONES
-    ['sus4#5', [0, 0, 1, 1, 1, 0], [0, 5, 8]],
     ['sus2#5', [0, 1, 0, 1, 0, 1], [0, 2, 8]],
     ['sus2b5', [0, 1, 0, 1, 0, 1], [0, 2, 6]],
 
@@ -41,9 +39,9 @@ let cualidades = [
 ]
 
 
-for (var i = 0; i < list.length; i++) {
-    list[i].sort((a, b) => a - b);
-}
+// for (var i = 0; i < list.length; i++) {
+//     list[i].sort((a, b) => a - b);
+// }
 
 function roundTo(n, digits) {
     var negative = false;
@@ -72,6 +70,19 @@ function getAllIndexes(arr, val) {
     return indexes;
 }
 
+function sfnAcomodador(A) {
+    var resultado = [];
+    var resultadoEval = [];
+    for (var i = 0; i < A.length; i++) {
+        var midinote = afinacionMIDI[A[i][0] - 1] + A[i][1];
+        resultadoEval.push(midinote);
+        resultado.push({ s: A[i][0], f: A[i][1], n: midinote });
+    }
+    var max = resultadoEval.reduce((a, b) => { return Math.max(a, b) });
+    // console.log(resultado[resultadoEval.indexOf(max)]);
+    return resultado[resultadoEval.indexOf(max)]
+}
+
 function cosSimAcomodador(A) {
     var resultado = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
     for (var i = 0; i < A.length; i++) {
@@ -80,6 +91,32 @@ function cosSimAcomodador(A) {
     }
     // console.log(resultado);
     return resultado;
+}
+
+function cosSimAcomodadorTrp(A) {
+    var resultado = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]];
+    for (var i = 0; i < A.length; i++) {
+        var cuerda = A[i][0];
+        resultado.splice(cuerda - 1, 1, A[i]);
+    }
+
+    resultado = resultado.flat();
+    resultado.splice(2, 1);
+    resultado.splice(5, 1);
+    resultado.splice(8, 1);
+    resultado.splice(11, 1);
+    resultado.splice(14, 1);
+    resultado.splice(17, 1);
+
+    // console.log(resultado)
+    return resultado
+}
+
+var distance = function (a, b) {
+    var dx = (b.f - a.f);
+    var dy = (b.s - a.s);
+    var dz = (b.n - a.n);
+    return dist = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2) + Math.pow(dz, 2));
 }
 
 function cosinesim(A, B) {
@@ -156,7 +193,6 @@ function chordNm(chordValues) {
 
     cosinesim(vectorInt(chordValues), cualidades[0][1]);
     var permus = transA0(chordValues);
-    var permusR = [];
 
     for (var p = 0; p < permus[0].length; p++) {
         simAll.push([]);
@@ -178,26 +214,28 @@ function chordNm(chordValues) {
 
     for (var z = 0; z < simAllEval.length; z++) {
         Tr.push([]);
-        result.push(notes[simAllOri[z]] + simAllCual[z][0], simAllEval[z]);
+        result.push(notesName[simAllOri[z]] + simAllCual[z][0], simAllEval[z]);
         for (var s = 0; s < simAllCual[z][2].length; s++) {
             Tr[z].push(((simAllCual[z][2][s] + 12) + simAllOri[z]) % 12);
         }
-        console.log(chordValues, Tr[z])
+        // console.log(chordValues, Tr[z])
     }
 
     var maxAll = simAllEval.reduce((a, b) => { return Math.max(a, b) });
     var allChords = getAllIndexes(simAllEval, maxAll);
 
     for (var allCh = 0; allCh < allChords.length; allCh++) {
-        resultMax.push(notes[simAllOri[allChords[allCh]]] + simAllCual[allChords[allCh]][0]);
+        resultMax.push(notesName[simAllOri[allChords[allCh]]] + simAllCual[allChords[allCh]][0]);
     }
 
     // console.log(permusR);
     // console.log([simAllEval, simAllCual, simAllOri]);
-    console.log(result, resultMax);
+    // console.log(result, resultMax);
     return [result, resultMax];
 }
 
-list.forEach((e) => {
-    return chordNm(e);
-})
+// // console.log(chordNm([11, 3, 6, 10])[1]);
+// list.forEach((e) => {
+//     return chordNm(e),dodeca();
+// })
+

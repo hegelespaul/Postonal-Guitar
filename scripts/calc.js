@@ -1,7 +1,7 @@
 
 var fPrR = [];
 
-var input = notas;
+var input = amplify.store("pisadas");
 /////////////////////////////////////////
 
 function dodeca() {
@@ -17,18 +17,29 @@ function dodeca() {
             var tri0 = [];
             var retro0 = [];
             var tri0sum;
+            var tri0Max;
+            var tri0Min;
             var retro0sum;
+            var retro0Max;
+            var retro0Min;
 
             tricorde.forEach(function (nota) {
                 var nuevoValor = (nota - tricorde[e] + 12) % 12;
                 tri0.push(nuevoValor);
                 tri0.sort((a, b) => a - b);
-                tri0sum = tri0.reduce((a, b) => a + b, 0);
+                // tri0sum = tri0.reduce((a, b) => a + b, 0);
+                tri0Max = Math.max(...tri0);
+                tri0Min = Math.min(...tri0);
+                tri0sum = tri0Max - tri0Min;
 
                 var nuevoValorR = (tricorde[e] - nota + 12) % 12;
                 retro0.push(nuevoValorR);
                 retro0.sort((a, b) => a - b);
-                retro0sum = retro0.reduce((a, b) => a + b, 0);
+                // retro0sum = retro0.reduce((a, b) => a + b, 0);
+                retro0Max = Math.max(...retro0);
+                retro0Min = Math.min(...retro0);
+                retro0sum = retro0Max - retro0Min;
+
             });
 
             formaPrimaCal.push(tri0sum, retro0sum);

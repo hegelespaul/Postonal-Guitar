@@ -3,7 +3,9 @@ const afinacionMIDI = [64, 59, 55, 50, 45, 40];
 let pallete = ["rgb(0,231,6,0.5)", "rgb(0,255,173,0.5)", "rgb(0,107,255,0.5)", "rgb(49,1,250,0.5)", "rgb(131,1,205,0.5)", "rgb(63,0,87,0.5)", "rgb(103,4,81,0.5)", "rgb(215,1,2,0.5)", "rgb(227,67,3,0.5)", "rgb(255,136,0,0.5)", "rgb(236,255,0,0.5)", "rgb(154,243,4,0.5)"];
 
 
-let list = [[0, 4, 7, 11], [2, 5, 9, 0], [6, 8, 10, 0], [2, 5, 7, 9], [1, 4, 6, 11], [2, 3, 7, 0], [6, 11, 10, 0], [2, 3, 5, 9]]
+// let list = [[0, 4, 7, 11], [2, 5, 9, 0], [6, 8, 10, 0], [2, 5, 7, 9], [1, 4, 6, 11], [2, 3, 7, 0], [6, 11, 10, 0], [2, 3, 5, 9]]
+// let list = [[0,1,2],[0,1,3],[0,1,4],[0,1,5],[0,1,6],[0,2,4],[0,2,5],[0,2,6],[0,2,7],[0,3,6],[0,3,7],[0,4,8]]
+list = [[11, 3, 6, 10], [2, 6, 9, 0], [7, 11, 2, 6], [10, 2, 4, 8], [3, 7, 10, 2], [9, 0, 4, 7], [2, 6, 9, 0], [7, 11, 2, 6], [10, 2, 4, 8], [3, 7, 10, 2], [6, 10, 1, 4], [11, 3, 6, 10], [5, 8, 0, 3], [10, 2, 4, 8], [3, 7, 10, 2], [9, 0, 4, 7], [2, 6, 9, 0], [7, 11, 2, 6], [1, 4, 8, 11], [6, 10, 1, 4], [11, 3, 6, 10], [5, 8, 0, 3], [10, 2, 4, 8], [3, 7, 10, 2], [1, 4, 8, 11], [6, 10, 1, 4]]
 let diapason = [];
 let acordes = [];
 let cuadrantes = [];
@@ -180,106 +182,27 @@ console.log(result);
 // genera()
 ///////////////////////////////////////////POR TOP NOTE DISTANCIA EUCLIDEANA  3D y SIMILARIDAD COSENO/////////////////////////////////////////////////////////////////////////////////
 
-for (var i = 0; i < result.length; i++) {
-    topnoteArr.push([]);
-    topnoteArrEv.push([]);
-    for (var j = 0; j < result[i].length; j++) {
-        topnoteArrEv[i].push([]);
-        for (var k = 0; k < result[i][j].length; k++) {
-            var topnote = afinacionMIDI[(result[i][j][k][0] - 1)] + result[i][j][k][1];
-            topnoteArrEv[i][j].push(topnote);
-        }
-        var max = topnoteArrEv[i][j].reduce((a, b) => { return Math.max(a, b) });
-        topnoteArr[i].push({ s: result[i][j][topnoteArrEv[i][j].indexOf(max)][0], f: result[i][j][topnoteArrEv[i][j].indexOf(max)][1], n: afinacionMIDI[result[i][j][topnoteArrEv[i][j].indexOf(max)][0] - 1] + result[i][j][topnoteArrEv[i][j].indexOf(max)][1] });
-    }
-}
-console.log(topnoteArr);
 
-var distance = function (a, b) {
-    var dx = (b.f - a.f);
-    var dy = (b.s - a.s);
-    var dz = (b.n - a.n);
-    return dist = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2) + Math.pow(dz, 2));
-}
+progresion.push(result[0][50]); //////////////EL DE MEDICION
 
-function roundTo(n, digits) {
-    var negative = false;
-    if (digits === undefined) {
-        digits = 0;
-    }
-    if (n < 0) {
-        negative = true;
-        n = n * -1;
-    }
-    var multiplicator = Math.pow(10, digits);
-    n = parseFloat((n * multiplicator).toFixed(11));
-    n = (Math.round(n) / multiplicator).toFixed(digits);
-    if (negative) {
-        n = (n * -1).toFixed(digits);
-    }
-    n = parseFloat(n)
-    return n;
-}
-
-function cosinesim(A, B) {
-    var dotproduct = 0;
-    var mA = 0;
-    var mB = 0;
-    for (j = 0; j < A.length; j++) {
-        dotproduct += (A[j] * B[j]);
-        mA += (A[j] * A[j]);
-        mB += (B[j] * B[j]);
-    }
-    mA = Math.sqrt(mA);
-    mB = Math.sqrt(mB);
-    var similarity = (dotproduct) / ((mA) * (mB));
-    var similarityR = roundTo(similarity,8);
-    return similarityR;
-}
-
-function getAllIndexes(arr, val) {
-    var indexes = [], i;
-    for (i = 0; i < arr.length; i++)
-        if (arr[i] === val)
-            indexes.push(i);
-    return indexes;
-}
-
-function sfnAcomodador(A) {
-    var resultado = [];
-    var resultadoEval = [];
-    for (var i = 0; i < A.length; i++) {
-        var midinote = afinacionMIDI[A[i][0] - 1] + A[i][1];
-        resultadoEval.push(midinote);
-        resultado.push({ s: A[i][0], f: A[i][1], n: midinote });
-    }
-    var max = resultadoEval.reduce((a, b) => { return Math.max(a, b) });
-    // console.log(resultado[resultadoEval.indexOf(max)]);
-    return resultado[resultadoEval.indexOf(max)]
-}
-
-function cosSimAcomodador(A) {
-    var resultado = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1], [-1, -1, -1]];
-    for (var i = 0; i < A.length; i++) {
-        var cuerda = A[i][0];
-        resultado.splice(cuerda - 1, 1, A[i]);
-    }
-
-    resultado = resultado.flat();
-    resultado.splice(2, 1);
-    resultado.splice(5, 1);
-    resultado.splice(8, 1);
-    resultado.splice(11, 1);
-    resultado.splice(14, 1);
-    resultado.splice(17, 1);
-
-    // console.log(resultado)
-    return resultado
-}
-
-progresion.push(result[0][0]); //////////////EL DE MEDICION
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function genera3DCS() {
+
+    for (var i = 0; i < result.length; i++) {
+        topnoteArr.push([]);
+        topnoteArrEv.push([]);
+        for (var j = 0; j < result[i].length; j++) {
+            topnoteArrEv[i].push([]);
+            for (var k = 0; k < result[i][j].length; k++) {
+                var topnote = afinacionMIDI[(result[i][j][k][0] - 1)] + result[i][j][k][1];
+                topnoteArrEv[i][j].push(topnote);
+            }
+            var max = topnoteArrEv[i][j].reduce((a, b) => { return Math.max(a, b) });
+            topnoteArr[i].push({ s: result[i][j][topnoteArrEv[i][j].indexOf(max)][0], f: result[i][j][topnoteArrEv[i][j].indexOf(max)][1], n: afinacionMIDI[result[i][j][topnoteArrEv[i][j].indexOf(max)][0] - 1] + result[i][j][topnoteArrEv[i][j].indexOf(max)][1] });
+        }
+    }
+    // console.log(topnoteArr);
+
     var minD = [];
     var posChord = [];
     var chordSim = [];
@@ -306,7 +229,7 @@ function genera3DCS() {
 
         chordSim.push([])
         for (var j = 0; j < posChord[i].length; j++) {
-            chordSim[i].push(cosinesim(cosSimAcomodador(progresion[i]), cosSimAcomodador(posChord[i][j])))
+            chordSim[i].push(cosinesim(cosSimAcomodadorTrp(progresion[i]), cosSimAcomodadorTrp(posChord[i][j])))
             // console.log(cosSimAcomodador(result[0][0]), cosSimAcomodador(posChord[i][j])); //////////////PROGRESIOONN
         }
 
@@ -442,40 +365,40 @@ function dibujaMatrix() {
                     .attr('stroke', 'gray')
                     .attr('stroke-width', 1);
             }
+            if (fretMin <= 1) {
+                diagramas.append('line')
+                    .attr('x1', 5)
+                    .attr('y1', 9.8)
+                    .attr('x2', 5)
+                    .attr('y2', 60.9)
+                    .attr('stroke', 'black')
+                    .attr('stroke-width', 1);
 
-            diagramas.append('line')
-                .attr('x1', 5)
-                .attr('y1', 9.8)
-                .attr('x2', 5)
-                .attr('y2', 60.9)
-                .attr('stroke', 'black')
-                .attr('stroke-width', 1);
+                diagramas.append('line')
+                    .attr('x1', 5)
+                    .attr('y1', 10)
+                    .attr('x2', 10.5)
+                    .attr('y2', 10)
+                    .attr('stroke', 'black')
+                    .attr('stroke-width', 0.3);
 
-            diagramas.append('line')
-                .attr('x1', 5)
-                .attr('y1', 10)
-                .attr('x2', 10.5)
-                .attr('y2', 10)
-                .attr('stroke', 'black')
-                .attr('stroke-width', 0.3);
-
-            diagramas.append('line')
-                .attr('x1', 5)
-                .attr('y1', 10 * i)
-                .attr('x2', 9.5)
-                .attr('y2', 10 * 6)
-                .attr('stroke', 'black')
-                .attr('stroke-width', 1.8);
-
-            for (var i = 0; i < pisada.length; i++) {
-                diagramas.append('text')
-                    .text('  ' + pisada[i][2] + '   ')
-                    .attr('x', 6 + i * 15)
-                    .attr('y', 100)
-                    .attr("font-size", "12px")
-                    .attr("font-family", "sans-serif")
+                diagramas.append('line')
+                    .attr('x1', 5)
+                    .attr('y1', 10 * i)
+                    .attr('x2', 9.5)
+                    .attr('y2', 10 * 6)
+                    .attr('stroke', 'black')
                     .attr('stroke-width', 1.8);
             }
+            // for (var i = 0; i < pisada.length; i++) {
+            //     diagramas.append('text')
+            //         .text('  ' + pisada[i][2] + '   ')
+            //         .attr('x', 6 + i * 15)
+            //         .attr('y', 100)
+            //         .attr("font-size", "12px")
+            //         .attr("font-family", "sans-serif")
+            //         .attr('stroke-width', 1.8);
+            // }
 
             for (var i = 0; i < pisada.length; i++) {
 
@@ -527,35 +450,34 @@ function dibujaMatrix() {
 
 dibujaMatrix();
 
+// let data = `
+//   options font-face='times' 
+//   tabstave notation=true clef=treble key=C tuning=standard 
+// `
+// for (var i = 0; i < progresion.length; i++) {
+//     var chord = '\n notes :w ('
+//     for (var j = 0; j < progresion[i].length; j++) {
+//         chord = chord + (progresion[i][j][1] + '/' + progresion[i][j][0] + '.');
+//     }
+//     chord = chord.slice(0, chord.length - 1) + chord.slice(chord.length);
+//     chord = chord + ')';
+//     data = data + chord
+// }
 
-let data = `
-  options font-face='times' 
-  tabstave notation=true clef=treble key=C tuning=standard 
-`
-for (var i = 0; i < progresion.length; i++) {
-    var chord = '\n notes :w ('
-    for (var j = 0; j < progresion[i].length; j++) {
-        chord = chord + (progresion[i][j][1] + '/' + progresion[i][j][0] + '.');
-    }
-    chord = chord.slice(0, chord.length - 1) + chord.slice(chord.length);
-    chord = chord + ')';
-    data = data + chord
-}
+// data = data + '=|=';
+// // data = data + '\n text :w,Cmaj7,Dm7,F#add9b5,Dmadd11,Esus2add13,Cmadd9,F#b5add11,Dmaddb9'
 
-data = data + '=|=';
-data = data + '\n text :w,Cmaj7,Dm7,F#add9b5,Dmadd11,Esus2add13,Cmadd9,F#b5add11,Dmaddb9'
+// const VF = vextab.Vex.Flow
 
-const VF = vextab.Vex.Flow
+// const renderer = new VF.Renderer($('#boo')[0],
+//     VF.Renderer.Backends.SVG);
 
-const renderer = new VF.Renderer($('#boo')[0],
-    VF.Renderer.Backends.SVG);
+// // Initialize VexTab artist and parser.
+// const artist = new vextab.Artist(10, 10, 750, { scale: 1 });
+// const tab = new vextab.VexTab(artist);
 
-// Initialize VexTab artist and parser.
-const artist = new vextab.Artist(10, 10, 750, { scale: 1 });
-const tab = new vextab.VexTab(artist);
-
-tab.parse(data);
-artist.render(renderer);
+// tab.parse(data);
+// artist.render(renderer);
 
 function playchord(coordenadas) {
 
@@ -573,3 +495,298 @@ function playchord(coordenadas) {
         gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
     }
 }
+
+var fileContent = `
+\\title "Mi cancion" 
+\\subtitle "Yo"
+\\tempo 180
+\\instrument 25
+.
+`
+
+for (var i = 0; i < progresion.length; i++) {
+    chord = ').1'
+    for (var j = 0; j < progresion[i].length; j++) {
+        chord = (progresion[i][j][1] + '.' + progresion[i][j][0] + ' ') + chord;
+    }
+    chord = '(' + chord + '{ch' + '"' + chordNm(list[i])[1] + '"' + '} |';
+    fileContent = fileContent + chord;
+}
+fileContent = fileContent.slice(0, -1);
+// console.log(fileContent);
+
+let blob = new Blob([fileContent], { type: 'text/plain' });
+
+var link = URL.createObjectURL(blob);
+// console.log(link)
+
+// load elements
+const wrapper = document.querySelector(".at-wrap");
+const main = wrapper.querySelector(".at-main");
+
+// initialize alphatab
+const settings = {
+    file: link,
+    notation: {
+        elements: {
+            effectTempo: false,
+            trackNames: false,
+            EffectDynamics: false
+        }
+    },
+    player: {
+        enablePlayer: true,
+        soundFont: "https://cdn.jsdelivr.net/npm/@coderline/alphatab@latest/dist/soundfont/sonivox.sf2",
+        scrollElement: wrapper.querySelector('.at-viewport')
+    }
+};
+const api = new alphaTab.AlphaTabApi(main, settings);
+
+
+document.getElementById('export').onclick = function (e) {
+    const exporter = new alphaTab.exporter.Gp7Exporter();
+    const data = exporter.export(api.score, api.settings); // will return a Uint8Array
+
+    // trigger download
+    const a = document.createElement('a');
+    a.download = api.score.title.length > 0 ? api.score.title + '.gp' : 'Untitled.gp';
+    a.href = URL.createObjectURL(new Blob([data]));
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+};
+
+// overlay logic
+const overlay = wrapper.querySelector(".at-overlay");
+api.renderStarted.on(() => {
+    overlay.style.display = "flex";
+});
+api.renderFinished.on(() => {
+    overlay.style.display = "none";
+});
+
+// // track selector
+// function createTrackItem(track) {
+//     const trackItem = document
+//         .querySelector("#at-track-template")
+//         .content.cloneNode(true).firstElementChild;
+//     trackItem.querySelector(".at-track-name").innerText = track.name;
+//     trackItem.track = track;
+//     trackItem.onclick = (e) => {
+//         e.stopPropagation();
+//         api.renderTracks([track]);
+//     };
+//     return trackItem;
+// }
+// const trackList = wrapper.querySelector(".at-track-list");
+// api.scoreLoaded.on((score) => {
+//     // clear items
+//     trackList.innerHTML = "";
+//     // generate a track item for all tracks of the score
+//     score.tracks.forEach((track) => {
+//         trackList.appendChild(createTrackItem(track));
+//     });
+// });
+// api.renderStarted.on(() => {
+//     // collect tracks being rendered
+//     const tracks = new Map();
+//     api.tracks.forEach((t) => {
+//         tracks.set(t.index, t);
+//     });
+//     // mark the item as active or not
+//     const trackItems = trackList.querySelectorAll(".at-track");
+//     trackItems.forEach((trackItem) => {
+//         if (tracks.has(trackItem.track.index)) {
+//             trackItem.classList.add("active");
+//         } else {
+//             trackItem.classList.remove("active");
+//         }
+//     });
+// });
+
+/** Controls **/
+api.scoreLoaded.on((score) => {
+    wrapper.querySelector(".at-song-title").innerText = score.title;
+    wrapper.querySelector(".at-song-artist").innerText = score.artist;
+});
+
+const countIn = wrapper.querySelector('.at-controls .at-count-in');
+countIn.onclick = () => {
+    countIn.classList.toggle('active');
+    if (countIn.classList.contains('active')) {
+        api.countInVolume = 1;
+    } else {
+        api.countInVolume = 0;
+    }
+};
+
+const metronome = wrapper.querySelector(".at-controls .at-metronome");
+metronome.onclick = () => {
+    metronome.classList.toggle("active");
+    if (metronome.classList.contains("active")) {
+        api.metronomeVolume = 1;
+    } else {
+        api.metronomeVolume = 0;
+    }
+};
+
+const loop = wrapper.querySelector(".at-controls .at-loop");
+loop.onclick = () => {
+    loop.classList.toggle("active");
+    api.isLooping = loop.classList.contains("active");
+};
+
+wrapper.querySelector(".at-controls .at-print").onclick = () => {
+    api.print();
+};
+
+const zoom = wrapper.querySelector(".at-controls .at-zoom select");
+zoom.onchange = () => {
+    const zoomLevel = parseInt(zoom.value) / 100;
+    api.settings.display.scale = zoomLevel;
+    api.updateSettings();
+    api.render();
+};
+
+const layout = wrapper.querySelector(".at-controls .at-layout select");
+layout.onchange = () => {
+    switch (layout.value) {
+        case "horizontal":
+            api.settings.display.layoutMode = alphaTab.LayoutMode.Horizontal;
+            break;
+        case "page":
+            api.settings.display.layoutMode = alphaTab.LayoutMode.Page;
+            break;
+    }
+    api.updateSettings();
+    api.render();
+};
+
+
+// player loading indicator
+const playerIndicator = wrapper.querySelector(
+    ".at-controls .at-player-progress"
+);
+api.soundFontLoad.on((e) => {
+    const percentage = Math.floor((e.loaded / e.total) * 100);
+    playerIndicator.innerText = percentage + "%";
+});
+api.playerReady.on(() => {
+    playerIndicator.style.display = "none";
+});
+
+
+// main player controls
+const playPause = wrapper.querySelector(
+    ".at-controls .at-player-play-pause"
+);
+const stop = wrapper.querySelector(".at-controls .at-player-stop");
+playPause.onclick = (e) => {
+    if (e.target.classList.contains("disabled")) {
+        return;
+    }
+    api.playPause();
+};
+stop.onclick = (e) => {
+    if (e.target.classList.contains("disabled")) {
+        return;
+    }
+    api.stop();
+};
+api.playerReady.on(() => {
+    playPause.classList.remove("disabled");
+    stop.classList.remove("disabled");
+});
+api.playerStateChanged.on((e) => {
+    const icon = playPause.querySelector("i");
+    if (e.state === alphaTab.synth.PlayerState.Playing) {
+        icon.classList.remove("fa-play");
+        icon.classList.add("fa-pause");
+    } else {
+        icon.classList.remove("fa-pause");
+        icon.classList.add("fa-play");
+    }
+});
+
+// song position
+function formatDuration(milliseconds) {
+    let seconds = milliseconds / 1000;
+    const minutes = (seconds / 60) | 0;
+    seconds = (seconds - minutes * 60) | 0;
+    return (
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0")
+    );
+}
+let position;
+const songPosition = wrapper.querySelector(".at-song-position");
+let previousTime = -1;
+api.playerPositionChanged.on((e) => {
+    // reduce number of UI updates to second changes.
+    const currentSeconds = (e.currentTime / 1000) | 0;
+    if (currentSeconds == previousTime) {
+        return;
+    }
+
+    songPosition.innerText =
+        formatDuration(e.currentTime) + " / " + formatDuration(e.endTime);
+
+    position = e.currentTime
+});
+
+/// Mute tracks to use own sounds /////////////////
+function createTrackItem(track) {
+    api.renderTracks([track]);
+}
+
+api.scoreLoaded.on((score) => {
+    // clear items
+    // generate a track item for all tracks of the score
+    score.tracks.forEach((track) => {
+        createTrackItem(track);
+        api.changeTrackMute(track, true);
+    });
+});
+
+///Coordinate tick to trigger sounds ///////////////////////
+api.midiEventsPlayedFilter = [alphaTab.midi.MidiEventType.SystemExclusive2];
+
+api.midiEventsPlayed.on(function (e) {
+
+    for (const midi of e.events) {
+
+        if (midi.isMetronome) {
+            var count = (midi.tick / 960) % 4;
+            var index = (midi.tick / 960) / 4
+            // console.log('Metronome tick ' + (midi.tick / 960) / 4 + (midi.tick / 960) % 4);
+            // console.log('index' + index);
+            // console.log('position' + position)
+            if (count == 0 && Math.round(position / 1333.333) - index == 0 && position != 0) {
+                // console.log('condition' + (Math.round(position/1333.333) - index))
+                audioContext.resume();
+                for (var i = 0; i < progresion[index].length; i++) {
+                    // console.log(progresion[index][i][0] +  '-' + progresion[index][i][1])
+                    var acorde = progresion[index][i][0] + '-' + progresion[index][i][1];
+                    const gainNode = audioContext.createGain();
+                    let audio1
+                    audio1 = new Audio;
+                    audio1.src = "../di/" + acorde + ".mp3";
+                    audio1.volume = 1 / 3;
+                    let track1 = audioContext.createMediaElementSource(audio1);
+                    track1.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    gainNode.gain.setValueAtTime(1, audioContext.currentTime);
+                    audio1.play();
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
+                }
+            }
+        }
+    }
+});
+
+
+
+
+
+
