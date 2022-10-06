@@ -498,19 +498,34 @@ function dibujaMatrix() {
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 function playchord(coordenadas) {
-
     for (var i = 0; i < coordenadas.length; i++) {
-        const gainNode = audioContext.createGain();
-        let audio1
-        audio1 = new Audio;
-        audio1.src = "../di/" + coordenadas[i] + ".mp3";
-        audio1.volume = 1 / 3;
-        let track1 = audioContext.createMediaElementSource(audio1);
-        track1.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        gainNode.gain.setValueAtTime(1, audioContext.currentTime);
-        audio1.play();
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
+
+        var audioBuffer;
+        let src = "../di/" + coordenadas[i] + ".mp3";
+        var getSound = new XMLHttpRequest();
+        getSound.open("get", src, true);
+        getSound.responseType = "arraybuffer";
+
+        getSound.onload = function () {
+            //   document.getElementById("xhrStatus").textContent = "Loaded";
+            audioContext.decodeAudioData(this.response, function (buffer) {
+                audioBuffer = buffer;
+                playback(); // <--- Start the playback after `audioBuffer` is defined.
+            });
+        };
+
+        getSound.send();
+
+        function playback() {
+            var gainNode = audioContext.createGain();
+            var playSound = audioContext.createBufferSource();
+            playSound.buffer = audioBuffer;
+            playSound.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+            playSound.start(audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
+        }
     }
 }
 
@@ -518,9 +533,10 @@ function playchord(coordenadas) {
 
 
 function formaPrima() {
+    var fpName = amplify.store("name");
     var paragraph = document.getElementById("forma");
     var paragraph2 = document.getElementById("acorde");
-    var text = document.createTextNode(fPrR);
+    var text = document.createTextNode(fpName + ' |  ' + fPrR + ' | ');
     var chordtext = document.createTextNode(chordNm(notas)[1])
 
     document.getElementById("forma").innerHTML = "";

@@ -500,6 +500,8 @@ var layout = {
         hovermode: 'closest',
 };
 
+
+
 var data = [trace1];
 
 Plotly.newPlot('myDiv', data, layout);
@@ -510,13 +512,15 @@ myPlot.on('plotly_click', function (data) {
                 pts = data.points[i][Object.keys(data.points[i])[8]];
         }
         var indexfP = names.indexOf(pts)
-        console.log(fP[indexfP]);
+        // console.log(fP[indexfP]);
         function NewTab() {
-                window.open(
+                var w = window.open(
                         "/index.html", "_blank");
                 pisadas = fP[indexfP];
-                amplify.store("pisadas", pisadas)
+                amplify.store("pisadas", pisadas);
+                origTitle = names[indexfP];
+                amplify.store("name",origTitle);
+                w.onload = function() { this.document.title = origTitle; }
         }
         NewTab();
 });
-
