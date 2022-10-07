@@ -111,7 +111,7 @@ function dibujaTodo() {
                 mtx = [];
 
                 console.clear();
-                dodeca();
+                dodeca(notas);
                 dibujaDiapason(notas);
                 generadorDiagramas();
                 dibujaMatrix();
@@ -139,7 +139,7 @@ function dibujaTodo() {
                     mtx = [];
 
                     console.clear();
-                    dodeca();
+                    dodeca(notas);
                     dibujaDiapason(notas);
                     generadorDiagramas();
                     dibujaMatrix();
@@ -533,17 +533,38 @@ function playchord(coordenadas) {
 
 
 function formaPrima() {
-    var fpName = amplify.store("name");
+
+    function getIndexOfArray(array, findArray) {
+        let index;
+        array.some((item, i) => {
+            if (JSON.stringify(item) === JSON.stringify(findArray)) {
+                index = i;
+                return true;
+            }
+        });
+        return index;
+    }
+
+    var allFp = amplify.store("allFp");
+    var allFpNames = amplify.store("allFpNames");
+
     var paragraph = document.getElementById("forma");
     var paragraph2 = document.getElementById("acorde");
-    var text = document.createTextNode(fpName + ' |  ' + fPrR + ' | ');
-    var chordtext = document.createTextNode(chordNm(notas)[1])
 
+    var text = document.createTextNode(allFpNames[getIndexOfArray(allFp, formaPrimaIn)]
+        + ' |  ' + fPrR + ' | ');
+
+    var notext = document.createTextNode(' |  ' + fPrR + ' | ');
+    var chordtext = document.createTextNode(chordNm(notas)[1])
     document.getElementById("forma").innerHTML = "";
     document.getElementById("acorde").innerHTML = "";
-    paragraph.appendChild(text);
+  
     if (notas.length >= 3) {
         paragraph2.appendChild(chordtext);
+        paragraph.appendChild(text);
+    }
+    else{
+        paragraph.appendChild(notext);
     }
     var res = fPrR;
     return res;

@@ -1,13 +1,14 @@
 
 var fPrR = [];
+var formaPrimaIn;
 
 var input = amplify.store("pisadas");
 /////////////////////////////////////////
-
-function dodeca() {
+ 
+function dodeca(notes) {
     function permutaciones() {
 
-        var tricorde = input;
+        var tricorde = notes;
         var permu = [];
         var formaPrimaCal = [];
         var formaPrimaSel = [];
@@ -51,8 +52,24 @@ function dodeca() {
             );
         }
 
-        var formaPrimaIn = formaPrimaCal.indexOf(Math.min(...formaPrimaCal));
-        fPrR = `(${formaPrimaSel[formaPrimaIn]}) ${formaPrimaOri[formaPrimaIn]}`;
+        var allindx = getAllIndexes(formaPrimaCal, Math.min(...formaPrimaCal));
+        var lastcomp = [];
+        var lastcompIndx = [];
+        var lastcompVal;
+        var namIndx = []
+
+        for (var i = 0; i < allindx.length; i++){
+            lastcompVal = formaPrimaSel[allindx[i]]
+            lastcompVal = lastcompVal.reduce((a, b) => a + b, 0);
+            lastcomp.push(lastcompVal);
+            lastcompIndx.push(formaPrimaSel[allindx[i]]);
+            namIndx.push(allindx[i]);
+        }
+        var formaPrimaIndex = Math.min(...lastcomp);
+        formaPrimaIn = lastcompIndx[lastcomp.indexOf(formaPrimaIndex)];
+
+        // var formaPrimaIn = formaPrimaCal.indexOf(Math.min(...formaPrimaCal));
+        fPrR = `(${formaPrimaIn}) ${formaPrimaOri[namIndx[lastcomp.indexOf(formaPrimaIndex)]]}`;
         return permu;
     }
     console.log("permutaciones", permutaciones(), "</br>");

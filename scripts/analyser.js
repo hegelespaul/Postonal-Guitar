@@ -352,7 +352,6 @@ var fP = [
         [0, 1, 3, 5, 7, 9],
         [0, 2, 4, 6, 8, 10]
 ]
-
 // console.log(data);
 
 function npMean(array) {
@@ -440,7 +439,6 @@ for (var k = 0; k < fP.length; k++) {
         var flatten = chordNm(fP[k])[1]
         psChords.push(flatten);
 }
-// psChords= psChords.flat();
 console.log(psChords)
 
 
@@ -495,12 +493,13 @@ var layout = {
                 }
         },
         paper_bgcolor: "rgba(0,0,0,0)",
-        width: 1200,
-        height: 600,
+        width: 1400,
+        height: 1000,
         hovermode: 'closest',
 };
 
-
+amplify.store("allFp", fP);
+amplify.store("allFpNames", names);
 
 var data = [trace1];
 
