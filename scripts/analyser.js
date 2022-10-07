@@ -496,6 +496,7 @@ var layout = {
         width: 1400,
         height: 1000,
         hovermode: 'closest',
+        title: 'Prime Forms Latent Space'
 };
 
 amplify.store("allFp", fP);
@@ -514,7 +515,7 @@ myPlot.on('plotly_click', function (data) {
         // console.log(fP[indexfP]);
         function NewTab() {
                 var w = window.open(
-                        "/index.html", "_blank");
+                        "/diagramGen.html", "_blank");
                 pisadas = fP[indexfP];
                 amplify.store("pisadas", pisadas);
                 origTitle = names[indexfP];
