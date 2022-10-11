@@ -2,10 +2,11 @@
 var fPrR = [];
 var formaPrimaIn;
 
-var input = amplify.store("pisadas");
+// var input = amplify.store("pisadas");
 /////////////////////////////////////////
  
 function dodeca(notes) {
+
     function permutaciones() {
 
         var tricorde = notes;
@@ -80,7 +81,7 @@ function dodeca(notes) {
     /////////////////////////////////////////
 
     function reverse() {
-        var rev = input.map((x) => x);
+        var rev = notes.map((x) => x);
         for (let i = 0, j = rev.length - 1; i < j; i++, j--)
             [rev[i], rev[j]] = [rev[j], rev[i]];
         return rev;
@@ -91,9 +92,9 @@ function dodeca(notes) {
     /////////////////////////////////////////
 
     function inv() {
-        var p1 = input[0];
+        var p1 = notes[0];
         var res = [];
-        input.forEach(function (unaNota) {
+        notes.forEach(function (unaNota) {
             var nuevoValor = (unaNota - p1) * -1 + p1;
             res.push((nuevoValor + 12) % 12);
         });
@@ -104,10 +105,10 @@ function dodeca(notes) {
     /////////////////////////////////////////
 
     function matrix() {
-        var p1 = input[0];
+        var p1 = notes[0];
         var res = [];
         var mres = [];
-        input.forEach(function (unaNota) {
+        notes.forEach(function (unaNota) {
             var nuevoValor = (unaNota - p1) * -1;
             res.push(nuevoValor);
         });
@@ -124,26 +125,28 @@ function dodeca(notes) {
             m10 = [],
             m11 = [];
         var r = [m0, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11];
-        for (var i = 0; i < input.length; i++) {
-            m0.push((input[i] + res[0] + 12) % 12);
-            m1.push((input[i] + res[1] + 12) % 12);
-            m2.push((input[i] + res[2] + 12) % 12);
-            m3.push((input[i] + res[3] + 12) % 12);
-            m4.push((input[i] + res[4] + 12) % 12);
-            m5.push((input[i] + res[5] + 12) % 12);
-            m6.push((input[i] + res[6] + 12) % 12);
-            m7.push((input[i] + res[7] + 12) % 12);
-            m8.push((input[i] + res[8] + 12) % 12);
-            m9.push((input[i] + res[9] + 12) % 12);
-            m10.push((input[i] + res[10] + 12) % 12);
-            m11.push((input[i] + res[11] + 12) % 12);
+        for (var i = 0; i < notes.length; i++) {
+            m0.push((notes[i] + res[0] + 12) % 12);
+            m1.push((notes[i] + res[1] + 12) % 12);
+            m2.push((notes[i] + res[2] + 12) % 12);
+            m3.push((notes[i] + res[3] + 12) % 12);
+            m4.push((notes[i] + res[4] + 12) % 12);
+            m5.push((notes[i] + res[5] + 12) % 12);
+            m6.push((notes[i] + res[6] + 12) % 12);
+            m7.push((notes[i] + res[7] + 12) % 12);
+            m8.push((notes[i] + res[8] + 12) % 12);
+            m9.push((notes[i] + res[9] + 12) % 12);
+            m10.push((notes[i] + res[10] + 12) % 12);
+            m11.push((notes[i] + res[11] + 12) % 12);
         }
-        for (var i = 0; i < input.length; i++) {
+        for (var i = 0; i < notes.length; i++) {
             var mv = r[i];
             mres.push(mv);
         }
         return mres;
     }
+
     console.log("matrix:", matrix(), "</br>");
+    return(fPrR);
 };
 /////////////////////////////////////////
