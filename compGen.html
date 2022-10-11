@@ -15,8 +15,12 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="/alphatab.js"></script>
   <script src="/scripts/kdTree.js"></script>
-  <script src="/scripts/vextab.js"></script>
+  <!-- <script src="/scripts/vextab.js"></script> -->
   <script src="/scripts/calc.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/amplifyjs/1.1.2/amplify.min.js"
+        integrity="sha512-CO88rRyfqavT831UMU0+YzJlz3gJ6O5JMj8iduxhuLPdMe7nmTDIopHpkOyedbRwC5IFy9gIBHkKuS6bcPa+9Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -25,8 +29,9 @@
   &nbsp
   <section class="selectorChords">
 
-  <button id="newChord" onclick=crearMenus()>New Chord</button>
-  <button id="newChord" onclick=allElements(listaF)>Gen Comp</button>
+  <button id="newChord" onclick=crearMenus()>Nuevo Acorde</button>
+  <button id="newChord" onclick=removeChord()>Borrar Último</button>
+  <button id="newChord" onclick=allElements(listaF)>Generar</button>
 
 </section>
   <section id="menusDrawer"></section>

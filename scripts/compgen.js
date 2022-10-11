@@ -54,474 +54,480 @@ function cartesianProduct(arr) {
 
 function allElements(list) {
 
-    document.getElementById("partitura").style.display = 'flex';
+    if (list.every(subarr => subarr.length >= 3)) {
+
+        document.getElementById("partitura").style.display = 'flex';
 
 
 
-    console.log(list);
+        console.log(list);
 
-    list.forEach((l) => {
-        chordsLen.push(l.length)
-    })
+        list.forEach((l) => {
+            chordsLen.push(l.length)
+        })
 
-    for (var c = 0; c < afinacion.length; c++) {
-        for (var t = 0; t <= 22; t++) {
-            diapason.push([c + 1, t, (afinacion[c] + t) % 12]);
+        for (var c = 0; c < afinacion.length; c++) {
+            for (var t = 0; t <= 22; t++) {
+                diapason.push([c + 1, t, (afinacion[c] + t) % 12]);
+            }
         }
-    }
 
-    for (var l = 0; l < list.length; l++) {
-        acordes.push([]);
-        for (var n = 0; n < list[l].length; n++) {
-            for (var c = 1; c < diapason.length; c++) {
-                if (list[l][n] == diapason[c][2]) {
-                    acordes[l].push(diapason[c]);
+        for (var l = 0; l < list.length; l++) {
+            acordes.push([]);
+            for (var n = 0; n < list[l].length; n++) {
+                for (var c = 1; c < diapason.length; c++) {
+                    if (list[l][n] == diapason[c][2]) {
+                        acordes[l].push(diapason[c]);
+                    }
                 }
             }
         }
-    }
 
-    for (var i = 0; i < 18; i++) {
-        a = 5 + i;
-        b = 1 + i;
-        cuadrantes.push([]);
-        for (var ch = 0; ch < acordes.length; ch++) {
-            cuadrantes[i].push([]);
-            acordes[ch].forEach(function (t) {
-                if (t[1] <= a && t[1] >= b) {
-                    cuadrantes[i][ch].push(t);
-                }
-            });
-        }
-    }
-
-    list.forEach(function (a) {
-        acomodo.push([]);
-    })
-
-    cuadrantes.forEach(function (e) {
-        for (var i = 0; i < list.length; i++) {
-            acomodo[i].push(e[i]);
-        }
-    })
-
-    console.log(acomodo)
-
-    for (var a = 0; a < acomodo.length; a++) {
-
-        let mtx = [];
-        let mtx2 = [];
-        acomodo[a].forEach(function (x) {
-            var myGrid = [];
-
-            var myGrid = [...Array(list[a].length)].map((e) => Array());
-
-            x.forEach(function (y) {
-                for (var c = 0; c < list[a].length; c++) {
-                    if (y[2] == list[a][c]) {
-                        myGrid[c].push(y);
+        for (var i = 0; i < 18; i++) {
+            a = 5 + i;
+            b = 1 + i;
+            cuadrantes.push([]);
+            for (var ch = 0; ch < acordes.length; ch++) {
+                cuadrantes[i].push([]);
+                acordes[ch].forEach(function (t) {
+                    if (t[1] <= a && t[1] >= b) {
+                        cuadrantes[i][ch].push(t);
                     }
-                }
-            });
+                });
+            }
+        }
 
-            myGrid = cartesianProduct(myGrid);
+        list.forEach(function (a) {
+            acomodo.push([]);
+        })
 
-            myGrid.forEach(function (e) {
-                mtx.push(e);
-                for (var c = 0; c < e.length; c++) {
-                    for (var d = 0; d < e.length; d++) {
-                        if (c != d && e[c][0] == e[d][0]) {
-                            mtx2.push(e);
+        cuadrantes.forEach(function (e) {
+            for (var i = 0; i < list.length; i++) {
+                acomodo[i].push(e[i]);
+            }
+        })
+
+        console.log(acomodo)
+
+        for (var a = 0; a < acomodo.length; a++) {
+
+            let mtx = [];
+            let mtx2 = [];
+            acomodo[a].forEach(function (x) {
+                var myGrid = [];
+
+                var myGrid = [...Array(list[a].length)].map((e) => Array());
+
+                x.forEach(function (y) {
+                    for (var c = 0; c < list[a].length; c++) {
+                        if (y[2] == list[a][c]) {
+                            myGrid[c].push(y);
                         }
                     }
-                }
-                mtx = _.difference(mtx, mtx2);
-            });
-            mtx = Array.from(new Set(mtx.map(JSON.stringify)), JSON.parse);
-        });
-        result.push(mtx)
-    }
-    console.log(result);
+                });
 
-    ///////////////////////////////////////////POR TOP NOTE DISTANCIA EUCLIDEANA  2D/////////////////////////////////////////////////////////////////////////////////
-    // var topnoteArrEv = [];
-    // for (var i = 0; i < result.length; i++) {
-    //     topnoteArr.push([]);
-    //     topnoteArrEv.push([]);
-    //     for (var j = 0; j < result[i].length; j++) {
-    //         topnoteArrEv[i].push([]);
-    //         for (var k = 0; k < result[i][j].length; k++) {
-    //             var topnote = afinacionMIDI[(result[i][j][k][0] - 1)] + result[i][j][k][1];
-    //             topnoteArrEv[i][j].push(topnote);
-    //         }
-    //         var max = topnoteArrEv[i][j].reduce((a, b) => { return Math.max(a, b) });
-    //         topnoteArr[i].push({ s: result[i][j][topnoteArrEv[i][j].indexOf(max)][0], f: result[i][j][topnoteArrEv[i][j].indexOf(max)][1] });
-    //     }
-    // }
-    // // console.log(topnoteArr);
+                myGrid = cartesianProduct(myGrid);
 
-    // for (var i = 0; i < result.length; i++) {
-    //     chordpoint.push([]);
-    //     for (var j = 0; j < result[i].length; j++) {
-    //         chordpoint[i].push([])
-    //         for (var k = 0; k < result[i][j].length; k++) {
-    //             var point = { s: result[i][j][k][0], f: result[i][j][k][1] }
-    //             chordpoint[i][j].push(point);
-    //         }
-    //     }
-    // }
-    // // console.log(chordpoint);
-
-    // var distance = function (a, b) {
-    //     return Math.pow(a.f - b.f, 2) + Math.pow(a.s - b.s, 2);
-    // }
-
-    // progresion.push(result[0][0])
-    // function genera() {
-    //     for (var i = 0; i < topnoteArr.length - 1; i++) {
-    //         var previous = topnoteArr[(i + topnoteArr.length - 1) % topnoteArr.length];
-    //         var next = topnoteArr[(i + 1) % topnoteArr.length];
-
-    //         var treeP = new kdTree(next.flat(), distance, ["s", "f"]);
-    //         var nearP = treeP.nearest(topnoteArr[i+1][0], 1);
-    //         progresion.push(result[(i + 1) % result.length][next.flat().indexOf(nearP[0][0])]);
-    //     }
-    //     console.log('Top Note 2D:',progresion);
-    // }
-
-    // genera()
-    ///////////////////////////////////////////POR TOP NOTE DISTANCIA EUCLIDEANA  3D y SIMILARIDAD COSENO/////////////////////////////////////////////////////////////////////////////////
-
-
-    progresion.push(result[0][0]); //////////////EL DE MEDICION
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    function genera3DCS() {
-
-        for (var i = 0; i < result.length; i++) {
-            topnoteArr.push([]);
-            topnoteArrEv.push([]);
-            for (var j = 0; j < result[i].length; j++) {
-                topnoteArrEv[i].push([]);
-                for (var k = 0; k < result[i][j].length; k++) {
-                    var topnote = afinacionMIDI[(result[i][j][k][0] - 1)] + result[i][j][k][1];
-                    topnoteArrEv[i][j].push(topnote);
-                }
-                var max = topnoteArrEv[i][j].reduce((a, b) => { return Math.max(a, b) });
-                topnoteArr[i].push({ s: result[i][j][topnoteArrEv[i][j].indexOf(max)][0], f: result[i][j][topnoteArrEv[i][j].indexOf(max)][1], n: afinacionMIDI[result[i][j][topnoteArrEv[i][j].indexOf(max)][0] - 1] + result[i][j][topnoteArrEv[i][j].indexOf(max)][1] });
-            }
-        }
-        // console.log(topnoteArr);
-
-        var minD = [];
-        var posChord = [];
-        var chordSim = [];
-
-        for (var i = 0; i < topnoteArr.length - 1; i++) {
-            minD.push([]);
-            var next = topnoteArr[(i + 1) % topnoteArr.length];
-
-            for (var j = 0; j < next.length; j++) {
-                minD[i].push(distance(sfnAcomodador(progresion[i]), next[j])); //////////PROGRESIOONN
-                // console.log(next[j])
-            }
-
-
-            posChord.push([]);
-            var minVal = Math.min(...minD[i]);
-            console.log(minVal);
-            console.log(getAllIndexes(minD[i], minVal))
-            console.log(minD);
-            for (var j = 0; j < getAllIndexes(minD[i], minVal).length; j++) {
-                posChord[i].push(result[i + 1][getAllIndexes(minD[i], minVal)[j]])
-            }
-
-
-            chordSim.push([])
-            for (var j = 0; j < posChord[i].length; j++) {
-                chordSim[i].push(cosinesim(cosSimAcomodadorTrp(progresion[i]), cosSimAcomodadorTrp(posChord[i][j])))
-                // console.log(cosSimAcomodador(result[0][0]), cosSimAcomodador(posChord[i][j])); //////////////PROGRESIOONN
-            }
-
-
-            var mostSim = Math.max(...chordSim[i]);
-            var defChord = posChord[i][chordSim[i].indexOf(mostSim)];
-            // console.log(defChord);
-            progresion.push(defChord);
-            // console.log(mostSim);
-
-        }
-        // console.log(minD)
-        // console.log(posChord);
-        // console.log(chordSim);
-    }
-
-    genera3DCS();
-
-    /////////////////////////////////////////////////////////POR COSINE SIMILARITY//////////////////////////////////////////////////////////
-
-    // function generaCos() {
-    //     progresion = [];
-    //     progresion.push(result[0][0]);
-    //     var cosSim = [];
-    //     for (var i = 0; i < result.length - 1; i++) {
-    //         cosSim.push([]);
-    //         var previous = result[(i + result.length - 1) % result.length];
-    //         var next = result[(i + 1) % result.length];
-
-    //         function cosinesim(A, B) {
-    //             var dotproduct = 0;
-    //             var mA = 0;
-    //             var mB = 0;
-    //             for (j = 0; j < A.length; j++) {
-    //                 dotproduct += (A[j] * B[j]);
-    //                 mA += (A[j] * A[j]);
-    //                 mB += (B[j] * B[j]);
-    //             }
-    //             mA = Math.sqrt(mA);
-    //             mB = Math.sqrt(mB);
-    //             var similarity = (dotproduct) / ((mA) * (mB));
-    //             return similarity;
-    //         }
-
-    //         for (var c = 0; c < next.length; c++) {
-    //             var array1 = result[i][0].flat();
-    //             var array2 = next[c].flat();
-
-    //             if (array1.length < 18) {
-    //                 array1.push(Array(18 - array1.length).fill(0));
-    //                 array1 = array1.flat();
-    //             }
-
-    //             if (array2.length < 18) {
-    //                 array2.push(Array(18 - array2.length).fill(0));
-    //                 array2 = array2.flat();
-    //             }
-
-    //             var p = cosinesim(array1, array2);
-    //             cosSim[i].push(p);
-    //         }
-    //     }
-    //     var cosSimIn = [];
-    //     for (var k = 0; k < cosSim.length; k++) {
-    //         // var Max = Math.max(...cosSim[k]);
-    //         // console.log(Max);
-    //         var indexOfMaxValue = cosSim[k].reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
-    //         cosSimIn.push(indexOfMaxValue);
-    //     }
-    //     for (var i = 1; i < result.length; i++) {
-    //         progresion.push(result[i][cosSimIn[i - 1]]);
-    //     }
-    //     console.log('CosSim:', progresion);
-    // }
-
-    // generaCos();
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    function dibujaMatrix() {
-
-        for (var d = 0; d < progresion.length; d++) {
-            var trastes = [];
-            for (var t = 0; t < progresion[d].length; t++) {
-                trastes.push(progresion[d][t][1]);
-
-            }
-            var fretMin = Math.min(...trastes);
-            var fretMax = Math.max(...trastes);
-
-            var dibujaDiagrama = (pisada) => {
-
-                var diagramas = d3.select('.drawerDiagrama').classed("svg-container", true).append('svg')
-
-                // .attr("preserveAspectRatio", "xMidYMid meet")
-                // .attr("viewBox", "0 0 600 100")
-                // .classed("svg-content-responsive-diagrama", true);
-
-                // diagramas.append('text')
-                // .text((d + 1))
-                // .attr('x', 0)
-                // .attr('y', 10)
-                // .attr("font-size", "20px")
-                // .attr("font-family", "sans-serif")
-                // .attr("stroke-width", 3);
-
-                if (fretMin > 1) {
-                    diagramas.append("text")
-                        .text('fr. ' + fretMin)
-                        .attr('x', 6)
-                        .attr('y', 83)
-                        .attr("font-size", "10.5px")
-                        .attr("font-family", "sans-serif")
-                        .attr("stroke-width", 1);
-                }
-
-                for (var i = 0; i < 7; i++) {
-                    diagramas.append('line')
-                        .attr('x1', 10)
-                        .attr('y1', 10 * i)
-                        .attr('x2', 200)
-                        .attr('y2', 10 * i)
-                        .attr('stroke', 'black')
-                        .attr('stroke-width', 0.3 * i);
-                }
-
-                for (var i = 0; i < 6; i++) {
-                    diagramas.append('line')
-                        .attr('x1', 10 + 38 * i)
-                        .attr('y1', 10)
-                        .attr('x2', 10 + 38 * i)
-                        .attr('y2', 60.9)
-                        .attr('stroke', 'gray')
-                        .attr('stroke-width', 1);
-                }
-                if (fretMin <= 1) {
-                    diagramas.append('line')
-                        .attr('x1', 5)
-                        .attr('y1', 9.8)
-                        .attr('x2', 5)
-                        .attr('y2', 60.9)
-                        .attr('stroke', 'black')
-                        .attr('stroke-width', 1);
-
-                    diagramas.append('line')
-                        .attr('x1', 5)
-                        .attr('y1', 10)
-                        .attr('x2', 10.5)
-                        .attr('y2', 10)
-                        .attr('stroke', 'black')
-                        .attr('stroke-width', 0.3);
-
-                    diagramas.append('line')
-                        .attr('x1', 5)
-                        .attr('y1', 10 * i)
-                        .attr('x2', 9.5)
-                        .attr('y2', 10 * 6)
-                        .attr('stroke', 'black')
-                        .attr('stroke-width', 1.8);
-                }
-                // for (var i = 0; i < pisada.length; i++) {
-                //     diagramas.append('text')
-                //         .text('  ' + pisada[i][2] + '   ')
-                //         .attr('x', 6 + i * 15)
-                //         .attr('y', 100)
-                //         .attr("font-size", "12px")
-                //         .attr("font-family", "sans-serif")
-                //         .attr('stroke-width', 1.8);
-                // }
-
-                for (var i = 0; i < pisada.length; i++) {
-
-
-                    diagramas.append('circle')
-                        .attr('cx', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
-                        .attr('cy', 10 * pisada[i][0])
-                        .attr('r', 6)
-                        .attr('stroke', 'none')
-                        .attr('stroke-width', 1)
-                        .attr('fill', pallete[(pisada[i][2] + 3) % 12])
-
-                    diagramas.append("text")
-                        .text(pisada[i][2])
-                        .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
-                        .attr('y', 10 * pisada[i][0] + 3.8)
-                        .attr('fill', 'white')
-                        .attr("font-size", "10px")
-                        .attr("font-family", "sans-serif")
-                        .style("text-anchor", "middle");
-                }
-
-                diagramas.on("mouseover", function (d) {
-                    d3.select(this).selectAll("circle").style("stroke", "red");
-                    d3.select(this).style("cursor", "pointer")
-
-                }).on("mouseout", function (d) {
-                    d3.select(this).selectAll("circle").style("stroke", "none").style("cursor", "pointer");
-                    d3.select(this).style("cursor", "pointer")
-
-                }).on("click", function () {
-
-                    audioContext.resume();
-                    var pisadaSound = [];
-                    for (var i = 0; i < pisada.length; i++) {
-                        pisadaSound.push([
-                            pisada[i][0].toString() + "-" + pisada[i][1].toString(),
-                        ]);
+                myGrid.forEach(function (e) {
+                    mtx.push(e);
+                    for (var c = 0; c < e.length; c++) {
+                        for (var d = 0; d < e.length; d++) {
+                            if (c != d && e[c][0] == e[d][0]) {
+                                mtx2.push(e);
+                            }
+                        }
                     }
-                    console.log(pisada);
-                    playchord(pisadaSound);
-                    d3.event.stopPropagation();
+                    mtx = _.difference(mtx, mtx2);
                 });
+                mtx = Array.from(new Set(mtx.map(JSON.stringify)), JSON.parse);
+            });
+            result.push(mtx)
+        }
+        console.log(result);
+
+        ///////////////////////////////////////////POR TOP NOTE DISTANCIA EUCLIDEANA  2D/////////////////////////////////////////////////////////////////////////////////
+        // var topnoteArrEv = [];
+        // for (var i = 0; i < result.length; i++) {
+        //     topnoteArr.push([]);
+        //     topnoteArrEv.push([]);
+        //     for (var j = 0; j < result[i].length; j++) {
+        //         topnoteArrEv[i].push([]);
+        //         for (var k = 0; k < result[i][j].length; k++) {
+        //             var topnote = afinacionMIDI[(result[i][j][k][0] - 1)] + result[i][j][k][1];
+        //             topnoteArrEv[i][j].push(topnote);
+        //         }
+        //         var max = topnoteArrEv[i][j].reduce((a, b) => { return Math.max(a, b) });
+        //         topnoteArr[i].push({ s: result[i][j][topnoteArrEv[i][j].indexOf(max)][0], f: result[i][j][topnoteArrEv[i][j].indexOf(max)][1] });
+        //     }
+        // }
+        // // console.log(topnoteArr);
+
+        // for (var i = 0; i < result.length; i++) {
+        //     chordpoint.push([]);
+        //     for (var j = 0; j < result[i].length; j++) {
+        //         chordpoint[i].push([])
+        //         for (var k = 0; k < result[i][j].length; k++) {
+        //             var point = { s: result[i][j][k][0], f: result[i][j][k][1] }
+        //             chordpoint[i][j].push(point);
+        //         }
+        //     }
+        // }
+        // // console.log(chordpoint);
+
+        // var distance = function (a, b) {
+        //     return Math.pow(a.f - b.f, 2) + Math.pow(a.s - b.s, 2);
+        // }
+
+        // progresion.push(result[0][0])
+        // function genera() {
+        //     for (var i = 0; i < topnoteArr.length - 1; i++) {
+        //         var previous = topnoteArr[(i + topnoteArr.length - 1) % topnoteArr.length];
+        //         var next = topnoteArr[(i + 1) % topnoteArr.length];
+
+        //         var treeP = new kdTree(next.flat(), distance, ["s", "f"]);
+        //         var nearP = treeP.nearest(topnoteArr[i+1][0], 1);
+        //         progresion.push(result[(i + 1) % result.length][next.flat().indexOf(nearP[0][0])]);
+        //     }
+        //     console.log('Top Note 2D:',progresion);
+        // }
+
+        // genera()
+        ///////////////////////////////////////////POR TOP NOTE DISTANCIA EUCLIDEANA  3D y SIMILARIDAD COSENO/////////////////////////////////////////////////////////////////////////////////
+
+
+        progresion.push(result[0][0]); //////////////EL DE MEDICION
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        function genera3DCS() {
+
+            for (var i = 0; i < result.length; i++) {
+                topnoteArr.push([]);
+                topnoteArrEv.push([]);
+                for (var j = 0; j < result[i].length; j++) {
+                    topnoteArrEv[i].push([]);
+                    for (var k = 0; k < result[i][j].length; k++) {
+                        var topnote = afinacionMIDI[(result[i][j][k][0] - 1)] + result[i][j][k][1];
+                        topnoteArrEv[i][j].push(topnote);
+                    }
+                    var max = topnoteArrEv[i][j].reduce((a, b) => { return Math.max(a, b) });
+                    topnoteArr[i].push({ s: result[i][j][topnoteArrEv[i][j].indexOf(max)][0], f: result[i][j][topnoteArrEv[i][j].indexOf(max)][1], n: afinacionMIDI[result[i][j][topnoteArrEv[i][j].indexOf(max)][0] - 1] + result[i][j][topnoteArrEv[i][j].indexOf(max)][1] });
+                }
+            }
+            // console.log(topnoteArr);
+
+            var minD = [];
+            var posChord = [];
+            var chordSim = [];
+
+            for (var i = 0; i < topnoteArr.length - 1; i++) {
+                minD.push([]);
+                var next = topnoteArr[(i + 1) % topnoteArr.length];
+
+                for (var j = 0; j < next.length; j++) {
+                    minD[i].push(distance(sfnAcomodador(progresion[i]), next[j])); //////////PROGRESIOONN
+                    // console.log(next[j])
+                }
+
+
+                posChord.push([]);
+                var minVal = Math.min(...minD[i]);
+                console.log(minVal);
+                console.log(getAllIndexes(minD[i], minVal))
+                console.log(minD);
+                for (var j = 0; j < getAllIndexes(minD[i], minVal).length; j++) {
+                    posChord[i].push(result[i + 1][getAllIndexes(minD[i], minVal)[j]])
+                }
+
+
+                chordSim.push([])
+                for (var j = 0; j < posChord[i].length; j++) {
+                    chordSim[i].push(cosinesim(cosSimAcomodadorTrp(progresion[i]), cosSimAcomodadorTrp(posChord[i][j])))
+                    // console.log(cosSimAcomodador(result[0][0]), cosSimAcomodador(posChord[i][j])); //////////////PROGRESIOONN
+                }
+
+
+                var mostSim = Math.max(...chordSim[i]);
+                var defChord = posChord[i][chordSim[i].indexOf(mostSim)];
+                // console.log(defChord);
+                progresion.push(defChord);
+                // console.log(mostSim);
 
             }
-            dibujaDiagrama(progresion[d]);
+            // console.log(minD)
+            // console.log(posChord);
+            // console.log(chordSim);
         }
-    }
 
-    dibujaMatrix();
+        genera3DCS();
 
-    // let data = `
-    //   options font-face='times' 
-    //   tabstave notation=true clef=treble key=C tuning=standard 
-    // `
-    // for (var i = 0; i < progresion.length; i++) {
-    //     var chord = '\n notes :w ('
-    //     for (var j = 0; j < progresion[i].length; j++) {
-    //         chord = chord + (progresion[i][j][1] + '/' + progresion[i][j][0] + '.');
-    //     }
-    //     chord = chord.slice(0, chord.length - 1) + chord.slice(chord.length);
-    //     chord = chord + ')';
-    //     data = data + chord
-    // }
+        /////////////////////////////////////////////////////////POR COSINE SIMILARITY//////////////////////////////////////////////////////////
 
-    // data = data + '=|=';
-    // // data = data + '\n text :w,Cmaj7,Dm7,F#add9b5,Dmadd11,Esus2add13,Cmadd9,F#b5add11,Dmaddb9'
+        // function generaCos() {
+        //     progresion = [];
+        //     progresion.push(result[0][0]);
+        //     var cosSim = [];
+        //     for (var i = 0; i < result.length - 1; i++) {
+        //         cosSim.push([]);
+        //         var previous = result[(i + result.length - 1) % result.length];
+        //         var next = result[(i + 1) % result.length];
 
-    // const VF = vextab.Vex.Flow
+        //         function cosinesim(A, B) {
+        //             var dotproduct = 0;
+        //             var mA = 0;
+        //             var mB = 0;
+        //             for (j = 0; j < A.length; j++) {
+        //                 dotproduct += (A[j] * B[j]);
+        //                 mA += (A[j] * A[j]);
+        //                 mB += (B[j] * B[j]);
+        //             }
+        //             mA = Math.sqrt(mA);
+        //             mB = Math.sqrt(mB);
+        //             var similarity = (dotproduct) / ((mA) * (mB));
+        //             return similarity;
+        //         }
 
-    // const renderer = new VF.Renderer($('#boo')[0],
-    //     VF.Renderer.Backends.SVG);
+        //         for (var c = 0; c < next.length; c++) {
+        //             var array1 = result[i][0].flat();
+        //             var array2 = next[c].flat();
 
-    // // Initialize VexTab artist and parser.
-    // const artist = new vextab.Artist(10, 10, 750, { scale: 1 });
-    // const tab = new vextab.VexTab(artist);
+        //             if (array1.length < 18) {
+        //                 array1.push(Array(18 - array1.length).fill(0));
+        //                 array1 = array1.flat();
+        //             }
 
-    // tab.parse(data);
-    // artist.render(renderer);
+        //             if (array2.length < 18) {
+        //                 array2.push(Array(18 - array2.length).fill(0));
+        //                 array2 = array2.flat();
+        //             }
 
-    function playchord(coordenadas) {
-        for (var i = 0; i < coordenadas.length; i++) {
+        //             var p = cosinesim(array1, array2);
+        //             cosSim[i].push(p);
+        //         }
+        //     }
+        //     var cosSimIn = [];
+        //     for (var k = 0; k < cosSim.length; k++) {
+        //         // var Max = Math.max(...cosSim[k]);
+        //         // console.log(Max);
+        //         var indexOfMaxValue = cosSim[k].reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
+        //         cosSimIn.push(indexOfMaxValue);
+        //     }
+        //     for (var i = 1; i < result.length; i++) {
+        //         progresion.push(result[i][cosSimIn[i - 1]]);
+        //     }
+        //     console.log('CosSim:', progresion);
+        // }
 
-            var audioBuffer;
-            let src = "../di/" + coordenadas[i] + ".mp3";
-            var getSound = new XMLHttpRequest();
-            getSound.open("get", src, true);
-            getSound.responseType = "arraybuffer";
+        // generaCos();
 
-            getSound.onload = function () {
-                //   document.getElementById("xhrStatus").textContent = "Loaded";
-                audioContext.decodeAudioData(this.response, function (buffer) {
-                    audioBuffer = buffer;
-                    playback(); // <--- Start the playback after `audioBuffer` is defined.
-                });
-            };
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            getSound.send();
+        function dibujaMatrix() {
 
-            function playback() {
-                var gainNode = audioContext.createGain();
-                var playSound = audioContext.createBufferSource();
-                playSound.buffer = audioBuffer;
-                playSound.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
-                playSound.start(audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
+            for (var d = 0; d < progresion.length; d++) {
+                var trastes = [];
+                for (var t = 0; t < progresion[d].length; t++) {
+                    trastes.push(progresion[d][t][1]);
+
+                }
+                var fretMin = Math.min(...trastes);
+                var fretMax = Math.max(...trastes);
+
+                var dibujaDiagrama = (pisada) => {
+
+                    var diagramas = d3.select('.drawerDiagrama').classed("svg-container", true).append('svg')
+
+                    // .attr("preserveAspectRatio", "xMidYMid meet")
+                    // .attr("viewBox", "0 0 600 100")
+                    // .classed("svg-content-responsive-diagrama", true);
+
+                    // diagramas.append('text')
+                    // .text((d + 1))
+                    // .attr('x', 0)
+                    // .attr('y', 10)
+                    // .attr("font-size", "20px")
+                    // .attr("font-family", "sans-serif")
+                    // .attr("stroke-width", 3);
+
+                    if (fretMin > 1) {
+                        diagramas.append("text")
+                            .text('fr. ' + fretMin)
+                            .attr('x', 6)
+                            .attr('y', 83)
+                            .attr("font-size", "10.5px")
+                            .attr("font-family", "sans-serif")
+                            .attr("stroke-width", 1);
+                    }
+
+                    for (var i = 0; i < 7; i++) {
+                        diagramas.append('line')
+                            .attr('x1', 10)
+                            .attr('y1', 10 * i)
+                            .attr('x2', 200)
+                            .attr('y2', 10 * i)
+                            .attr('stroke', 'black')
+                            .attr('stroke-width', 0.3 * i);
+                    }
+
+                    for (var i = 0; i < 6; i++) {
+                        diagramas.append('line')
+                            .attr('x1', 10 + 38 * i)
+                            .attr('y1', 10)
+                            .attr('x2', 10 + 38 * i)
+                            .attr('y2', 60.9)
+                            .attr('stroke', 'gray')
+                            .attr('stroke-width', 1);
+                    }
+                    if (fretMin <= 1) {
+                        diagramas.append('line')
+                            .attr('x1', 5)
+                            .attr('y1', 9.8)
+                            .attr('x2', 5)
+                            .attr('y2', 60.9)
+                            .attr('stroke', 'black')
+                            .attr('stroke-width', 1);
+
+                        diagramas.append('line')
+                            .attr('x1', 5)
+                            .attr('y1', 10)
+                            .attr('x2', 10.5)
+                            .attr('y2', 10)
+                            .attr('stroke', 'black')
+                            .attr('stroke-width', 0.3);
+
+                        diagramas.append('line')
+                            .attr('x1', 5)
+                            .attr('y1', 10 * i)
+                            .attr('x2', 9.5)
+                            .attr('y2', 10 * 6)
+                            .attr('stroke', 'black')
+                            .attr('stroke-width', 1.8);
+                    }
+                    // for (var i = 0; i < pisada.length; i++) {
+                    //     diagramas.append('text')
+                    //         .text('  ' + pisada[i][2] + '   ')
+                    //         .attr('x', 6 + i * 15)
+                    //         .attr('y', 100)
+                    //         .attr("font-size", "12px")
+                    //         .attr("font-family", "sans-serif")
+                    //         .attr('stroke-width', 1.8);
+                    // }
+
+                    for (var i = 0; i < pisada.length; i++) {
+
+
+                        diagramas.append('circle')
+                            .attr('cx', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
+                            .attr('cy', 10 * pisada[i][0])
+                            .attr('r', 6)
+                            .attr('stroke', 'none')
+                            .attr('stroke-width', 1)
+                            .attr('fill', pallete[(pisada[i][2] + 3) % 12])
+
+                        diagramas.append("text")
+                            .text(pisada[i][2])
+                            .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
+                            .attr('y', 10 * pisada[i][0] + 3.8)
+                            .attr('fill', 'white')
+                            .attr("font-size", "10px")
+                            .attr("font-family", "sans-serif")
+                            .style("text-anchor", "middle");
+                    }
+
+                    diagramas.on("mouseover", function (d) {
+                        d3.select(this).selectAll("circle").style("stroke", "red");
+                        d3.select(this).style("cursor", "pointer")
+
+                    }).on("mouseout", function (d) {
+                        d3.select(this).selectAll("circle").style("stroke", "none").style("cursor", "pointer");
+                        d3.select(this).style("cursor", "pointer")
+
+                    }).on("click", function () {
+
+                        audioContext.resume();
+                        var pisadaSound = [];
+                        for (var i = 0; i < pisada.length; i++) {
+                            pisadaSound.push([
+                                pisada[i][0].toString() + "-" + pisada[i][1].toString(),
+                            ]);
+                        }
+                        console.log(pisada);
+                        playchord(pisadaSound);
+                        d3.event.stopPropagation();
+                    });
+
+                }
+                dibujaDiagrama(progresion[d]);
             }
         }
-    }
 
-    var fileContent = `
+        dibujaMatrix();
+
+        // let data = `
+        //   options font-face='times' 
+        //   tabstave notation=true clef=treble key=C tuning=standard 
+        // `
+        // for (var i = 0; i < progresion.length; i++) {
+        //     var chord = '\n notes :w ('
+        //     for (var j = 0; j < progresion[i].length; j++) {
+        //         chord = chord + (progresion[i][j][1] + '/' + progresion[i][j][0] + '.');
+        //     }
+        //     chord = chord.slice(0, chord.length - 1) + chord.slice(chord.length);
+        //     chord = chord + ')';
+        //     data = data + chord
+        // }
+
+        // data = data + '=|=';
+        // // data = data + '\n text :w,Cmaj7,Dm7,F#add9b5,Dmadd11,Esus2add13,Cmadd9,F#b5add11,Dmaddb9'
+
+        // const VF = vextab.Vex.Flow
+
+        // const renderer = new VF.Renderer($('#boo')[0],
+        //     VF.Renderer.Backends.SVG);
+
+        // // Initialize VexTab artist and parser.
+        // const artist = new vextab.Artist(10, 10, 750, { scale: 1 });
+        // const tab = new vextab.VexTab(artist);
+
+        // tab.parse(data);
+        // artist.render(renderer);
+
+        function playchord(coordenadas) {
+            for (var i = 0; i < coordenadas.length; i++) {
+
+                var audioBuffer;
+                let src = "../di/" + coordenadas[i] + ".mp3";
+                var getSound = new XMLHttpRequest();
+                getSound.open("get", src, true);
+                getSound.responseType = "arraybuffer";
+
+                getSound.onload = function () {
+                    //   document.getElementById("xhrStatus").textContent = "Loaded";
+                    audioContext.decodeAudioData(this.response, function (buffer) {
+                        audioBuffer = buffer;
+                        playback(); // <--- Start the playback after `audioBuffer` is defined.
+                    });
+                };
+
+                getSound.send();
+
+                function playback() {
+                    var gainNode = audioContext.createGain();
+                    var playSound = audioContext.createBufferSource();
+                    playSound.buffer = audioBuffer;
+                    playSound.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+                    playSound.start(audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
+                }
+            }
+        }
+        var re = list.map(function (x) {
+            return parseInt(x, 10);
+        });
+
+
+        var fileContent = `
 \\title "Mi cancion" 
 \\subtitle "Yo"
 \\tempo 180
@@ -529,301 +535,306 @@ function allElements(list) {
 .
 `
 
-    for (var i = 0; i < progresion.length; i++) {
-        chord = ').1'
-        for (var j = 0; j < progresion[i].length; j++) {
-            chord = (progresion[i][j][1] + '.' + progresion[i][j][0] + ' ') + chord;
-        }
-        chord = '(' + chord + '{ch' + '"' + chordNm(list[i])[1] + '"' + '} |';
-        fileContent = fileContent + chord;
-    }
-    fileContent = fileContent.slice(0, -1);
-    // console.log(fileContent);
+        for (var i = 0; i < progresion.length; i++) {
+            chord = ').1'
+            for (var j = 0; j < progresion[i].length; j++) {
 
-    let blob = new Blob([fileContent], { type: 'text/plain' });
-
-    var link = URL.createObjectURL(blob);
-    // console.log(link)
-
-    // load elements
-    const wrapper = document.querySelector(".at-wrap");
-    const main = wrapper.querySelector(".at-main");
-
-    // initialize alphatab
-    const settings = {
-        file: link,
-        notation: {
-            elements: {
-                effectTempo: false,
-                trackNames: false,
-                EffectDynamics: false
+                chord = (progresion[i][j][1] + '.' + progresion[i][j][0] + ' ') + chord;
             }
-        },
-        player: {
-            enablePlayer: true,
-            soundFont: "https://cdn.jsdelivr.net/npm/@coderline/alphatab@latest/dist/soundfont/sonivox.sf2",
-            scrollElement: wrapper.querySelector('.at-viewport')
+            chord = '(' + chord + '{ch' + '"' + chordNm(list[i].map(i => Number(i)))[1] + '"' + '} |';
+            fileContent = fileContent + chord;
         }
-    };
-    const api = new alphaTab.AlphaTabApi(main, settings);
+        fileContent = fileContent.slice(0, -1);
+        // console.log(fileContent);
+
+        let blob = new Blob([fileContent], { type: 'text/plain' });
+
+        var link = URL.createObjectURL(blob);
+        // console.log(link)
+
+        // load elements
+        const wrapper = document.querySelector(".at-wrap");
+        const main = wrapper.querySelector(".at-main");
+
+        // initialize alphatab
+        const settings = {
+            file: link,
+            notation: {
+                elements: {
+                    effectTempo: false,
+                    trackNames: false,
+                    EffectDynamics: false
+                }
+            },
+            player: {
+                enablePlayer: true,
+                soundFont: "https://cdn.jsdelivr.net/npm/@coderline/alphatab@latest/dist/soundfont/sonivox.sf2",
+                scrollElement: wrapper.querySelector('.at-viewport')
+            }
+        };
+        const api = new alphaTab.AlphaTabApi(main, settings);
 
 
-    document.getElementById('export').onclick = function (e) {
-        const exporter = new alphaTab.exporter.Gp7Exporter();
-        const data = exporter.export(api.score, api.settings); // will return a Uint8Array
+        document.getElementById('export').onclick = function (e) {
+            const exporter = new alphaTab.exporter.Gp7Exporter();
+            const data = exporter.export(api.score, api.settings); // will return a Uint8Array
 
-        // trigger download
-        const a = document.createElement('a');
-        a.download = api.score.title.length > 0 ? api.score.title + '.gp' : 'Untitled.gp';
-        a.href = URL.createObjectURL(new Blob([data]));
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    };
+            // trigger download
+            const a = document.createElement('a');
+            a.download = api.score.title.length > 0 ? api.score.title + '.gp' : 'Untitled.gp';
+            a.href = URL.createObjectURL(new Blob([data]));
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        };
 
-    // overlay logic
-    const overlay = wrapper.querySelector(".at-overlay");
-    api.renderStarted.on(() => {
-        overlay.style.display = "flex";
-    });
-    api.renderFinished.on(() => {
-        overlay.style.display = "none";
-    });
-
-    // // track selector
-    // function createTrackItem(track) {
-    //     const trackItem = document
-    //         .querySelector("#at-track-template")
-    //         .content.cloneNode(true).firstElementChild;
-    //     trackItem.querySelector(".at-track-name").innerText = track.name;
-    //     trackItem.track = track;
-    //     trackItem.onclick = (e) => {
-    //         e.stopPropagation();
-    //         api.renderTracks([track]);
-    //     };
-    //     return trackItem;
-    // }
-    // const trackList = wrapper.querySelector(".at-track-list");
-    // api.scoreLoaded.on((score) => {
-    //     // clear items
-    //     trackList.innerHTML = "";
-    //     // generate a track item for all tracks of the score
-    //     score.tracks.forEach((track) => {
-    //         trackList.appendChild(createTrackItem(track));
-    //     });
-    // });
-    // api.renderStarted.on(() => {
-    //     // collect tracks being rendered
-    //     const tracks = new Map();
-    //     api.tracks.forEach((t) => {
-    //         tracks.set(t.index, t);
-    //     });
-    //     // mark the item as active or not
-    //     const trackItems = trackList.querySelectorAll(".at-track");
-    //     trackItems.forEach((trackItem) => {
-    //         if (tracks.has(trackItem.track.index)) {
-    //             trackItem.classList.add("active");
-    //         } else {
-    //             trackItem.classList.remove("active");
-    //         }
-    //     });
-    // });
-
-    /** Controls **/
-    api.scoreLoaded.on((score) => {
-        wrapper.querySelector(".at-song-title").innerText = score.title;
-        wrapper.querySelector(".at-song-artist").innerText = score.artist;
-    });
-
-    const countIn = wrapper.querySelector('.at-controls .at-count-in');
-    countIn.onclick = () => {
-        countIn.classList.toggle('active');
-        if (countIn.classList.contains('active')) {
-            api.countInVolume = 1;
-        } else {
-            api.countInVolume = 0;
-        }
-    };
-
-    const metronome = wrapper.querySelector(".at-controls .at-metronome");
-    metronome.onclick = () => {
-        metronome.classList.toggle("active");
-        if (metronome.classList.contains("active")) {
-            api.metronomeVolume = 1;
-        } else {
-            api.metronomeVolume = 0;
-        }
-    };
-
-    const loop = wrapper.querySelector(".at-controls .at-loop");
-    loop.onclick = () => {
-        loop.classList.toggle("active");
-        api.isLooping = loop.classList.contains("active");
-    };
-
-    wrapper.querySelector(".at-controls .at-print").onclick = () => {
-        api.print();
-    };
-
-    const zoom = wrapper.querySelector(".at-controls .at-zoom select");
-    zoom.onchange = () => {
-        const zoomLevel = parseInt(zoom.value) / 100;
-        api.settings.display.scale = zoomLevel;
-        api.updateSettings();
-        api.render();
-    };
-
-    const layout = wrapper.querySelector(".at-controls .at-layout select");
-    layout.onchange = () => {
-        switch (layout.value) {
-            case "horizontal":
-                api.settings.display.layoutMode = alphaTab.LayoutMode.Horizontal;
-                break;
-            case "page":
-                api.settings.display.layoutMode = alphaTab.LayoutMode.Page;
-                break;
-        }
-        api.updateSettings();
-        api.render();
-    };
-
-
-    // player loading indicator
-    const playerIndicator = wrapper.querySelector(
-        ".at-controls .at-player-progress"
-    );
-    api.soundFontLoad.on((e) => {
-        const percentage = Math.floor((e.loaded / e.total) * 100);
-        playerIndicator.innerText = percentage + "%";
-    });
-    api.playerReady.on(() => {
-        playerIndicator.style.display = "none";
-    });
-
-
-    // main player controls
-    const playPause = wrapper.querySelector(
-        ".at-controls .at-player-play-pause"
-    );
-    const stop = wrapper.querySelector(".at-controls .at-player-stop");
-    playPause.onclick = (e) => {
-        if (e.target.classList.contains("disabled")) {
-            return;
-        }
-        api.playPause();
-    };
-    stop.onclick = (e) => {
-        if (e.target.classList.contains("disabled")) {
-            return;
-        }
-        api.stop();
-    };
-    api.playerReady.on(() => {
-        playPause.classList.remove("disabled");
-        stop.classList.remove("disabled");
-    });
-    api.playerStateChanged.on((e) => {
-        const icon = playPause.querySelector("i");
-        if (e.state === alphaTab.synth.PlayerState.Playing) {
-            icon.classList.remove("fa-play");
-            icon.classList.add("fa-pause");
-        } else {
-            icon.classList.remove("fa-pause");
-            icon.classList.add("fa-play");
-        }
-    });
-
-    // song position
-    function formatDuration(milliseconds) {
-        let seconds = milliseconds / 1000;
-        const minutes = (seconds / 60) | 0;
-        seconds = (seconds - minutes * 60) | 0;
-        return (
-            String(minutes).padStart(2, "0") +
-            ":" +
-            String(seconds).padStart(2, "0")
-        );
-    }
-    let position;
-    const songPosition = wrapper.querySelector(".at-song-position");
-    let previousTime = -1;
-    api.playerPositionChanged.on((e) => {
-        // reduce number of UI updates to second changes.
-        const currentSeconds = (e.currentTime / 1000) | 0;
-        if (currentSeconds == previousTime) {
-            return;
-        }
-
-        songPosition.innerText =
-            formatDuration(e.currentTime) + " / " + formatDuration(e.endTime);
-
-        position = e.currentTime
-    });
-
-    /// Mute tracks to use own sounds /////////////////
-    function createTrackItem(track) {
-        api.renderTracks([track]);
-    }
-
-    api.scoreLoaded.on((score) => {
-        // clear items
-        // generate a track item for all tracks of the score
-        score.tracks.forEach((track) => {
-            createTrackItem(track);
-            api.changeTrackMute(track, true);
+        // overlay logic
+        const overlay = wrapper.querySelector(".at-overlay");
+        api.renderStarted.on(() => {
+            overlay.style.display = "flex";
         });
-    });
+        api.renderFinished.on(() => {
+            overlay.style.display = "none";
+        });
 
-    ///Coordinate tick to trigger sounds ///////////////////////
-    api.midiEventsPlayedFilter = [alphaTab.midi.MidiEventType.SystemExclusive2];
+        // // track selector
+        // function createTrackItem(track) {
+        //     const trackItem = document
+        //         .querySelector("#at-track-template")
+        //         .content.cloneNode(true).firstElementChild;
+        //     trackItem.querySelector(".at-track-name").innerText = track.name;
+        //     trackItem.track = track;
+        //     trackItem.onclick = (e) => {
+        //         e.stopPropagation();
+        //         api.renderTracks([track]);
+        //     };
+        //     return trackItem;
+        // }
+        // const trackList = wrapper.querySelector(".at-track-list");
+        // api.scoreLoaded.on((score) => {
+        //     // clear items
+        //     trackList.innerHTML = "";
+        //     // generate a track item for all tracks of the score
+        //     score.tracks.forEach((track) => {
+        //         trackList.appendChild(createTrackItem(track));
+        //     });
+        // });
+        // api.renderStarted.on(() => {
+        //     // collect tracks being rendered
+        //     const tracks = new Map();
+        //     api.tracks.forEach((t) => {
+        //         tracks.set(t.index, t);
+        //     });
+        //     // mark the item as active or not
+        //     const trackItems = trackList.querySelectorAll(".at-track");
+        //     trackItems.forEach((trackItem) => {
+        //         if (tracks.has(trackItem.track.index)) {
+        //             trackItem.classList.add("active");
+        //         } else {
+        //             trackItem.classList.remove("active");
+        //         }
+        //     });
+        // });
 
-    api.midiEventsPlayed.on(function (e) {
+        /** Controls **/
+        api.scoreLoaded.on((score) => {
+            wrapper.querySelector(".at-song-title").innerText = score.title;
+            wrapper.querySelector(".at-song-artist").innerText = score.artist;
+        });
 
-        for (const midi of e.events) {
+        const countIn = wrapper.querySelector('.at-controls .at-count-in');
+        countIn.onclick = () => {
+            countIn.classList.toggle('active');
+            if (countIn.classList.contains('active')) {
+                api.countInVolume = 1;
+            } else {
+                api.countInVolume = 0;
+            }
+        };
 
-            if (midi.isMetronome) {
-                var count = (midi.tick / 960) % 4;
-                var index = (midi.tick / 960) / 4
-                // console.log('Metronome tick ' + (midi.tick / 960) / 4 + (midi.tick / 960) % 4);
-                // console.log('index' + index);
-                // console.log('position' + position)
-                if (count == 0 && Math.round(position / 1333.333) - index == 0 && position != 0) {
-                    // console.log('condition' + (Math.round(position/1333.333) - index))
-                    audioContext.resume();
-                    for (var i = 0; i < progresion[index].length; i++) {
-                        // console.log(progresion[index][i][0] +  '-' + progresion[index][i][1])
-                        var acorde = progresion[index][i][0] + '-' + progresion[index][i][1];
-                        var audioBuffer;
-                        let src = "../di/" + acorde + ".mp3";
-                        var getSound = new XMLHttpRequest();
-                        getSound.open("get", src, true);
-                        getSound.responseType = "arraybuffer";
+        const metronome = wrapper.querySelector(".at-controls .at-metronome");
+        metronome.onclick = () => {
+            metronome.classList.toggle("active");
+            if (metronome.classList.contains("active")) {
+                api.metronomeVolume = 1;
+            } else {
+                api.metronomeVolume = 0;
+            }
+        };
 
-                        getSound.onload = function () {
-                            //   document.getElementById("xhrStatus").textContent = "Loaded";
-                            audioContext.decodeAudioData(this.response, function (buffer) {
-                                audioBuffer = buffer;
-                                playback(); // <--- Start the playback after `audioBuffer` is defined.
-                            });
-                        };
+        const loop = wrapper.querySelector(".at-controls .at-loop");
+        loop.onclick = () => {
+            loop.classList.toggle("active");
+            api.isLooping = loop.classList.contains("active");
+        };
 
-                        getSound.send();
+        wrapper.querySelector(".at-controls .at-print").onclick = () => {
+            api.print();
+        };
 
-                        function playback() {
-                            var gainNode = audioContext.createGain();
-                            var playSound = audioContext.createBufferSource();
-                            playSound.buffer = audioBuffer;
-                            playSound.connect(gainNode);
-                            gainNode.connect(audioContext.destination);
-                            gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
-                            playSound.start(audioContext.currentTime);
-                            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
+        const zoom = wrapper.querySelector(".at-controls .at-zoom select");
+        zoom.onchange = () => {
+            const zoomLevel = parseInt(zoom.value) / 100;
+            api.settings.display.scale = zoomLevel;
+            api.updateSettings();
+            api.render();
+        };
+
+        const layout = wrapper.querySelector(".at-controls .at-layout select");
+        layout.onchange = () => {
+            switch (layout.value) {
+                case "horizontal":
+                    api.settings.display.layoutMode = alphaTab.LayoutMode.Horizontal;
+                    break;
+                case "page":
+                    api.settings.display.layoutMode = alphaTab.LayoutMode.Page;
+                    break;
+            }
+            api.updateSettings();
+            api.render();
+        };
+
+
+        // player loading indicator
+        const playerIndicator = wrapper.querySelector(
+            ".at-controls .at-player-progress"
+        );
+        api.soundFontLoad.on((e) => {
+            const percentage = Math.floor((e.loaded / e.total) * 100);
+            playerIndicator.innerText = percentage + "%";
+        });
+        api.playerReady.on(() => {
+            playerIndicator.style.display = "none";
+        });
+
+
+        // main player controls
+        const playPause = wrapper.querySelector(
+            ".at-controls .at-player-play-pause"
+        );
+        const stop = wrapper.querySelector(".at-controls .at-player-stop");
+        playPause.onclick = (e) => {
+            if (e.target.classList.contains("disabled")) {
+                return;
+            }
+            api.playPause();
+        };
+        stop.onclick = (e) => {
+            if (e.target.classList.contains("disabled")) {
+                return;
+            }
+            api.stop();
+        };
+        api.playerReady.on(() => {
+            playPause.classList.remove("disabled");
+            stop.classList.remove("disabled");
+        });
+        api.playerStateChanged.on((e) => {
+            const icon = playPause.querySelector("i");
+            if (e.state === alphaTab.synth.PlayerState.Playing) {
+                icon.classList.remove("fa-play");
+                icon.classList.add("fa-pause");
+            } else {
+                icon.classList.remove("fa-pause");
+                icon.classList.add("fa-play");
+            }
+        });
+
+        // song position
+        function formatDuration(milliseconds) {
+            let seconds = milliseconds / 1000;
+            const minutes = (seconds / 60) | 0;
+            seconds = (seconds - minutes * 60) | 0;
+            return (
+                String(minutes).padStart(2, "0") +
+                ":" +
+                String(seconds).padStart(2, "0")
+            );
+        }
+        let position;
+        const songPosition = wrapper.querySelector(".at-song-position");
+        let previousTime = -1;
+        api.playerPositionChanged.on((e) => {
+            // reduce number of UI updates to second changes.
+            const currentSeconds = (e.currentTime / 1000) | 0;
+            if (currentSeconds == previousTime) {
+                return;
+            }
+
+            songPosition.innerText =
+                formatDuration(e.currentTime) + " / " + formatDuration(e.endTime);
+
+            position = e.currentTime
+        });
+
+        /// Mute tracks to use own sounds /////////////////
+        function createTrackItem(track) {
+            api.renderTracks([track]);
+        }
+
+        api.scoreLoaded.on((score) => {
+            // clear items
+            // generate a track item for all tracks of the score
+            score.tracks.forEach((track) => {
+                createTrackItem(track);
+                api.changeTrackMute(track, true);
+            });
+        });
+
+        ///Coordinate tick to trigger sounds ///////////////////////
+        api.midiEventsPlayedFilter = [alphaTab.midi.MidiEventType.SystemExclusive2];
+
+        api.midiEventsPlayed.on(function (e) {
+
+            for (const midi of e.events) {
+
+                if (midi.isMetronome) {
+                    var count = (midi.tick / 960) % 4;
+                    var index = (midi.tick / 960) / 4
+                    // console.log('Metronome tick ' + (midi.tick / 960) / 4 + (midi.tick / 960) % 4);
+                    // console.log('index' + index);
+                    // console.log('position' + position)
+                    if (count == 0 && Math.round(position / 1333.333) - index == 0 && position != 0) {
+                        // console.log('condition' + (Math.round(position/1333.333) - index))
+                        audioContext.resume();
+                        for (var i = 0; i < progresion[index].length; i++) {
+                            // console.log(progresion[index][i][0] +  '-' + progresion[index][i][1])
+                            var acorde = progresion[index][i][0] + '-' + progresion[index][i][1];
+                            var audioBuffer;
+                            let src = "../di/" + acorde + ".mp3";
+                            var getSound = new XMLHttpRequest();
+                            getSound.open("get", src, true);
+                            getSound.responseType = "arraybuffer";
+
+                            getSound.onload = function () {
+                                //   document.getElementById("xhrStatus").textContent = "Loaded";
+                                audioContext.decodeAudioData(this.response, function (buffer) {
+                                    audioBuffer = buffer;
+                                    playback(); // <--- Start the playback after `audioBuffer` is defined.
+                                });
+                            };
+
+                            getSound.send();
+
+                            function playback() {
+                                var gainNode = audioContext.createGain();
+                                var playSound = audioContext.createBufferSource();
+                                playSound.buffer = audioBuffer;
+                                playSound.connect(gainNode);
+                                gainNode.connect(audioContext.destination);
+                                gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+                                playSound.start(audioContext.currentTime);
+                                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
+                            }
                         }
                     }
                 }
             }
-        }
-    });
+        });
+    } else {
+        alert('Antes de generar la progresión, necesitas seleccionar un mínimo de 3 notas para cada acorde!');
+        console.log(list)
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -837,11 +848,25 @@ function crearMenus() {
     let zona = document.getElementById("menusDrawer");
     zona.appendChild(document.createElement("br"));
     new menuBotones(btnCount);
-
+    console.log(listaF);
 }
 
 class menuBotones {
     constructor(index) {
+
+        function getIndexOfArray(array, findArray) {
+            let index;
+            array.some((item, i) => {
+                if (JSON.stringify(item) === JSON.stringify(findArray)) {
+                    index = i;
+                    return true;
+                }
+            });
+            return index;
+        }
+
+        
+        console.log(listaF)
         let zona = document.getElementById("menusDrawer");
         let f = document.createElement('div');
         f.id = 'f' + btnCount;
@@ -866,12 +891,15 @@ class menuBotones {
                                 document.getElementById('g' + index).remove();
 
                             }
+                            var allFp = amplify.store("allFp");
+                            var allFpNames = amplify.store("allFpNames");
                             var chordInTime = (listaF[index - 1].map(i => Number(i)));
                             var ChFp = dodeca(chordInTime);
                             var g = document.createElement('div');
                             g.id = 'g' + index;
-                            f.append(g)
-                            document.getElementById('g' + index).append(ChFp);
+                            f.append(g) 
+                            document.getElementById('g' + index).append(allFpNames[getIndexOfArray(allFp, formaPrimaIn)] + ' | ');
+                            document.getElementById('g' + index).append(ChFp + ' | ');
                             document.getElementById('g' + index).append(chordNm(chordInTime)[1]);
 
                         }
@@ -915,5 +943,15 @@ class menuBotones {
     }
 }
 
+function removeChord() {
+    if( document.getElementById("menusDrawer").childNodes.length > 0){
+        listaF.pop();
+        btnCount = btnCount - 1;
+        console.log(listaF);
+    for (var i = 0; i < 15; i++) {
+        document.getElementById("menusDrawer").removeChild(document.getElementById("menusDrawer").lastChild);
+    }
+}
+}
 
-
+window.onload = function () { crearMenus() };
