@@ -831,6 +831,14 @@ function allElements(list) {
                 }
             }
         });
+        const boxes = Array.from(document.getElementsByClassName('selectorChords'));
+
+        boxes.forEach(box => {
+          box.remove();
+        });    
+
+        document.getElementById('menusDrawer').remove();
+    
     } else {
         alert('Antes de generar la progresión, necesitas seleccionar un mínimo de 3 notas para cada acorde!');
         console.log(list)
