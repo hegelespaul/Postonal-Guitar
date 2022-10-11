@@ -59,7 +59,7 @@ var data = [
         [2, 2, 1, 1, 3, 1],
         [2, 2, 0, 2, 2, 2],
         [2, 1, 3, 2, 1, 1],
-        [2, 2, 0, 2, 2, 2],
+        [2, 1, 2, 3, 2, 0],
         [2, 1, 2, 2, 2, 1],
         [2, 1, 2, 1, 2, 2],
         [2, 1, 1, 2, 3, 1],
@@ -82,9 +82,9 @@ var data = [
         [2, 1, 2, 3, 2, 0],
         [2, 1, 2, 2, 2, 1],
         [5, 4, 3, 2, 1, 0],
-        [4, 4, 3, 2, 1, 0],
         [4, 4, 3, 2, 1, 1],
         [4, 3, 3, 2, 2, 1],
+        [4, 3, 2, 3, 2, 1],
         [4, 2, 2, 2, 3, 2],
         [4, 2, 1, 2, 4, 2],
         [4, 2, 0, 2, 4, 3],
@@ -115,7 +115,22 @@ var data = [
         [1, 4, 3, 2, 5, 0],
         [1, 4, 3, 2, 4, 1],
         [1, 4, 2, 4, 2, 2],
-        [0, 6, 0, 6, 0, 3]
+        [0, 6, 0, 6, 0, 3],
+        [4, 3, 3, 2, 2, 1],
+        [4, 3, 2, 3, 2, 1],
+        [4, 2, 1, 2, 4, 2],
+        [3, 3, 3, 3, 2, 1],
+        [3, 3, 3, 2, 3, 1],
+        [3, 3, 2, 2, 3, 2],
+        [3, 2, 4, 2, 2, 2],
+        [3, 2, 2, 3, 3, 2],
+        [3, 1, 3, 4, 3, 1],
+        [2, 3, 4, 2, 2, 2],
+        [2, 3, 3, 3, 3, 1],
+        [2, 3, 3, 2, 4, 1],
+        [2, 3, 2, 3, 4, 1],
+        [2, 2, 4, 3, 2, 2],
+        [2, 2, 4, 2, 3, 2]
 ];
 
 var names = [
@@ -233,6 +248,21 @@ var names = [
         '6-33',
         '6-34',
         '6-35',
+        '6-Z36',
+        '6-Z37',
+        '6-Z38',
+        '6-Z39',
+        '6-Z40',
+        '6-Z41',
+        '6-Z42',
+        '6-Z43',
+        '6-Z44',
+        '6-Z45',
+        '6-Z46',
+        '6-Z47',
+        '6-Z48',
+        '6-Z49',
+        '6-Z50'
 ]
 
 
@@ -296,7 +326,7 @@ var fP = [
         [0, 1, 3, 4, 7],
         [0, 1, 3, 4, 8],
         [0, 1, 4, 5, 7],
-        [0, 13, 56, 7],
+        [0, 1, 3, 6, 7],
         [0, 1, 3, 7, 8],
         [0, 1, 4, 5, 8],
         [0, 1, 4, 7, 8],
@@ -337,7 +367,7 @@ var fP = [
         [0, 1, 3, 4, 7, 8],
         [0, 1, 4, 5, 8, 9],
         [0, 2, 3, 4, 6, 8],
-        [0, 1, 3, 4, 6, 8],
+        [0, 1, 2, 4, 6, 8],
         [0, 2, 3, 5, 6, 8],
         [0, 1, 3, 4, 6, 8],
         [0, 1, 3, 5, 6, 8],
@@ -350,7 +380,22 @@ var fP = [
         [0, 2, 4, 5, 7, 9],
         [0, 2, 3, 5, 7, 9],
         [0, 1, 3, 5, 7, 9],
-        [0, 2, 4, 6, 8, 10]
+        [0, 2, 4, 6, 8, 10],
+        [0, 1, 2, 3, 4, 7],
+        [0, 1, 2, 3, 4, 8],
+        [0, 1, 2, 3, 7, 8],
+        [0, 2, 3, 4, 5, 8],
+        [0, 1, 2, 3, 5, 8],
+        [0, 1, 2, 3, 6, 8],
+        [0, 1, 2, 3, 6, 9],
+        [0, 1, 2, 5, 6, 8],
+        [0, 1, 2, 5, 6, 9],
+        [0, 2, 3, 4, 6, 9],
+        [0, 1, 2, 4, 6, 9],
+        [0, 1, 2, 4, 7, 9],
+        [0, 1, 2, 5, 7, 9],
+        [0, 1, 3, 4, 7, 9],
+        [0, 1, 4, 6, 7, 9]
 ]
 // console.log(data);
 
@@ -393,8 +438,9 @@ function dataNormalice(array) {
         for (var e = 0; e < array.length; e++) {
                 dataNorm.push([]);
                 for (var f = 0; f < array[e].length; f++) {
-                        var dataValNorm = array[e][f] - arrayMean[f] / arrayStandardDeviation;
+                        var dataValNorm = array[e][f] - arrayMean[f] / arrayStandardDeviation;    //score
                         // var dataValNorm = array[e][f] - arrayMean[f];
+                        // var dataValNorm = array[e][f];
                         dataNorm[e].push(dataValNorm);
                 }
                 dataNorm[e].sort((a, b) => { return b - a });
@@ -408,8 +454,8 @@ function dataNormalice(array) {
 var vectors = PCA.getEigenVectors(data);
 // console.log(vectors)
 var Point1 = PCA.computeAdjustedData(data, vectors[0]);
-var Point2 = PCA.computeAdjustedData(data, vectors[1]);
-var Point3 = PCA.computeAdjustedData(data, vectors[2]);
+var Point2 = PCA.computeAdjustedData(data, vectors[2]);
+var Point3 = PCA.computeAdjustedData(data, vectors[3]);
 var x = Point1.formattedAdjustedData;
 var y = Point2.formattedAdjustedData;
 var z = Point3.formattedAdjustedData;
@@ -445,8 +491,8 @@ console.log(psChords)
 var myPlot = document.getElementById('myDiv')
 
 var customdata = [];
-for(var i =0; i< psChords.length;i++){
-        customdata.push([psChords[i],fP[i]]);
+for (var i = 0; i < psChords.length; i++) {
+        customdata.push([psChords[i], fP[i]]);
 }
 
 var trace1 = {
@@ -458,18 +504,22 @@ var trace1 = {
         marker: {
                 size: 8,
                 line: {
-                        color: 'rgba(217, 217, 217, 0.14)',
+                        color: 'rgba(21, 21, 21, 0.5)',
                         width: 0.5
                 },
-                opacity: 0.5,
+                opacity: 0.3,
                 color: color
         },
-        hovertemplate: '<i>Prime form</i>: <b>%{customdata[1]}</b>' +
+        hovertemplate: '<i>%{text}</i>' + '<br><i>Prime form</i>: <b>%{customdata[1]}</b>' +
                 '<br><i>Possible Chords</i>: <b>%{customdata[0]}</b><extra></extra>',
         customdata: customdata,
         text: names,
+        textfont: {
+                // family: 'sans serif',
+                size: 11,
+                color: '#696969'
+              },
         textposition: 'bottom',
-        labels: fP,
         type: 'scatter3d',
 };
 
@@ -486,9 +536,9 @@ var layout = {
                 },
                 camera: {
                         eye: {
-                                x: 0.6652270019457444,
-                                y: 0.6720157541649203,
-                                z: 1.8973322149538521
+                                x: 0.19618860166593133,                                
+                                y: 1.6720157541649203,
+                                z: 0.8973322149538521
                         }
                 }
         },
@@ -496,7 +546,7 @@ var layout = {
         width: 1400,
         height: 1000,
         hovermode: 'closest',
-        title: 'Prime Forms Latent Space'
+        // title: 'Prime Forms Latent Space'
 };
 
 amplify.store("allFp", fP);
@@ -519,8 +569,8 @@ myPlot.on('plotly_click', function (data) {
                 pisadas = fP[indexfP];
                 amplify.store("pisadas", pisadas);
                 origTitle = names[indexfP];
-                amplify.store("name",origTitle);
-                w.onload = function() { this.document.title = origTitle; }
+                amplify.store("name", origTitle);
+                w.onload = function () { this.document.title = origTitle; }
         }
         NewTab();
 });
