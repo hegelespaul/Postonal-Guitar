@@ -451,9 +451,9 @@ svg text {
 }
 
 .btnoff{
-  background-color: white;
+  background-color: none;
 }
 
 .btnon{
-  background-color: green;
+  background-color: rgb(111, 201, 111);
 }

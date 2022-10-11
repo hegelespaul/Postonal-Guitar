@@ -19,11 +19,6 @@ let topnoteArr = [];
 var topnoteArrEv = [];
 let chordpoint = [];
 let progresion = [];
-// let list = [];
-
-// for (var i = 0; i < list.length; i++) {
-//     list[i].sort((a, b) => a - b);
-// }                                        ///////////////SORT
 
 window.addEventListener('load', init, false);
 function init() {
@@ -53,6 +48,21 @@ function cartesianProduct(arr) {
 
 
 function allElements(list) {
+    let diapason = [];
+    acordes = [];
+    cuadrantes = [];
+    chordsLen = [];
+    acomodo = [];
+    carrera = [];
+    result = [];
+    topnoteArr = [];
+    topnoteArrEv = [];
+    chordpoint = [];
+    progresion = [];
+
+    // for (var i = 0; i < list.length; i++) {
+    // list[i].sort((a, b) => a - b);
+    // }
 
     if (list.every(subarr => subarr.length >= 3)) {
 
@@ -334,7 +344,9 @@ function allElements(list) {
 
                 var dibujaDiagrama = (pisada) => {
 
+
                     var diagramas = d3.select('.drawerDiagrama').classed("svg-container", true).append('svg')
+
 
                     // .attr("preserveAspectRatio", "xMidYMid meet")
                     // .attr("viewBox", "0 0 600 100")
@@ -522,12 +534,9 @@ function allElements(list) {
                 }
             }
         }
-        var re = list.map(function (x) {
-            return parseInt(x, 10);
-        });
 
 
-        var fileContent = `
+        let fileContent = `
 \\title "Mi cancion" 
 \\subtitle "Yo"
 \\tempo 180
@@ -552,12 +561,13 @@ function allElements(list) {
         var link = URL.createObjectURL(blob);
         // console.log(link)
 
+
         // load elements
-        const wrapper = document.querySelector(".at-wrap");
-        const main = wrapper.querySelector(".at-main");
+        let wrapper = document.querySelector(".at-wrap");
+        let main = wrapper.querySelector(".at-main");
 
         // initialize alphatab
-        const settings = {
+        let settings = {
             file: link,
             notation: {
                 elements: {
@@ -572,7 +582,11 @@ function allElements(list) {
                 scrollElement: wrapper.querySelector('.at-viewport')
             }
         };
-        const api = new alphaTab.AlphaTabApi(main, settings);
+
+        let api = new alphaTab.AlphaTabApi(main, settings);
+        api.destroy();
+        api = new alphaTab.AlphaTabApi(main, settings);
+
 
 
         document.getElementById('export').onclick = function (e) {
@@ -831,14 +845,14 @@ function allElements(list) {
                 }
             }
         });
-        const boxes = Array.from(document.getElementsByClassName('selectorChords'));
+        // const boxes = Array.from(document.getElementsByClassName('selectorChords'));
 
-        boxes.forEach(box => {
-          box.remove();
-        });    
+        // boxes.forEach(box => {
+        //     box.remove();
+        // });
 
-        document.getElementById('menusDrawer').remove();
-    
+        // document.getElementById('menusDrawer').remove();
+
     } else {
         alert('Antes de generar la progresión, necesitas seleccionar un mínimo de 3 notas para cada acorde!');
         console.log(list)
@@ -873,8 +887,7 @@ class menuBotones {
             return index;
         }
 
-        
-        console.log(listaF)
+        console.log(listaF);
         let zona = document.getElementById("menusDrawer");
         let f = document.createElement('div');
         f.id = 'f' + btnCount;
@@ -885,8 +898,11 @@ class menuBotones {
             btn.id = i;
             btn.value = "OFF";
 
-
             btn.onclick = function toggle() {
+                var allFp = amplify.store("allFp");
+                var allFpNames = amplify.store("allFpNames");
+                var chordInTime;
+                var ChFp;
                 if (listaF[index - 1].length < 6) {
                     if (btn.value == "OFF") {
                         btn.value = "ON";
@@ -897,15 +913,12 @@ class menuBotones {
                         if (listaF[index - 1].length > 2) {
                             if (document.getElementById('g' + index)) {
                                 document.getElementById('g' + index).remove();
-
                             }
-                            var allFp = amplify.store("allFp");
-                            var allFpNames = amplify.store("allFpNames");
-                            var chordInTime = (listaF[index - 1].map(i => Number(i)));
-                            var ChFp = dodeca(chordInTime);
+                            chordInTime = (listaF[index - 1].map(i => Number(i)));
+                            ChFp = dodeca(chordInTime);
                             var g = document.createElement('div');
                             g.id = 'g' + index;
-                            f.append(g) 
+                            f.append(g);
                             document.getElementById('g' + index).append(allFpNames[getIndexOfArray(allFp, formaPrimaIn)] + ' | ');
                             document.getElementById('g' + index).append(ChFp + ' | ');
                             document.getElementById('g' + index).append(chordNm(chordInTime)[1]);
@@ -927,12 +940,13 @@ class menuBotones {
                         if (listaF[index - 1].length > 2) {
                             if (document.getElementById('g' + index)) {
                                 document.getElementById('g' + index).remove();
-
-                            } chordInTime = (listaF[index - 1].map(i => Number(i)));
+                            }
+                            chordInTime = (listaF[index - 1].map(i => Number(i)));
                             ChFp = dodeca(chordInTime);
                             var g = document.createElement('div');
                             g.id = 'g' + index;
-                            f.append(g)
+                            f.append(g);
+                            document.getElementById('g' + index).append(allFpNames[getIndexOfArray(allFp, formaPrimaIn)] + ' | ');
                             document.getElementById('g' + index).append(ChFp);
                             document.getElementById('g' + index).append(chordNm(chordInTime)[1]);
                         }
@@ -943,8 +957,37 @@ class menuBotones {
                         }
                     }
                 }
+                else if (listaF[index - 1].length === 6) {
+                    if (btn.value == "ON") {
+                        btn.value = "OFF";
+                        listaF[index - 1].splice(listaF[index - 1].indexOf(btn.id), 1);
+                        btn.classList.remove('btnon');
+                        btn.classList.add('btnoff');
+
+                        if (listaF[index - 1].length > 2) {
+                            if (document.getElementById('g' + index)) {
+                                document.getElementById('g' + index).remove();
+
+                            } chordInTime = (listaF[index - 1].map(i => Number(i)));
+                            ChFp = dodeca(chordInTime);
+                            var g = document.createElement('div');
+                            g.id = 'g' + index;
+                            f.append(g);
+                            document.getElementById('g' + index).append(allFpNames[getIndexOfArray(allFp, formaPrimaIn)] + ' | ');
+                            document.getElementById('g' + index).append(ChFp);
+                            document.getElementById('g' + index).append(chordNm(chordInTime)[1]);
+                        }
+                        else if (listaF[index - 1].length < 3) {
+                            if (document.getElementById('g' + index)) {
+                                document.getElementById('g' + index).remove();
+                            }
+                        }
+                    }
+
+                }
             };
             zona.append(btn);
+
         }
         zona.append(f)
         zona.appendChild(document.createElement("br"));
@@ -952,14 +995,19 @@ class menuBotones {
 }
 
 function removeChord() {
-    if( document.getElementById("menusDrawer").childNodes.length > 0){
+    if (document.getElementById("menusDrawer").childNodes.length > 0) {
         listaF.pop();
         btnCount = btnCount - 1;
         console.log(listaF);
-    for (var i = 0; i < 15; i++) {
-        document.getElementById("menusDrawer").removeChild(document.getElementById("menusDrawer").lastChild);
+        for (var i = 0; i < 15; i++) {
+            document.getElementById("menusDrawer").removeChild(document.getElementById("menusDrawer").lastChild);
+        }
     }
 }
+
+function eraseChords() {
+    var diagramas = d3.select('.drawerDiagrama');
+    diagramas.selectAll("*").remove();
 }
 
 window.onload = function () { crearMenus() };
