@@ -465,3 +465,7 @@ h1{
 .btnon{
   background-color: rgb(111, 201, 111);
 }
+
+.btnSelPoint:hover{
+  cursor: pointer;
+}

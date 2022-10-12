@@ -19,6 +19,11 @@ let topnoteArr = [];
 var topnoteArrEv = [];
 let chordpoint = [];
 let progresion = [];
+let listaF = []
+let btnCount = 0;
+let puntoPartidaFinal;
+let puntoArray;
+
 
 window.addEventListener('load', init, false);
 function init() {
@@ -46,6 +51,303 @@ function cartesianProduct(arr) {
     );
 }
 
+
+
+function puntodePartida(list) {
+    let mtx = [];
+
+    diapason = [];
+    acordes = [];
+    cuadrantes = [];
+    chordsLen = [];
+    acomodo = [];
+    carrera = [];
+    result = [];
+    topnoteArr = [];
+    topnoteArrEv = [];
+    chordpoint = [];
+    progresion = [];
+
+    if (list.every(subarr => subarr.length >= 3)) {
+
+        list.forEach((l) => {
+            chordsLen.push(l.length)
+        })
+
+        for (var c = 0; c < afinacion.length; c++) {
+            for (var t = 0; t <= 22; t++) {
+                diapason.push([c + 1, t, (afinacion[c] + t) % 12]);
+            }
+        }
+
+        for (var l = 0; l < list.length; l++) {
+            acordes.push([]);
+            for (var n = 0; n < list[l].length; n++) {
+                for (var c = 1; c < diapason.length; c++) {
+                    if (list[l][n] == diapason[c][2]) {
+                        acordes[l].push(diapason[c]);
+                    }
+                }
+            }
+        }
+
+        for (var i = 0; i < 18; i++) {
+            a = 5 + i;
+            b = 1 + i;
+            cuadrantes.push([]);
+            for (var ch = 0; ch < acordes.length; ch++) {
+                cuadrantes[i].push([]);
+                acordes[ch].forEach(function (t) {
+                    if (t[1] <= a && t[1] >= b) {
+                        cuadrantes[i][ch].push(t);
+                    }
+                });
+            }
+        }
+
+        list.forEach(function (a) {
+            acomodo.push([]);
+        })
+
+        cuadrantes.forEach(function (e) {
+            for (var i = 0; i < list.length; i++) {
+                acomodo[i].push(e[i]);
+            }
+        })
+
+        console.log(acomodo)
+
+        for (var a = 0; a < acomodo.length; a++) {
+
+            mtx = [];
+            let mtx2 = [];
+            acomodo[a].forEach(function (x) {
+                var myGrid = [];
+
+                var myGrid = [...Array(list[a].length)].map((e) => Array());
+
+                x.forEach(function (y) {
+                    for (var c = 0; c < list[a].length; c++) {
+                        if (y[2] == list[a][c]) {
+                            myGrid[c].push(y);
+                        }
+                    }
+                });
+
+                myGrid = cartesianProduct(myGrid);
+
+                myGrid.forEach(function (e) {
+                    mtx.push(e);
+                    for (var c = 0; c < e.length; c++) {
+                        for (var d = 0; d < e.length; d++) {
+                            if (c != d && e[c][0] == e[d][0]) {
+                                mtx2.push(e);
+                            }
+                        }
+                    }
+                    mtx = _.difference(mtx, mtx2);
+                });
+                mtx = Array.from(new Set(mtx.map(JSON.stringify)), JSON.parse);
+            });
+            console.log(mtx)
+            puntoArray = [...mtx];
+            console.log(puntoArray)
+        }
+
+        for (var d = 0; d < mtx.length; d++) {
+            var trastes = [];
+
+           
+            for (var t = 0; t < mtx[d].length; t++) {
+
+                trastes.push(mtx[d][t][1]);
+
+            }
+            var fretMin = Math.min(...trastes);
+            var fretMax = Math.max(...trastes);
+
+
+            var dibujaDiagrama = (pisada) => {
+                
+
+                var diagramas = d3.select('.drawerDiagrama').classed("svg-container", true).append('svg');
+                diagramas.append("foreignObject")
+                    .attr("width", 480)
+                    .attr("height", 500)
+                    .attr('x', -125)
+                    .attr('y', 90)
+                    .style("cursor", "pointer")
+                    .append("xhtml:div")
+                    .style("font", "10px 'Helvetica Neue'")
+                    .html("<button id=" +"punto" + d +" onclick=puntoPartida("+d+"),allElements(listaF) class="+"btnSelPoint"+">Selecciona como punto de partida</button>");
+
+                //  .attr("preserveAspectRatio", "xMidYMid meet")
+                //  .attr("viewBox", "0 0 600 100")
+                // .classed("svg-content-responsive-diagrama", true);
+
+                // diagramas.append('text')
+                // .text((d + 1))
+                // .attr('x', 0)
+                // .attr('y', 10)
+                // .attr("font-size", "20px")
+                // .attr("font-family", "sans-serif")
+                // .attr("stroke-width", 3);
+
+                if (fretMin > 1) {
+                    diagramas.append("text")
+                        .text('fr. ' + fretMin)
+                        .attr('x', 6)
+                        .attr('y', 83)
+                        .attr("font-size", "10.5px")
+                        .attr("font-family", "sans-serif")
+                        .attr("stroke-width",);
+                }
+
+                for (var i = 0; i < 7; i++) {
+                    diagramas.append('line')
+                        .attr('x1', 10)
+                        .attr('y1', 10 * i)
+                        .attr('x2', 200)
+                        .attr('y2', 10 * i)
+                        .attr('stroke', 'black')
+                        .attr('stroke-width', 0.3 * i);
+                }
+
+                for (var i = 0; i < 6; i++) {
+                    diagramas.append('line')
+                        .attr('x1', 10 + 38 * i)
+                        .attr('y1', 10)
+                        .attr('x2', 10 + 38 * i)
+                        .attr('y2', 60.9)
+                        .attr('stroke', 'gray')
+                        .attr('stroke-width', 1);
+                }
+                if (fretMin <= 1) {
+                    diagramas.append('line')
+                        .attr('x1', 5)
+                        .attr('y1', 9.8)
+                        .attr('x2', 5)
+                        .attr('y2', 60.9)
+                        .attr('stroke', 'black')
+                        .attr('stroke-width', 1);
+
+                    diagramas.append('line')
+                        .attr('x1', 5)
+                        .attr('y1', 10)
+                        .attr('x2', 10.5)
+                        .attr('y2', 10)
+                        .attr('stroke', 'black')
+                        .attr('stroke-width', 0.3);
+
+                    diagramas.append('line')
+                        .attr('x1', 5)
+                        .attr('y1', 10 * i)
+                        .attr('x2', 9.5)
+                        .attr('y2', 10 * 6)
+                        .attr('stroke', 'black')
+                        .attr('stroke-width', 1.8);
+                }
+
+                for (var i = 0; i < pisada.length; i++) {
+
+                    diagramas.append("input")
+                        .attr("type", "button")
+                        .attr("name", "toggle")
+                        .attr("value", "Toggle")
+                        .attr("onclick", "togglePressed()");
+
+
+                    diagramas.append('circle')
+                        .attr('cx', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
+                        .attr('cy', 10 * pisada[i][0])
+                        .attr('r', 6)
+                        .attr('stroke', 'none')
+                        .attr('stroke-width', 1)
+                        .attr('fill', pallete[(pisada[i][2] + 3) % 12])
+
+                    diagramas.append("text")
+                        .text(pisada[i][2])
+                        .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
+                        .attr('y', 10 * pisada[i][0] + 3.8)
+                        .attr('fill', 'white')
+                        .attr("font-size", "10px")
+                        .attr("font-family", "sans-serif")
+                        .style("text-anchor", "middle");
+                }
+
+
+                diagramas.on("mouseover", function (d) {
+                    d3.select(this).selectAll("circle").style("stroke", "red");
+                    d3.select(this).style("cursor", "pointer")
+
+                }).on("mouseout", function (d) {
+                    d3.select(this).selectAll("circle").style("stroke", "none").style("cursor", "pointer");
+                    d3.select(this).style("cursor", "pointer")
+
+                }).on("click", function () {
+
+                    audioContext.resume();
+                    var pisadaSound = [];
+                    for (var i = 0; i < pisada.length; i++) {
+                        pisadaSound.push([
+                            pisada[i][0].toString() + "-" + pisada[i][1].toString(),
+                        ]);
+                    }
+                    console.log(pisada);
+                    playchord(pisadaSound);
+                    d3.event.stopPropagation();
+                });
+
+            }
+            dibujaDiagrama(mtx[d]);
+        }
+
+
+        function playchord(coordenadas) {
+            for (var i = 0; i < coordenadas.length; i++) {
+
+                var audioBuffer;
+                let src = "../di/" + coordenadas[i] + ".mp3";
+                var getSound = new XMLHttpRequest();
+                getSound.open("get", src, true);
+                getSound.responseType = "arraybuffer";
+
+                getSound.onload = function () {
+                    //   document.getElementById("xhrStatus").textContent = "Loaded";
+                    audioContext.decodeAudioData(this.response, function (buffer) {
+                        audioBuffer = buffer;
+                        playback(); // <--- Start the playback after `audioBuffer` is defined.
+                    });
+                };
+
+                getSound.send();
+
+                function playback() {
+                    var gainNode = audioContext.createGain();
+                    var playSound = audioContext.createBufferSource();
+                    playSound.buffer = audioBuffer;
+                    playSound.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+                    playSound.start(audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
+                }
+            }
+        }
+
+    }
+    else {
+        alert('Antes de generar la progresión, necesitas seleccionar un mínimo de 3 notas para cada acorde!');
+        console.log(list)
+    }
+}
+
+console.log(puntoArray);
+
+function puntoPartida(identifier) {
+    puntoPartidaFinal = puntoArray[identifier];
+    console.log(puntoPartidaFinal);
+}
 
 function allElements(list) {
     let diapason = [];
@@ -205,7 +507,7 @@ function allElements(list) {
         ///////////////////////////////////////////POR TOP NOTE DISTANCIA EUCLIDEANA  3D y SIMILARIDAD COSENO/////////////////////////////////////////////////////////////////////////////////
 
 
-        progresion.push(result[0][0]); //////////////EL DE MEDICION
+        progresion.push(puntoPartidaFinal); //////////////EL DE MEDICION
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         function genera3DCS() {
@@ -332,6 +634,8 @@ function allElements(list) {
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         function dibujaMatrix() {
+
+            d3.select('.drawerDiagrama').selectAll("*").remove();
 
             for (var d = 0; d < progresion.length; d++) {
                 var trastes = [];
@@ -862,8 +1166,6 @@ function allElements(list) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 document.getElementById("partitura").style.display = 'none';
 
-let listaF = []
-let btnCount = 0;
 function crearMenus() {
     btnCount = btnCount + 1;
     listaF.push([]);
@@ -1003,11 +1305,14 @@ function removeChord() {
             document.getElementById("menusDrawer").removeChild(document.getElementById("menusDrawer").lastChild);
         }
     }
+    document.getElementById("partitura").style.display = 'none';
 }
 
 function eraseChords() {
     var diagramas = d3.select('.drawerDiagrama');
     diagramas.selectAll("*").remove();
+    document.getElementById("partitura").style.display = 'none';
+
 }
 
 window.onload = function () { crearMenus() };
