@@ -297,7 +297,7 @@ function puntodePartida(list) {
                 });
 
             }
-            dibujaDiagrama(mtx[0]);
+            dibujaDiagrama(mtx[d]);
         }
 
 
