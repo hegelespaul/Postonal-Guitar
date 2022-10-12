@@ -54,8 +54,8 @@ function cartesianProduct(arr) {
 
 
 function puntodePartida(list) {
+    
     let mtx = [];
-
     diapason = [];
     acordes = [];
     cuadrantes = [];
@@ -115,20 +115,18 @@ function puntodePartida(list) {
             }
         })
 
-        console.log(acomodo)
-
-        for (var a = 0; a < acomodo.length; a++) {
+        // console.log(acomodo)
 
             mtx = [];
             let mtx2 = [];
-            acomodo[a].forEach(function (x) {
+            acomodo[0].forEach(function (x) {
                 var myGrid = [];
 
-                var myGrid = [...Array(list[a].length)].map((e) => Array());
+                var myGrid = [...Array(list[0].length)].map((e) => Array());
 
                 x.forEach(function (y) {
-                    for (var c = 0; c < list[a].length; c++) {
-                        if (y[2] == list[a][c]) {
+                    for (var c = 0; c < list[0].length; c++) {
+                        if (y[2] == list[0][c]) {
                             myGrid[c].push(y);
                         }
                     }
@@ -149,10 +147,10 @@ function puntodePartida(list) {
                 });
                 mtx = Array.from(new Set(mtx.map(JSON.stringify)), JSON.parse);
             });
-            console.log(mtx)
+            // console.log(mtx)
             puntoArray = [...mtx];
-            console.log(puntoArray)
-        }
+            // console.log(puntoArray)
+        
 
         for (var d = 0; d < mtx.length; d++) {
             var trastes = [];
@@ -293,13 +291,13 @@ function puntodePartida(list) {
                             pisada[i][0].toString() + "-" + pisada[i][1].toString(),
                         ]);
                     }
-                    console.log(pisada);
+                    // console.log(pisada);
                     playchord(pisadaSound);
                     d3.event.stopPropagation();
                 });
 
             }
-            dibujaDiagrama(mtx[d]);
+            dibujaDiagrama(mtx[0]);
         }
 
 
@@ -342,11 +340,9 @@ function puntodePartida(list) {
     }
 }
 
-console.log(puntoArray);
-
 function puntoPartida(identifier) {
     puntoPartidaFinal = puntoArray[identifier];
-    console.log(puntoPartidaFinal);
+    // console.log(puntoPartidaFinal);
 }
 
 function allElements(list) {
@@ -372,7 +368,7 @@ function allElements(list) {
 
 
 
-        console.log(list);
+        // console.log(list);
 
         list.forEach((l) => {
             chordsLen.push(l.length)
@@ -419,7 +415,7 @@ function allElements(list) {
             }
         })
 
-        console.log(acomodo)
+        // console.log(acomodo)
 
         for (var a = 0; a < acomodo.length; a++) {
 
@@ -455,7 +451,7 @@ function allElements(list) {
             });
             result.push(mtx)
         }
-        console.log(result);
+        // console.log(result);
 
         ///////////////////////////////////////////POR TOP NOTE DISTANCIA EUCLIDEANA  2D/////////////////////////////////////////////////////////////////////////////////
         // var topnoteArrEv = [];
@@ -543,9 +539,9 @@ function allElements(list) {
 
                 posChord.push([]);
                 var minVal = Math.min(...minD[i]);
-                console.log(minVal);
-                console.log(getAllIndexes(minD[i], minVal))
-                console.log(minD);
+                // console.log(minVal);
+                // console.log(getAllIndexes(minD[i], minVal))
+                // console.log(minD);
                 for (var j = 0; j < getAllIndexes(minD[i], minVal).length; j++) {
                     posChord[i].push(result[i + 1][getAllIndexes(minD[i], minVal)[j]])
                 }
