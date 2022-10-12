@@ -510,8 +510,8 @@ var trace1 = {
                 opacity: 0.3,
                 color: color
         },
-        hovertemplate: '<i>%{text}</i>' + '<br><i>Prime form</i>: <b>%{customdata[1]}</b>' +
-                '<br><i>Possible Chords</i>: <b>%{customdata[0]}</b><extra></extra>',
+        hovertemplate: '<i>%{text}</i>' + '<br><i>Forma Prima</i>: <b>%{customdata[1]}</b>' +
+                '<br><i>Posibles Acordes</i>: <b>%{customdata[0]}</b><extra></extra>',
         customdata: customdata,
         text: names,
         textfont: {
