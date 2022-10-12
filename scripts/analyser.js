@@ -543,8 +543,8 @@ var layout = {
                 }
         },
         paper_bgcolor: "rgba(0,0,0,0)",
-        width: 1400,
-        height: 1000,
+        width: 1600,
+        height: 800,
         hovermode: 'closest',
         // title: 'Prime Forms Latent Space'
 };
