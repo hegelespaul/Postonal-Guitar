@@ -498,11 +498,13 @@ function dibujaMatrix() {
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 function playchord(coordenadas) {
+    var getSound;
+    var chorArr = [];
     for (var i = 0; i < coordenadas.length; i++) {
 
         var audioBuffer;
         let src = "../di/" + coordenadas[i] + ".mp3";
-        var getSound = new XMLHttpRequest();
+        getSound = new XMLHttpRequest();
         getSound.open("get", src, true);
         getSound.responseType = "arraybuffer";
 
@@ -513,8 +515,10 @@ function playchord(coordenadas) {
                 playback(); // <--- Start the playback after `audioBuffer` is defined.
             });
         };
+        chorArr.push(getSound);
+    }
 
-        getSound.send();
+    for(var sch = 0; sch< chorArr.length;sch++){
 
         function playback() {
             var gainNode = audioContext.createGain();
@@ -526,6 +530,8 @@ function playchord(coordenadas) {
             playSound.start(audioContext.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
         }
+        
+        chorArr[sch].send()
     }
 }
 

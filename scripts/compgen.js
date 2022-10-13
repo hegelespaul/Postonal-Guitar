@@ -302,14 +302,16 @@ function puntodePartida(list) {
 
 
         function playchord(coordenadas) {
+            var getSound;
+            var chorArr = [];
             for (var i = 0; i < coordenadas.length; i++) {
-
+        
                 var audioBuffer;
                 let src = "../di/" + coordenadas[i] + ".mp3";
-                var getSound = new XMLHttpRequest();
+                getSound = new XMLHttpRequest();
                 getSound.open("get", src, true);
                 getSound.responseType = "arraybuffer";
-
+        
                 getSound.onload = function () {
                     //   document.getElementById("xhrStatus").textContent = "Loaded";
                     audioContext.decodeAudioData(this.response, function (buffer) {
@@ -317,9 +319,11 @@ function puntodePartida(list) {
                         playback(); // <--- Start the playback after `audioBuffer` is defined.
                     });
                 };
-
-                getSound.send();
-
+                chorArr.push(getSound);
+            }
+        
+            for(var sch = 0; sch< chorArr.length;sch++){
+        
                 function playback() {
                     var gainNode = audioContext.createGain();
                     var playSound = audioContext.createBufferSource();
@@ -330,6 +334,8 @@ function puntodePartida(list) {
                     playSound.start(audioContext.currentTime);
                     gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
                 }
+                
+                chorArr[sch].send()
             }
         }
 
