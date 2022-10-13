@@ -54,7 +54,7 @@ function cartesianProduct(arr) {
 
 
 function puntodePartida(list) {
-    
+
     let mtx = [];
     diapason = [];
     acordes = [];
@@ -117,45 +117,45 @@ function puntodePartida(list) {
 
         // console.log(acomodo)
 
-            mtx = [];
-            let mtx2 = [];
-            acomodo[0].forEach(function (x) {
-                var myGrid = [];
+        mtx = [];
+        let mtx2 = [];
+        acomodo[0].forEach(function (x) {
+            var myGrid = [];
 
-                var myGrid = [...Array(list[0].length)].map((e) => Array());
+            var myGrid = [...Array(list[0].length)].map((e) => Array());
 
-                x.forEach(function (y) {
-                    for (var c = 0; c < list[0].length; c++) {
-                        if (y[2] == list[0][c]) {
-                            myGrid[c].push(y);
-                        }
+            x.forEach(function (y) {
+                for (var c = 0; c < list[0].length; c++) {
+                    if (y[2] == list[0][c]) {
+                        myGrid[c].push(y);
                     }
-                });
-
-                myGrid = cartesianProduct(myGrid);
-
-                myGrid.forEach(function (e) {
-                    mtx.push(e);
-                    for (var c = 0; c < e.length; c++) {
-                        for (var d = 0; d < e.length; d++) {
-                            if (c != d && e[c][0] == e[d][0]) {
-                                mtx2.push(e);
-                            }
-                        }
-                    }
-                    mtx = _.difference(mtx, mtx2);
-                });
-                mtx = Array.from(new Set(mtx.map(JSON.stringify)), JSON.parse);
+                }
             });
-            // console.log(mtx)
-            puntoArray = [...mtx];
-            // console.log(puntoArray)
-        
+
+            myGrid = cartesianProduct(myGrid);
+
+            myGrid.forEach(function (e) {
+                mtx.push(e);
+                for (var c = 0; c < e.length; c++) {
+                    for (var d = 0; d < e.length; d++) {
+                        if (c != d && e[c][0] == e[d][0]) {
+                            mtx2.push(e);
+                        }
+                    }
+                }
+                mtx = _.difference(mtx, mtx2);
+            });
+            mtx = Array.from(new Set(mtx.map(JSON.stringify)), JSON.parse);
+        });
+        // console.log(mtx)
+        puntoArray = [...mtx];
+        // console.log(puntoArray)
+
 
         for (var d = 0; d < mtx.length; d++) {
             var trastes = [];
 
-           
+
             for (var t = 0; t < mtx[d].length; t++) {
 
                 trastes.push(mtx[d][t][1]);
@@ -166,7 +166,7 @@ function puntodePartida(list) {
 
 
             var dibujaDiagrama = (pisada) => {
-                
+
 
                 var diagramas = d3.select('.drawerDiagrama').classed("svg-container", true).append('svg');
                 diagramas.append("foreignObject")
@@ -177,7 +177,7 @@ function puntodePartida(list) {
                     .style("cursor", "pointer")
                     .append("xhtml:div")
                     .style("font", "10px 'Helvetica Neue'")
-                    .html("<button id=" +"punto" + d +" onclick=puntoPartida("+d+"),allElements(listaF) class="+"btnSelPoint"+">Selecciona como punto de partida</button>");
+                    .html("<button id=" + "punto" + d + " onclick=puntoPartida(" + d + "),allElements(listaF) class=" + "btnSelPoint" + ">Selecciona como punto de partida</button>");
 
                 //  .attr("preserveAspectRatio", "xMidYMid meet")
                 //  .attr("viewBox", "0 0 600 100")
@@ -305,13 +305,13 @@ function puntodePartida(list) {
             var getSound;
             var chorArr = [];
             for (var i = 0; i < coordenadas.length; i++) {
-        
+
                 var audioBuffer;
                 let src = "../di/" + coordenadas[i] + ".mp3";
                 getSound = new XMLHttpRequest();
                 getSound.open("get", src, true);
                 getSound.responseType = "arraybuffer";
-        
+
                 getSound.onload = function () {
                     //   document.getElementById("xhrStatus").textContent = "Loaded";
                     audioContext.decodeAudioData(this.response, function (buffer) {
@@ -321,9 +321,9 @@ function puntodePartida(list) {
                 };
                 chorArr.push(getSound);
             }
-        
-            for(var sch = 0; sch< chorArr.length;sch++){
-        
+
+            for (var sch = 0; sch < chorArr.length; sch++) {
+
                 function playback() {
                     var gainNode = audioContext.createGain();
                     var playSound = audioContext.createBufferSource();
@@ -334,7 +334,7 @@ function puntodePartida(list) {
                     playSound.start(audioContext.currentTime);
                     gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
                 }
-                
+
                 chorArr[sch].send()
             }
         }
@@ -810,11 +810,13 @@ function allElements(list) {
         // artist.render(renderer);
 
         function playchord(coordenadas) {
+            var getSound;
+            var chorArr = [];
             for (var i = 0; i < coordenadas.length; i++) {
 
                 var audioBuffer;
                 let src = "../di/" + coordenadas[i] + ".mp3";
-                var getSound = new XMLHttpRequest();
+                getSound = new XMLHttpRequest();
                 getSound.open("get", src, true);
                 getSound.responseType = "arraybuffer";
 
@@ -825,8 +827,10 @@ function allElements(list) {
                         playback(); // <--- Start the playback after `audioBuffer` is defined.
                     });
                 };
+                chorArr.push(getSound);
+            }
 
-                getSound.send();
+            for (var sch = 0; sch < chorArr.length; sch++) {
 
                 function playback() {
                     var gainNode = audioContext.createGain();
@@ -838,6 +842,8 @@ function allElements(list) {
                     playSound.start(audioContext.currentTime);
                     gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
                 }
+
+                chorArr[sch].send()
             }
         }
 
@@ -1117,12 +1123,14 @@ function allElements(list) {
                     if (count == 0 && Math.round(position / 1333.333) - index == 0 && position != 0) {
                         // console.log('condition' + (Math.round(position/1333.333) - index))
                         audioContext.resume();
+                        var getSound;
+                        var chorArr = [];
                         for (var i = 0; i < progresion[index].length; i++) {
                             // console.log(progresion[index][i][0] +  '-' + progresion[index][i][1])
                             var acorde = progresion[index][i][0] + '-' + progresion[index][i][1];
                             var audioBuffer;
                             let src = "../di/" + acorde + ".mp3";
-                            var getSound = new XMLHttpRequest();
+                            getSound = new XMLHttpRequest();
                             getSound.open("get", src, true);
                             getSound.responseType = "arraybuffer";
 
@@ -1134,7 +1142,10 @@ function allElements(list) {
                                 });
                             };
 
-                            getSound.send();
+                            chorArr.push(getSound);
+                        }
+
+                        for (var sch = 0; sch < chorArr.length; sch++) {
 
                             function playback() {
                                 var gainNode = audioContext.createGain();
@@ -1146,6 +1157,7 @@ function allElements(list) {
                                 playSound.start(audioContext.currentTime);
                                 gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
                             }
+                            chorArr[sch].send()
                         }
                     }
                 }
