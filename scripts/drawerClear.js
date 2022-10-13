@@ -515,6 +515,7 @@ function playchord(coordenadas) {
         };
 
         getSound.send();
+    }
 
         function playback() {
             var gainNode = audioContext.createGain();
@@ -526,7 +527,7 @@ function playchord(coordenadas) {
             playSound.start(audioContext.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
         }
-    }
+    
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
