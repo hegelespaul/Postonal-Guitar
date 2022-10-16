@@ -5,7 +5,7 @@ let chunkIndx = [];
 
 if(dat.length ==7){
     chunkIndx = [];
-    chunkIndx.push(3);
+    chunkIndx.push(4);
 }
 
 if(dat.length ==8){
