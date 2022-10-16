@@ -1,16 +1,14 @@
 const afinacion = [4, 11, 7, 2, 9, 4];
-// let notas = amplify.store("pisadas");
+let serie;
 notas = []
 console.log(notas);
-var buttons;
+var buttons = [];
 var coord = [];
-
-
-
 let mtx = [];
 let pisadas = [];
 let audioContext;
 let pallete = ["rgb(0,231,6,0.5)", "rgb(0,255,173,0.5)", "rgb(0,107,255,0.5)", "rgb(49,1,250,0.5)", "rgb(131,1,205,0.5)", "rgb(63,0,87,0.5)", "rgb(103,4,81,0.5)", "rgb(215,1,2,0.5)", "rgb(227,67,3,0.5)", "rgb(255,136,0,0.5)", "rgb(236,255,0,0.5)", "rgb(154,243,4,0.5)"];
+let complemento;
 
 window.addEventListener('load', init, false);
 function init() {
@@ -25,6 +23,7 @@ function init() {
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 function dibujaTodo() {
+    serie = notas;
 
     var formas = d3.select('.drawerForm').classed("svg-container", true).append("svg")
         .attr("height", "500");
@@ -87,11 +86,8 @@ function dibujaTodo() {
         btn.setAttribute("value", 0);
         btn.style.background = pallete[i];
         ul.appendChild(li);
+        buttons.push(btn)
     }
-
-    buttons = document.getElementsByTagName("button");
-
-
 
     for (var i = 0; i < 12; i++) {
 
@@ -147,18 +143,15 @@ function dibujaTodo() {
                     polygon();
                 }
             }
-
         };
-
-
     }
-
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 var dibujaDiapason = (notas) => {
+    console.log(complemento)
     var diapason = d3.select('.drawerDiapason').classed("svg-container", true).append('svg')
         .attr("preserveAspectRatio", "xMidYMid meet")
         .attr("viewBox", "0 0 400 100")
@@ -392,6 +385,7 @@ function dibujaMatrix() {
             // .attr("font-family", "sans-serif")
             // .attr("stroke-width", 3);
 
+
             if (fretMin > 1) {
                 diagramas.append("text")
                     .text('fr. ' + fretMin)
@@ -518,7 +512,7 @@ function playchord(coordenadas) {
         chorArr.push(getSound);
     }
 
-    for(var sch = 0; sch< chorArr.length;sch++){
+    for (var sch = 0; sch < chorArr.length; sch++) {
 
         function playback() {
             var gainNode = audioContext.createGain();
@@ -530,7 +524,7 @@ function playchord(coordenadas) {
             playSound.start(audioContext.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
         }
-        
+
         chorArr[sch].send()
     }
 }
@@ -539,6 +533,9 @@ function playchord(coordenadas) {
 
 
 function formaPrima() {
+    complemento = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    complemento.splice(complemento.indexOf(serie), 1);
+
 
     function getIndexOfArray(array, findArray) {
         let index;
@@ -560,16 +557,22 @@ function formaPrima() {
     var text = document.createTextNode(allFpNames[getIndexOfArray(allFp, formaPrimaIn)]
         + ' |  ' + fPrR + ' | ');
 
+    if (allFpNames[getIndexOfArray(allFp, formaPrimaIn)] != undefined) {
+        document.title = allFpNames[getIndexOfArray(allFp, formaPrimaIn)]
+    } else {
+        document.title = 'Guitarra Postonal en Línea'
+    }
+
     var notext = document.createTextNode(' |  ' + fPrR + ' | ');
     var chordtext = document.createTextNode(chordNm(notas)[1])
     document.getElementById("forma").innerHTML = "";
     document.getElementById("acorde").innerHTML = "";
-  
+
     if (notas.length >= 3) {
         paragraph2.appendChild(chordtext);
         paragraph.appendChild(text);
     }
-    else{
+    else {
         paragraph.appendChild(notext);
     }
     var res = fPrR;
@@ -581,13 +584,231 @@ function formaPrima() {
 dibujaTodo();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
+let inputN;
 
-let inputN = amplify.store("pisadas");
-for (var i = 0; i < inputN.length; i++) {
-    var id = inputN[i];
-    // console.log(notas[i], buttons[(notas[i] + 3) % 12])
-    if (inputN[i] = buttons[(inputN[i] + 3) % 12]) {
-        var btnprsd = document.getElementById(id);
-        btnprsd.click();
+function onload() {
+    if (amplify.store("pisadas")) {
+        inputN = amplify.store("pisadas");
+        complemento = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+        for (var i = 0; i < inputN.length; i++) {
+            complemento.splice(complemento.indexOf(inputN[i]), 1);
+            var id = inputN[i];
+            // console.log(notas[i], buttons[(notas[i] + 3) % 12])
+            if (inputN[i] = buttons[(inputN[i] + 3) % 12]) {
+                var btnprsd = document.getElementById(id);
+                btnprsd.click();
+            }
+        }
     }
+}
+window.onload = onload();
+
+window.onbeforeunload = closingCode;
+function closingCode() {
+    amplify.store("pisadas", null);
+    return null;
+}
+
+serie = [];
+
+function complementoW() {
+    serie = [];
+    complemento = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+    for (var h = 0; h < buttons.length; h++) {
+        if (buttons[h].className == "btnOn") {
+            var asi = parseInt(buttons[h].id);
+            serie.push(asi);
+        }
+    }
+
+    for (var h = 0; h < serie.length; h++) {
+        complemento.splice(complemento.indexOf(serie[h]), 1);
+    }
+
+    if (serie.length < 6) {
+        var w = window.open(
+            "/complemento.html", "_blank");
+            amplify.store("complemento", complemento);
+    } else if (serie.length == 6) {
+        var compbtn = complemento;
+
+        for (var t = 0; t < buttons.length; t++) {
+            if (buttons[t].className == "btnOn") {
+                buttons[t].click();
+            }
+        }
+
+        for (var t = 0; t < buttons.length; t++) {
+            if (compbtn.includes(parseInt(buttons[t].id)) == true) {
+                buttons[t].click();
+            }
+        }
+    }
+}
+
+function inversionW() {
+    serie = [];
+
+    function permutaciones(notes) {
+        var formaPrimaIn2;
+        var tricorde = notes;
+        var permu = [];
+        var formaPrimaCal = [];
+        var formaPrimaSel = [];
+        var formaPrimaOri = [];
+
+        for (var e = 0; e < tricorde.length; e++) {
+            var fPrR2;
+            var tri0 = [];
+            var retro0 = [];
+            var tri0sum;
+            var tri0Max;
+            var tri0Min;
+            var retro0sum;
+            var retro0Max;
+            var retro0Min;
+
+            tricorde.forEach(function (nota) {
+                var nuevoValor = (nota - tricorde[e] + 12) % 12;
+                tri0.push(nuevoValor);
+                tri0.sort((a, b) => a - b);
+                // tri0sum = tri0.reduce((a, b) => a + b, 0);
+                tri0Max = Math.max(...tri0);
+                tri0Min = Math.min(...tri0);
+                tri0sum = tri0Max - tri0Min;
+
+                var nuevoValorR = (tricorde[e] - nota + 12) % 12;
+                retro0.push(nuevoValorR);
+                retro0.sort((a, b) => a - b);
+                // retro0sum = retro0.reduce((a, b) => a + b, 0);
+                retro0Max = Math.max(...retro0);
+                retro0Min = Math.min(...retro0);
+                retro0sum = retro0Max - retro0Min;
+
+            });
+
+            formaPrimaCal.push(tri0sum, retro0sum);
+            formaPrimaSel.push(tri0, retro0);
+            formaPrimaOri.push(tricorde[e].toString(), "'" + tricorde[e].toString());
+            permu.push(
+                "(" + tri0 + ")" + " " + tricorde[e].toString(),
+                "(" + retro0 + ")" + " '" + tricorde[e].toString(),
+            );
+        }
+
+        var allindx = getAllIndexes(formaPrimaCal, Math.min(...formaPrimaCal));
+        var lastcomp = [];
+        var lastcompIndx = [];
+        var lastcompVal;
+        var namIndx = []
+
+        for (var i = 0; i < allindx.length; i++) {
+            lastcompVal = formaPrimaSel[allindx[i]]
+            lastcompVal = lastcompVal.reduce((a, b) => a + b, 0);
+            lastcomp.push(lastcompVal);
+            lastcompIndx.push(formaPrimaSel[allindx[i]]);
+            namIndx.push(allindx[i]);
+        }
+        var formaPrimaIndex = Math.min(...lastcomp);
+        formaPrimaIn2 = lastcompIndx[lastcomp.indexOf(formaPrimaIndex)];
+
+        // var formaPrimaIn = formaPrimaCal.indexOf(Math.min(...formaPrimaCal));
+        fPrR2 = `(${formaPrimaIn2}) ${formaPrimaOri[namIndx[lastcomp.indexOf(formaPrimaIndex)]]}`;
+        return [formaPrimaIn2, formaPrimaOri[namIndx[lastcomp.indexOf(formaPrimaIndex)]]];
+    }
+
+
+    for (var i = 0; i < buttons.length; i++) {
+        if (buttons[i].className == 'btnOn') {
+            serie.push((parseInt(buttons[i].id)));
+        }
+    }
+
+    function inv(notes) {
+        var p1 = notes[0];
+        var res = [];
+        notes.forEach(function (unaNota) {
+            var nuevoValor = (unaNota - p1) * -1 + p1;
+            res.push((nuevoValor + 12) % 12);
+        });
+        return res;
+    }
+
+    let seriefP = permutaciones(serie)[0];
+    let seriefPn = permutaciones(serie)[1];
+
+    // console.log(seriefP);
+
+    let serieEv = [];
+    let invS;
+
+
+    for (var j = 0; j < seriefP.length; j++) {
+        if (seriefPn.includes("'") == true) {
+            serieEv.push((seriefP[j] + parseInt(seriefPn[1])) % 12)
+        }
+        if (seriefPn.includes("'") == false) {
+            serieEv.push((seriefP[j] + parseInt(seriefPn[0])) % 12)
+        }
+    }
+
+    if (seriefPn.includes("'") == true) {
+        invS = serieEv;
+    }
+    if (seriefPn.includes("'") == false) {
+        invS = inv(serieEv);
+    }
+
+    // console.log(serieEv)
+
+    // console.log(serie, seriefP, invS)
+
+    for (var t = 0; t < buttons.length; t++) {
+        if (buttons[t].className == "btnOn") {
+            buttons[t].click();
+        }
+    }
+
+    for (var t = 0; t < buttons.length; t++) {
+
+        if (invS.includes(parseInt(buttons[t].id)) == true) {
+            buttons[t].click()
+        }
+    }
+    serie = invS;
+    amplify.store("pisadas", serie)
+}
+
+function transponerW() {
+    serie = [];
+
+    var tIndex = document.getElementById("tIndex").value;
+
+    if (parseInt(tIndex)) {
+
+        for (var t = 0; t < buttons.length; t++) {
+            if (buttons[t].className == "btnOn") {
+                buttons[t].click();
+                serie.push(parseInt(buttons[t].id))
+            }
+        }
+
+        for (var t = 0; t < serie.length; t++) {
+            var tINdxT = parseInt(tIndex);
+            var este
+
+            if (tINdxT > 0) {
+                este = ((serie[t] + parseInt(tIndex) % 12));
+            }
+            if (tINdxT < 0) {
+                este = (((serie[t] + parseInt(tIndex) % 12) + 12) % 12);
+            }
+
+            buttons[(este + 3) % 12].click()
+        }
+    }
+
+    amplify.store("pisadas", serie);
 }

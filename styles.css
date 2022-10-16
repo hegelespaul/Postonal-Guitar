@@ -469,3 +469,19 @@ h1{
 .btnSelPoint:hover{
   cursor: pointer;
 }
+
+.operations{
+  display: flex;
+  justify-content: center;
+  width: 70%;
+  margin: auto;
+  margin-top: 5px;
+}
+
+.operations > button{
+  margin-left: 10px;;
+}
+
+.operations > button:hover{
+  cursor: pointer;
+}
