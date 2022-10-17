@@ -194,7 +194,7 @@ console.log(permutaciones(dat));
 function NewTab(notasNuevas) {
   amplify.store("pisadas", notasNuevas);
   var w = window.open(
-    "/diagramGen.html", "_blank", "width=200,height=100");
+    "/diagramGen.html", "_blank");
 }
 
 function getIndexOfArray(array, findArray) {
