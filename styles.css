@@ -485,3 +485,11 @@ h1{
 .operations > button:hover{
   cursor: pointer;
 }
+
+.listacomplemento{
+  display:flex;
+  flex-flow:wrap;
+  width: 70%;
+  margin: auto;
+  justify-content: space-evenly;
+}

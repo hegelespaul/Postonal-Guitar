@@ -218,12 +218,47 @@ for (var a = 0; a < chunkIndx.length; a++) {
   // let red2 = allFpperm
 
   console.log(red2);
-  for(var j= 0; j<red2.length;j++){
-  d3.select("#forma").append("div")
-    .html("<a href='/compgen.html'>" + red2[j] + "</br>")
+
+
+  for (var j = 0; j < red2.length; j++) {
+    d3.select(".listacomplemento").append("text")
+      .text("    [");
+    for (var k = 0; k < red2[j].length; k++) {
+
+      var notasFP = red2[j][k].substring(1, red2[j][k].indexOf(')'));
+      notasFP = notasFP.split(",").map(Number)
+      // console.log(notasFP)
+
+      var arreglo = red2[j][k].slice(red2[j][k].indexOf(')'));
+      arreglo = arreglo.slice(1);
+
+      if (arreglo.includes("'") == true) {
+        arreglo = arreglo.replace("'", "");
+        arreglo = parseInt(arreglo)
+        // console.log('retrogrado de ', arreglo);
+      } else {
+        arreglo = parseInt(arreglo);
+        // console.log('desde ', arreglo);
+      }
+
+
+
+      // function NewTab() {
+      //   var w = window.open(
+      //           "/diagramGen.html", "_blank");
+      //   amplify.store("pisadas", pisadas);
+      // }
+      d3.select(".listacomplemento").append("div")
+        .html("<a href='/diagramGen.html' target='_blank'>" + red2[j][k] + ' ');
+    }
+    d3.select(".listacomplemento").append("text")
+      .text("]    ");
   }
 
 }
+
+d3.select(".head").append("text").
+  text(permutaciones(dat));
 
 
 // function transA0(acorde) {
