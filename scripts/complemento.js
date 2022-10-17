@@ -192,9 +192,9 @@ var perm = heapsPermute(dat);
 console.log(permutaciones(dat));
 
 function NewTab(notasNuevas) {
-  var w = window.open(
-    "/diagramGen.html", "_blank");
   amplify.store("pisadas", notasNuevas);
+  var w = window.open(
+    "/diagramGen.html", "_blank","width=200,height=100");
 }
 
 function getIndexOfArray(array, findArray) {
