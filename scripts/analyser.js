@@ -567,6 +567,7 @@ myPlot.on('plotly_click', function (data) {
                 var w = window.open(
                         "/diagramGen.html", "_blank");
                 pisadas = fP[indexfP];
+                console.log(pisadas);
                 amplify.store("pisadas", pisadas);
                 origTitle = names[indexfP];
                 amplify.store("name", origTitle);

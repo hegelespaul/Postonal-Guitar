@@ -189,7 +189,24 @@ function permutaciones(notes) {
 // };
 
 var perm = heapsPermute(dat);
-console.log(permutaciones(dat))
+console.log(permutaciones(dat));
+
+function NewTab(notasNuevas) {
+  var w = window.open(
+    "/diagramGen.html", "_blank");
+  amplify.store("pisadas", notasNuevas);
+}
+
+function getIndexOfArray(array, findArray) {
+  let index;
+  array.some((item, i) => {
+    if (JSON.stringify(item) === JSON.stringify(findArray)) {
+      index = i;
+      return true;
+    }
+  });
+  return index;
+}
 
 for (var a = 0; a < chunkIndx.length; a++) {
   all = [];
@@ -216,18 +233,16 @@ for (var a = 0; a < chunkIndx.length; a++) {
     red2 = allFpperm.filter(a => lut2[a] ? false : lut2[a] = true);
 
   // let red2 = allFpperm
-
-  console.log(red2);
-
+  // console.log(red2);
 
   for (var j = 0; j < red2.length; j++) {
-    d3.select(".listacomplemento").append("text")
-      .text("    [");
+    var chordC = d3.select(".listacomplemento").append("div").attr("id","cuadrito");
     for (var k = 0; k < red2[j].length; k++) {
 
+      var notasF;
+
       var notasFP = red2[j][k].substring(1, red2[j][k].indexOf(')'));
-      notasFP = notasFP.split(",").map(Number)
-      // console.log(notasFP)
+      notasFP = notasFP.split(",").map(Number);
 
       var arreglo = red2[j][k].slice(red2[j][k].indexOf(')'));
       arreglo = arreglo.slice(1);
@@ -236,25 +251,48 @@ for (var a = 0; a < chunkIndx.length; a++) {
         arreglo = arreglo.replace("'", "");
         arreglo = parseInt(arreglo)
         // console.log('retrogrado de ', arreglo);
+        notasF = [];
+        for (var y = 0; y < notasFP.length; y++) {
+          notasF.push(Math.abs(notasFP[y] - arreglo) % 12);
+        }
+        chordC.append("div")
+          .attr("id", notasF)
+          .text(red2[j][k] + " ")
+          .on("click", function () {
+            var notasNewTab = this.id.split(",").map(Number);
+            console.log(notasNewTab)
+            NewTab(notasNewTab);
+          })
+          .style("cursor", "pointer")
+          .on("mouseover", function (d) {
+            this.className = 'textorojo';
+          }).on("mouseout", function (d) {
+            this.className = 'textonegro';
+          });
       } else {
         arreglo = parseInt(arreglo);
         // console.log('desde ', arreglo);
+        notasF = [];
+        for (var y = 0; y < notasFP.length; y++) {
+          notasF.push((notasFP[y] + arreglo) % 12);
+        }
+        chordC.append("div")
+          .attr("id", notasF)
+          .text(red2[j][k] + " ")
+          .on("click", function () {
+            var notasNewTab = this.id.split(",").map(Number);
+            console.log(notasNewTab)
+            NewTab(notasNewTab);
+          })
+          .style("cursor", "pointer")
+          .on("mouseover", function () {
+            this.className = 'textorojo';
+          }).on("mouseout", function () {
+            this.className = 'textonegro';
+          });
       }
-
-
-
-      // function NewTab() {
-      //   var w = window.open(
-      //           "/diagramGen.html", "_blank");
-      //   amplify.store("pisadas", pisadas);
-      // }
-      d3.select(".listacomplemento").append("div")
-        .html("<a href='/diagramGen.html' target='_blank'>" + red2[j][k] + ' ');
     }
-    d3.select(".listacomplemento").append("text")
-      .text("]    ");
   }
-
 }
 
 d3.select(".head").append("text").

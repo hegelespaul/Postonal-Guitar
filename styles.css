@@ -493,3 +493,19 @@ h1{
   margin: auto;
   justify-content: space-evenly;
 }
+
+.listacomplemento > *{
+  margin:10px;
+}
+
+#cuadrito:hover{
+  background-color:#f2f7aa98;
+}
+
+.textorojo{
+  color: red;
+}
+
+.textonegro{
+  color: black;
+}
