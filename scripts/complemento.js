@@ -236,7 +236,8 @@ for (var a = 0; a < chunkIndx.length; a++) {
   // console.log(red2);
 
   for (var j = 0; j < red2.length; j++) {
-    var chordC = d3.select(".listacomplemento").append("div").attr("id","cuadrito");
+    var chordC = d3.select(".listacomplemento").append("div").attr("id", "cuadrito");
+    
     for (var k = 0; k < red2[j].length; k++) {
 
       var notasF;
@@ -297,7 +298,6 @@ for (var a = 0; a < chunkIndx.length; a++) {
 
 d3.select(".head").append("text").
   text(permutaciones(dat));
-
 
 // function transA0(acorde) {
 //     var result = [];
