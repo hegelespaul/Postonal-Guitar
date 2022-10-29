@@ -526,13 +526,13 @@ var trace1 = {
 var layout = {
         scene: {
                 xaxis: {
-                        visible: false,
+                        visible: true,
                 },
                 yaxis: {
-                        visible: false,
+                        visible: true,
                 },
                 zaxis: {
-                        visible: false
+                        visible: true,
                 },
                 camera: {
                         eye: {
