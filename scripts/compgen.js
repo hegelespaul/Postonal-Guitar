@@ -173,7 +173,7 @@ function puntodePartida(list) {
                     .attr("width", 480)
                     .attr("height", 500)
                     .attr('x', -125)
-                    .attr('y', 90+ adjustY)
+                    .attr('y', 90 + adjustY)
                     .style("cursor", "pointer")
                     .append("xhtml:div")
                     .style("font", "9px 'Helvetica Neue'")
@@ -184,19 +184,19 @@ function puntodePartida(list) {
                 // .classed("svg-content-responsive-diagrama", true);
 
                 diagramas.append('text')
-                .text((d + 1))
-                .attr('x', 10)
-                .attr('y', adjustY - 5)
-                .attr("font-size", "20px")
-                .attr("opacity", "0.5")
-                .attr("font-family", "sans-serif")
-                .attr("stroke-width", 3);
+                    .text((d + 1))
+                    .attr('x', 10)
+                    .attr('y', adjustY - 5)
+                    .attr("font-size", "20px")
+                    .attr("opacity", "0.5")
+                    .attr("font-family", "sans-serif")
+                    .attr("stroke-width", 3);
 
                 if (fretMin > 1) {
                     diagramas.append("text")
                         .text('fr. ' + fretMin)
                         .attr('x', 6)
-                        .attr('y', 83+ adjustY)
+                        .attr('y', 83 + adjustY)
                         .attr("font-size", "10.5px")
                         .attr("font-family", "sans-serif")
                         .attr("stroke-width",);
@@ -205,9 +205,9 @@ function puntodePartida(list) {
                 for (var i = 0; i < 7; i++) {
                     diagramas.append('line')
                         .attr('x1', 10)
-                        .attr('y1', 10 * i+ adjustY)
+                        .attr('y1', 10 * i + adjustY)
                         .attr('x2', 200)
-                        .attr('y2', 10 * i+ adjustY)
+                        .attr('y2', 10 * i + adjustY)
                         .attr('stroke', 'black')
                         .attr('stroke-width', 0.3 * i);
                 }
@@ -215,34 +215,34 @@ function puntodePartida(list) {
                 for (var i = 0; i < 6; i++) {
                     diagramas.append('line')
                         .attr('x1', 10 + 38 * i)
-                        .attr('y1', 10+ adjustY)
+                        .attr('y1', 10 + adjustY)
                         .attr('x2', 10 + 38 * i)
-                        .attr('y2', 60.9+ adjustY)
+                        .attr('y2', 60.9 + adjustY)
                         .attr('stroke', 'gray')
                         .attr('stroke-width', 1);
                 }
                 if (fretMin <= 1) {
                     diagramas.append('line')
                         .attr('x1', 5)
-                        .attr('y1', 9.8+ adjustY)
+                        .attr('y1', 9.8 + adjustY)
                         .attr('x2', 5)
-                        .attr('y2', 60.9+ adjustY)
+                        .attr('y2', 60.9 + adjustY)
                         .attr('stroke', 'black')
                         .attr('stroke-width', 1);
 
                     diagramas.append('line')
                         .attr('x1', 5)
-                        .attr('y1', 10+ adjustY)
+                        .attr('y1', 10 + adjustY)
                         .attr('x2', 10.5)
-                        .attr('y2', 10+ adjustY)
+                        .attr('y2', 10 + adjustY)
                         .attr('stroke', 'black')
                         .attr('stroke-width', 0.3);
 
                     diagramas.append('line')
                         .attr('x1', 5)
-                        .attr('y1', 10 * i+ adjustY)
+                        .attr('y1', 10 * i + adjustY)
                         .attr('x2', 9.5)
-                        .attr('y2', 10 * 6+ adjustY)
+                        .attr('y2', 10 * 6 + adjustY)
                         .attr('stroke', 'black')
                         .attr('stroke-width', 1.8);
                 }
@@ -258,7 +258,7 @@ function puntodePartida(list) {
 
                     diagramas.append('circle')
                         .attr('cx', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
-                        .attr('cy', 10 * pisada[i][0]+ adjustY)
+                        .attr('cy', 10 * pisada[i][0] + adjustY)
                         .attr('r', 6)
                         .attr('stroke', 'none')
                         .attr('stroke-width', 1)
@@ -267,7 +267,7 @@ function puntodePartida(list) {
                     diagramas.append("text")
                         .text(pisada[i][2])
                         .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
-                        .attr('y', 10 * pisada[i][0] + 3.8+ adjustY)
+                        .attr('y', 10 * pisada[i][0] + 3.8 + adjustY)
                         .attr('fill', 'white')
                         .attr("font-size", "10px")
                         .attr("font-family", "sans-serif")
@@ -303,40 +303,39 @@ function puntodePartida(list) {
 
 
         function playchord(coordenadas) {
-            var getSound;
             var chorArr = [];
+
             for (var i = 0; i < coordenadas.length; i++) {
 
-                var audioBuffer;
-                let src = "../di/" + coordenadas[i] + ".mp3";
-                getSound = new XMLHttpRequest();
-                getSound.open("get", src, true);
-                getSound.responseType = "arraybuffer";
+                var src_i = "../di/" + coordenadas[i] + ".mp3";
+                var getSound_i = new XMLHttpRequest();
+                getSound_i.open("get", src_i, true);
+                getSound_i.responseType = "arraybuffer";
 
-                getSound.onload = function () {
+                getSound_i.onload = async function () {
                     //   document.getElementById("xhrStatus").textContent = "Loaded";
-                    audioContext.decodeAudioData(this.response, function (buffer) {
-                        audioBuffer = buffer;
-                        playback(); // <--- Start the playback after `audioBuffer` is defined.
+                    audioContext.decodeAudioData(this.response, async function (buffer) {
+                        await buffer;
+                        playback(buffer); // <--- Start the playback after `audioBuffer` is defined.
                     });
                 };
-                chorArr.push(getSound);
+                chorArr.push(getSound_i);
             }
 
+            function playback(buffer) {
+                var gainNode = audioContext.createGain();
+                var playSound = audioContext.createBufferSource();
+                playSound.buffer = buffer;
+                playSound.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+                playSound.start(audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
+            }
+
+
             for (var sch = 0; sch < chorArr.length; sch++) {
-
-                function playback() {
-                    var gainNode = audioContext.createGain();
-                    var playSound = audioContext.createBufferSource();
-                    playSound.buffer = audioBuffer;
-                    playSound.connect(gainNode);
-                    gainNode.connect(audioContext.destination);
-                    gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
-                    playSound.start(audioContext.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
-                }
-
-                chorArr[sch].send()
+                chorArr[sch].send();
             }
         }
 
@@ -637,7 +636,7 @@ function allElements(list) {
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         function dibujaMatrix() {
-            let adjustY =30;
+            let adjustY = 30;
 
             d3.select('.drawerDiagrama').selectAll("*").remove();
 
@@ -661,19 +660,19 @@ function allElements(list) {
                     // .classed("svg-content-responsive-diagrama", true);
 
                     diagramas.append('text')
-                    .text((d + 1))
-                    .attr('x', 10)
-                    .attr('y', adjustY - 5)
-                    .attr("font-size", "20px")
-                    .attr("opacity", "0.5")
-                    .attr("font-family", "sans-serif")
-                    .attr("stroke-width", 3);
+                        .text((d + 1))
+                        .attr('x', 10)
+                        .attr('y', adjustY - 5)
+                        .attr("font-size", "20px")
+                        .attr("opacity", "0.5")
+                        .attr("font-family", "sans-serif")
+                        .attr("stroke-width", 3);
 
                     if (fretMin > 1) {
                         diagramas.append("text")
                             .text('fr. ' + fretMin)
                             .attr('x', 6)
-                            .attr('y', 83+ adjustY)
+                            .attr('y', 83 + adjustY)
                             .attr("font-size", "10.5px")
                             .attr("font-family", "sans-serif")
                             .attr("stroke-width", 1);
@@ -682,9 +681,9 @@ function allElements(list) {
                     for (var i = 0; i < 7; i++) {
                         diagramas.append('line')
                             .attr('x1', 10)
-                            .attr('y1', 10 * i+ adjustY)
+                            .attr('y1', 10 * i + adjustY)
                             .attr('x2', 200)
-                            .attr('y2', 10 * i+ adjustY)
+                            .attr('y2', 10 * i + adjustY)
                             .attr('stroke', 'black')
                             .attr('stroke-width', 0.3 * i);
                     }
@@ -692,34 +691,34 @@ function allElements(list) {
                     for (var i = 0; i < 6; i++) {
                         diagramas.append('line')
                             .attr('x1', 10 + 38 * i)
-                            .attr('y1', 10+ adjustY)
+                            .attr('y1', 10 + adjustY)
                             .attr('x2', 10 + 38 * i)
-                            .attr('y2', 60.9+ adjustY)
+                            .attr('y2', 60.9 + adjustY)
                             .attr('stroke', 'gray')
                             .attr('stroke-width', 1);
                     }
                     if (fretMin <= 1) {
                         diagramas.append('line')
                             .attr('x1', 5)
-                            .attr('y1', 9.8+ adjustY)
+                            .attr('y1', 9.8 + adjustY)
                             .attr('x2', 5)
-                            .attr('y2', 60.9+ adjustY)
+                            .attr('y2', 60.9 + adjustY)
                             .attr('stroke', 'black')
                             .attr('stroke-width', 1);
 
                         diagramas.append('line')
                             .attr('x1', 5)
-                            .attr('y1', 10+ adjustY)
+                            .attr('y1', 10 + adjustY)
                             .attr('x2', 10.5)
-                            .attr('y2', 10+ adjustY)
+                            .attr('y2', 10 + adjustY)
                             .attr('stroke', 'black')
                             .attr('stroke-width', 0.3);
 
                         diagramas.append('line')
                             .attr('x1', 5)
-                            .attr('y1', 10 * i+ adjustY)
+                            .attr('y1', 10 * i + adjustY)
                             .attr('x2', 9.5)
-                            .attr('y2', 10 * 6+ adjustY)
+                            .attr('y2', 10 * 6 + adjustY)
                             .attr('stroke', 'black')
                             .attr('stroke-width', 1.8);
                     }
@@ -738,7 +737,7 @@ function allElements(list) {
 
                         diagramas.append('circle')
                             .attr('cx', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
-                            .attr('cy', 10 * pisada[i][0]+ adjustY)
+                            .attr('cy', 10 * pisada[i][0] + adjustY)
                             .attr('r', 6)
                             .attr('stroke', 'none')
                             .attr('stroke-width', 1)
@@ -747,7 +746,7 @@ function allElements(list) {
                         diagramas.append("text")
                             .text(pisada[i][2])
                             .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
-                            .attr('y', 10 * pisada[i][0] + 3.8+ adjustY)
+                            .attr('y', 10 * pisada[i][0] + 3.8 + adjustY)
                             .attr('fill', 'white')
                             .attr("font-size", "10px")
                             .attr("font-family", "sans-serif")
@@ -813,40 +812,39 @@ function allElements(list) {
         // artist.render(renderer);
 
         function playchord(coordenadas) {
-            var getSound;
             var chorArr = [];
+
             for (var i = 0; i < coordenadas.length; i++) {
 
-                var audioBuffer;
-                let src = "../di/" + coordenadas[i] + ".mp3";
-                getSound = new XMLHttpRequest();
-                getSound.open("get", src, true);
-                getSound.responseType = "arraybuffer";
+                var src_i = "../di/" + coordenadas[i] + ".mp3";
+                var getSound_i = new XMLHttpRequest();
+                getSound_i.open("get", src_i, true);
+                getSound_i.responseType = "arraybuffer";
 
-                getSound.onload = function () {
+                getSound_i.onload = async function () {
                     //   document.getElementById("xhrStatus").textContent = "Loaded";
-                    audioContext.decodeAudioData(this.response, function (buffer) {
-                        audioBuffer = buffer;
-                        playback(); // <--- Start the playback after `audioBuffer` is defined.
+                    audioContext.decodeAudioData(this.response, async function (buffer) {
+                        await buffer;
+                        playback(buffer); // <--- Start the playback after `audioBuffer` is defined.
                     });
                 };
-                chorArr.push(getSound);
+                chorArr.push(getSound_i);
             }
 
+            function playback(buffer) {
+                var gainNode = audioContext.createGain();
+                var playSound = audioContext.createBufferSource();
+                playSound.buffer = buffer;
+                playSound.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+                playSound.start(audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
+            }
+
+
             for (var sch = 0; sch < chorArr.length; sch++) {
-
-                function playback() {
-                    var gainNode = audioContext.createGain();
-                    var playSound = audioContext.createBufferSource();
-                    playSound.buffer = audioBuffer;
-                    playSound.connect(gainNode);
-                    gainNode.connect(audioContext.destination);
-                    gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
-                    playSound.start(audioContext.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
-                }
-
-                chorArr[sch].send()
+                chorArr[sch].send();
             }
         }
 
@@ -1217,7 +1215,7 @@ class menuBotones {
             btn.id = i;
             btn.value = "OFF";
             btn.classList.add('btnOffC');
-            btn.style.background = pallete[(i+3)%12];
+            btn.style.background = pallete[(i + 3) % 12];
 
 
             btn.onclick = function toggle() {
