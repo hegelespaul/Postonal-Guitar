@@ -497,7 +497,7 @@ function playchord(coordenadas) {
 
     for (var i = 0; i < coordenadas.length; i++) {
 
-        var src_i = "../di/" + coordenadas[i] + ".mp3";
+        var src_i = "../sounds/" + coordenadas[i] + ".mp3";
         var getSound_i = new XMLHttpRequest();
         getSound_i.open("get", src_i, true);
         getSound_i.responseType = "arraybuffer";

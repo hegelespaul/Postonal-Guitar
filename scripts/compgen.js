@@ -307,7 +307,7 @@ function puntodePartida(list) {
 
             for (var i = 0; i < coordenadas.length; i++) {
 
-                var src_i = "../di/" + coordenadas[i] + ".mp3";
+                var src_i = "../sounds/" + coordenadas[i] + ".mp3";
                 var getSound_i = new XMLHttpRequest();
                 getSound_i.open("get", src_i, true);
                 getSound_i.responseType = "arraybuffer";
@@ -816,7 +816,7 @@ function allElements(list) {
 
             for (var i = 0; i < coordenadas.length; i++) {
 
-                var src_i = "../di/" + coordenadas[i] + ".mp3";
+                var src_i = "../sounds/" + coordenadas[i] + ".mp3";
                 var getSound_i = new XMLHttpRequest();
                 getSound_i.open("get", src_i, true);
                 getSound_i.responseType = "arraybuffer";
@@ -1130,7 +1130,7 @@ function allElements(list) {
                             // console.log(progresion[index][i][0] +  '-' + progresion[index][i][1])
                             var acorde = progresion[index][i][0] + '-' + progresion[index][i][1];
                             var audioBuffer;
-                            let src = "../di/" + acorde + ".mp3";
+                            let src = "../sounds/" + acorde + ".mp3";
                             getSound = new XMLHttpRequest();
                             getSound.open("get", src, true);
                             getSound.responseType = "arraybuffer";
