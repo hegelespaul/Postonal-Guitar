@@ -1,1 +1,1 @@
-The site could be seen here or in https://guitarrapostonalenlinea.netlify.app/
+The site can be seen here: https://guitarrapostonalenlinea.netlify.app/
