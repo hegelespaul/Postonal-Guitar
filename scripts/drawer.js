@@ -154,7 +154,7 @@ var dibujaDiapason = (notas) => {
     console.log(complemento)
     var diapason = d3.select('.drawerDiapason').classed("svg-container", true).append('svg')
         .attr("preserveAspectRatio", "xMidYMid meet")
-        .attr("viewBox", "0 0 400 100")
+        .attr("viewBox", "4 0 400 100")
         .classed("svg-content-responsive-diapason", true);
 
 
@@ -373,9 +373,9 @@ function dibujaMatrix() {
 
             var diagramas = d3.select('.drawerDiagrama').classed("svg-container", true).append('svg')
 
-            // .attr("preserveAspectRatio", "xMidYMid meet")
-            // .attr("viewBox", "0 0 600 100")
-            // .classed("svg-content-responsive-diagrama", true);
+            .attr("preserveAspectRatio", "xMidYMid meet")
+            //.attr("viewBox", "0 0 600 100")
+            //.classed("svg-content-responsive-diagrama", true);
 
             // diagramas.append('text')
             // .text((d + 1))

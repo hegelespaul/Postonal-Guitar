@@ -1213,6 +1213,9 @@ class menuBotones {
             btn.append(i);
             btn.id = i;
             btn.value = "OFF";
+            btn.classList.add('btnOffC');
+            btn.style.background = pallete[(i+3)%12];
+
 
             btn.onclick = function toggle() {
                 var allFp = amplify.store("allFp");
@@ -1222,8 +1225,8 @@ class menuBotones {
                 if (listaF[index - 1].length < 6) {
                     if (btn.value == "OFF") {
                         btn.value = "ON";
-                        btn.classList.remove('btnoff');
-                        btn.classList.add('btnon');
+                        btn.classList.remove('btnOffC');
+                        btn.classList.add('btnOnC');
                         listaF[index - 1].push(btn.id);
 
                         if (listaF[index - 1].length > 2) {
@@ -1233,6 +1236,7 @@ class menuBotones {
                             chordInTime = (listaF[index - 1].map(i => Number(i)));
                             ChFp = dodeca(chordInTime);
                             var g = document.createElement('div');
+                            g.setAttribute("style", "font-size: 20px; margin: 5px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;");
                             g.id = 'g' + index;
                             f.append(g);
                             document.getElementById('g' + index).append(allFpNames[getIndexOfArray(allFp, formaPrimaIn)] + ' | ');
@@ -1250,8 +1254,8 @@ class menuBotones {
                     else if (btn.value == "ON") {
                         btn.value = "OFF";
                         listaF[index - 1].splice(listaF[index - 1].indexOf(btn.id), 1);
-                        btn.classList.remove('btnon');
-                        btn.classList.add('btnoff');
+                        btn.classList.remove('btnOnC');
+                        btn.classList.add('btnOffC');
 
                         if (listaF[index - 1].length > 2) {
                             if (document.getElementById('g' + index)) {
@@ -1277,8 +1281,8 @@ class menuBotones {
                     if (btn.value == "ON") {
                         btn.value = "OFF";
                         listaF[index - 1].splice(listaF[index - 1].indexOf(btn.id), 1);
-                        btn.classList.remove('btnon');
-                        btn.classList.add('btnoff');
+                        btn.classList.remove('btnOnC');
+                        btn.classList.add('btnOffC');
 
                         if (listaF[index - 1].length > 2) {
                             if (document.getElementById('g' + index)) {
@@ -1305,6 +1309,7 @@ class menuBotones {
             zona.append(btn);
 
         }
+        zona.appendChild(document.createElement("br"));
         zona.append(f)
         zona.appendChild(document.createElement("br"));
     }
@@ -1315,7 +1320,7 @@ function removeChord() {
         listaF.pop();
         btnCount = btnCount - 1;
         console.log(listaF);
-        for (var i = 0; i < 15; i++) {
+        for (var i = 0; i < 16; i++) {
             document.getElementById("menusDrawer").removeChild(document.getElementById("menusDrawer").lastChild);
         }
     }

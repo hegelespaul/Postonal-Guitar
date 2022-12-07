@@ -19,8 +19,8 @@ body {
   justify-content: center;
   width: 90%;
   margin: auto;
-  margin-top: 2.5%;
-  margin-bottom: 1%;
+  margin-top: 3%;
+  margin-bottom: 3%;
   height: 20vh;
 }
 
@@ -74,6 +74,7 @@ body {
   width: 25px;
 }
 
+
 .drawer {
   display: flex;
   align-items: center;
@@ -93,13 +94,14 @@ body {
   margin: auto;
 }
 
-.svg-content-responsive-diagrama {
+.drawerDiagrama.svg-container {
   display: flex;
   flex-flow: wrap;
   justify-content: center;
-  position: relative;
+  align-items: center;
   text-align: center;
-  margin: auto;
+  margin:auto;
+  margin-left: 7.3%;
   width: 90%;
 }
 
@@ -404,21 +406,57 @@ h1{
   display: flex;
   width: 78%;
   height: auto;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   margin: auto;
 }
 
 #menusDrawer {
+  display: block;
   margin: auto;
   width: 78%;
   height: auto;
   margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  text-align: center;
 }
 
 #menusDrawer > *{
   display: inline-block;
   margin: auto;
+}
+
+#menusDrawer button{
+  margin-right: 5px;
+}
+
+#menusDrawer button:hover{
+  cursor: pointer;
+  /* color: #ffd6d1; */
+  border-color: rgba(255, 0, 0, 0.75);
+  border-style: solid;
+  border-width: 1px;
+}
+
+.btnOffC {
+  border-style: none;
+  border-radius: 50%;
+  color: white;
+  text-align: center;
+  height: 28px;
+  width: 28px;
+}
+
+.btnOnC {
+  color: azure;
+  border-style: none;
+  border-radius: 50%;
+  text-align: center;
+  opacity: 0.20;
+  height: 28px;
+  width: 28px;
 }
 
 #newChord {
@@ -456,14 +494,6 @@ h1{
 
 #newChord:focus-visible {
   box-shadow: none;
-}
-
-.btnoff{
-  background-color: none;
-}
-
-.btnon{
-  background-color: rgb(111, 201, 111);
 }
 
 .btnSelPoint:hover{
@@ -508,4 +538,36 @@ h1{
 
 .textonegro{
   color: black;
+}
+
+@media only screen and (max-width: 600px) {
+
+  .selector{
+    margin-top: 15%;
+    margin-bottom: 30%;
+  }
+  .drawerDiapason.svg-container{
+    display:none;
+  }
+}
+
+@media only screen and (max-width: 1015px) {
+
+  .selector{
+    margin-top: 10%;
+    margin-bottom: 15%;
+  }
+  .drawerDiapason.svg-container{
+    display:none;
+  }
+  .drawerDiagrama.svg-container {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin:auto;
+    margin-left: 16%;
+    width: 90%;
+  }
 }
