@@ -497,36 +497,34 @@ function playchord(coordenadas) {
     var chorArr = [];
     for (var i = 0; i < coordenadas.length; i++) {
 
-        var audioBuffer;
         let src = "../di/" + coordenadas[i] + ".mp3";
         getSound = new XMLHttpRequest();
         getSound.open("get", src, true);
         getSound.responseType = "arraybuffer";
 
-        getSound.onload = function () {
+        getSound.onload = async function () {
             //   document.getElementById("xhrStatus").textContent = "Loaded";
             audioContext.decodeAudioData(this.response, async function (buffer) {
                 await buffer;
-                audioBuffer = buffer;
-                playback(); // <--- Start the playback after `audioBuffer` is defined.
+                playback(buffer); // <--- Start the playback after `audioBuffer` is defined.
             });
         };
         chorArr.push(getSound);
     }
 
+    function playback(buffer) {
+        var gainNode = audioContext.createGain();
+        var playSound = audioContext.createBufferSource();
+        playSound.buffer = buffer;
+        playSound.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+        playSound.start(audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
+    }
+
+
     for (var sch = 0; sch < chorArr.length; sch++) {
-
-        function playback() {
-            var gainNode = audioContext.createGain();
-            var playSound = audioContext.createBufferSource();
-            playSound.buffer = audioBuffer;
-            playSound.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
-            playSound.start(audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
-        }
-
         chorArr[sch].send()
     }
 }
