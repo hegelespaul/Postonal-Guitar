@@ -356,7 +356,7 @@ function generadorDiagramas() {
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 function dibujaMatrix() {
-
+    let adjustY = 30;
 
 
     for (var d = 0; d < mtx.length; d++) {
@@ -373,24 +373,25 @@ function dibujaMatrix() {
 
             var diagramas = d3.select('.drawerDiagrama').classed("svg-container", true).append('svg')
 
-            .attr("preserveAspectRatio", "xMidYMid meet")
+                .attr("preserveAspectRatio", "xMidYMid meet")
             //.attr("viewBox", "0 0 600 100")
             //.classed("svg-content-responsive-diagrama", true);
 
-            // diagramas.append('text')
-            // .text((d + 1))
-            // .attr('x', 0)
-            // .attr('y', 10)
-            // .attr("font-size", "20px")
-            // .attr("font-family", "sans-serif")
-            // .attr("stroke-width", 3);
+            diagramas.append('text')
+                .text((d + 1))
+                .attr('x', 10)
+                .attr('y', adjustY - 5)
+                .attr("font-size", "20px")
+                .attr("opacity", "0.5")
+                .attr("font-family", "sans-serif")
+                .attr("stroke-width", 3);
 
 
             if (fretMin > 1) {
                 diagramas.append("text")
                     .text('fr. ' + fretMin)
                     .attr('x', 6)
-                    .attr('y', 83)
+                    .attr('y', 83 + adjustY)
                     .attr("font-size", "10.5px")
                     .attr("font-family", "sans-serif")
                     .attr("stroke-width",);
@@ -399,9 +400,9 @@ function dibujaMatrix() {
             for (var i = 0; i < 7; i++) {
                 diagramas.append('line')
                     .attr('x1', 10)
-                    .attr('y1', 10 * i)
+                    .attr('y1', 10 * i + adjustY)
                     .attr('x2', 200)
-                    .attr('y2', 10 * i)
+                    .attr('y2', 10 * i + adjustY)
                     .attr('stroke', 'black')
                     .attr('stroke-width', 0.3 * i);
             }
@@ -409,34 +410,34 @@ function dibujaMatrix() {
             for (var i = 0; i < 6; i++) {
                 diagramas.append('line')
                     .attr('x1', 10 + 38 * i)
-                    .attr('y1', 10)
+                    .attr('y1', 10 + adjustY)
                     .attr('x2', 10 + 38 * i)
-                    .attr('y2', 60.9)
+                    .attr('y2', 60.9 + adjustY)
                     .attr('stroke', 'gray')
                     .attr('stroke-width', 1);
             }
             if (fretMin <= 1) {
                 diagramas.append('line')
                     .attr('x1', 5)
-                    .attr('y1', 9.8)
+                    .attr('y1', 9.8 + adjustY)
                     .attr('x2', 5)
-                    .attr('y2', 60.9)
+                    .attr('y2', 60.9 + adjustY)
                     .attr('stroke', 'black')
                     .attr('stroke-width', 1);
 
                 diagramas.append('line')
                     .attr('x1', 5)
-                    .attr('y1', 10)
+                    .attr('y1', 10 + adjustY)
                     .attr('x2', 10.5)
-                    .attr('y2', 10)
+                    .attr('y2', 10 + adjustY)
                     .attr('stroke', 'black')
                     .attr('stroke-width', 0.3);
 
                 diagramas.append('line')
                     .attr('x1', 5)
-                    .attr('y1', 10 * i)
+                    .attr('y1', 10 * i + adjustY)
                     .attr('x2', 9.5)
-                    .attr('y2', 10 * 6)
+                    .attr('y2', 10 * 6 + adjustY)
                     .attr('stroke', 'black')
                     .attr('stroke-width', 1.8);
             }
@@ -446,7 +447,7 @@ function dibujaMatrix() {
 
                 diagramas.append('circle')
                     .attr('cx', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
-                    .attr('cy', 10 * pisada[i][0])
+                    .attr('cy', 10 * pisada[i][0] + adjustY)
                     .attr('r', 6)
                     .attr('stroke', 'none')
                     .attr('stroke-width', 1)
@@ -455,7 +456,7 @@ function dibujaMatrix() {
                 diagramas.append("text")
                     .text(pisada[i][2])
                     .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
-                    .attr('y', 10 * pisada[i][0] + 3.8)
+                    .attr('y', 10 * pisada[i][0] + 3.8 + adjustY)
                     .attr('fill', 'white')
                     .attr("font-size", "10px")
                     .attr("font-family", "sans-serif")
@@ -504,7 +505,8 @@ function playchord(coordenadas) {
 
         getSound.onload = function () {
             //   document.getElementById("xhrStatus").textContent = "Loaded";
-            audioContext.decodeAudioData(this.response, function (buffer) {
+            audioContext.decodeAudioData(this.response, async function (buffer) {
+                await buffer;
                 audioBuffer = buffer;
                 playback(); // <--- Start the playback after `audioBuffer` is defined.
             });
@@ -630,7 +632,7 @@ function complementoW() {
     if (serie.length < 6) {
         var w = window.open(
             "/complemento.html", "_blank");
-            amplify.store("complemento", complemento);
+        amplify.store("complemento", complemento);
     } else if (serie.length == 6) {
         var compbtn = complemento;
 
