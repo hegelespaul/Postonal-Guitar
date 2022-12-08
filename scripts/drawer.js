@@ -493,41 +493,50 @@ function dibujaMatrix() {
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 function playchord(coordenadas) {
-    var chorArr = [];
+
+    const samplePaths = [];
 
     for (var i = 0; i < coordenadas.length; i++) {
-
         var src_i = "../sounds/" + coordenadas[i] + ".mp3";
-        var getSound_i = new XMLHttpRequest();
-        getSound_i.open("get", src_i, true);
-        getSound_i.responseType = "arraybuffer";
-
-        getSound_i.onload = async function () {
-            //   document.getElementById("xhrStatus").textContent = "Loaded";
-            audioContext.decodeAudioData(this.response, async function (buffer) {
-                await buffer;
-                playback(buffer); // <--- Start the playback after `audioBuffer` is defined.
-            });
-        };
-        chorArr.push(getSound_i);
+        samplePaths.push(src_i);
     }
 
-    function playback(buffer) {
+
+    async function getFile(filePath) {
+        const response = await fetch(filePath);
+        const arrayBuffer = await response.arrayBuffer();
+        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+        return audioBuffer;
+    }
+
+    async function setupSamples(paths) {
+        const audioBuffers = [];
+
+        for (const path of paths) {
+            const sample = await getFile(path);
+            audioBuffers.push(sample);
+        }
+        return audioBuffers;
+    }
+
+    function playSample(audioBuffer, time) {
+        var sampleSource = audioContext.createBufferSource();
         var gainNode = audioContext.createGain();
-        var playSound = audioContext.createBufferSource();
-        playSound.buffer = buffer;
-        playSound.connect(gainNode);
+        sampleSource.buffer = audioBuffer;
+        sampleSource.connect(gainNode);
         gainNode.connect(audioContext.destination);
         gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
-        playSound.start(audioContext.currentTime+0.3);
+        sampleSource.start(time);
         gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
     }
 
-    chorArr.forEach((e)=> e.send());
-    console.log(chorArr)
-    // for (var sch = 0; sch < chorArr.length; sch++) {
-    //     chorArr[sch].send();
-    // }
+    setupSamples(samplePaths).then((response) => {
+        const samples = response;
+        for(const sample of samples){
+            playSample(sample, 0);
+        }
+    });
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
