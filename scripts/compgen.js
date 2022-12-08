@@ -341,8 +341,7 @@ function puntodePartida(list) {
 
             setupSamples(samplePaths).then((response) => {
                 const samples = response;
-                for (i = 0; i < 6; i++) {
-                    if (samples[i] != undefined)
+                for (i = 0; i < samples.length; i++) {
                         playSample(samples[i], 0);
                 }
             });
@@ -860,8 +859,7 @@ function allElements(list) {
 
             setupSamples(samplePaths).then((response) => {
                 const samples = response;
-                for (i = 0; i < 6; i++) {
-                    if (samples[i] != undefined)
+                for (i = 0; i < samples.length; i++) {
                         playSample(samples[i], 0);
                 }
             });
@@ -1144,42 +1142,50 @@ function allElements(list) {
                     if (count == 0 && Math.round(position / 1333.333) - index == 0 && position != 0) {
                         // console.log('condition' + (Math.round(position/1333.333) - index))
                         audioContext.resume();
-                        var getSound;
-                        var chorArr = [];
+
+
+                        const samplePaths = [];
+
                         for (var i = 0; i < progresion[index].length; i++) {
-                            // console.log(progresion[index][i][0] +  '-' + progresion[index][i][1])
                             var acorde = progresion[index][i][0] + '-' + progresion[index][i][1];
-                            var audioBuffer;
-                            let src = "../sounds/" + acorde + ".mp3";
-                            getSound = new XMLHttpRequest();
-                            getSound.open("get", src, true);
-                            getSound.responseType = "arraybuffer";
-
-                            getSound.onload = function () {
-                                //   document.getElementById("xhrStatus").textContent = "Loaded";
-                                audioContext.decodeAudioData(this.response, function (buffer) {
-                                    audioBuffer = buffer;
-                                    playback(); // <--- Start the playback after `audioBuffer` is defined.
-                                });
-                            };
-
-                            chorArr.push(getSound);
+                            var src_i = "../sounds/" + acorde + ".mp3";
+                            samplePaths.push(src_i);
                         }
-
-                        for (var sch = 0; sch < chorArr.length; sch++) {
-
-                            function playback() {
-                                var gainNode = audioContext.createGain();
-                                var playSound = audioContext.createBufferSource();
-                                playSound.buffer = audioBuffer;
-                                playSound.connect(gainNode);
-                                gainNode.connect(audioContext.destination);
-                                gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
-                                playSound.start(audioContext.currentTime);
-                                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
+                    
+                        async function getFile(filePath) {
+                            const response = await fetch(filePath);
+                            const arrayBuffer = await response.arrayBuffer();
+                            const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+                            return audioBuffer;
+                        }
+                    
+                        async function setupSamples(paths) {
+                            const audioBuffers = [];
+                    
+                            for (const path of paths) {
+                                const sample = await getFile(path);
+                                audioBuffers.push(sample);
                             }
-                            chorArr[sch].send()
+                            return audioBuffers;
                         }
+                    
+                        function playSample(audioBuffer, time) {
+                            var sampleSource = audioContext.createBufferSource();
+                            var gainNode = audioContext.createGain();
+                            sampleSource.buffer = audioBuffer;
+                            sampleSource.connect(gainNode);
+                            gainNode.connect(audioContext.destination);
+                            gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+                            sampleSource.start(time);
+                            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
+                        }
+                    
+                        setupSamples(samplePaths).then((response) => {
+                            const samples = response;
+                            for (i = 0; i < samples.length; i++) {
+                                    playSample(samples[i], 0);
+                            }
+                        });
                     }
                 }
             }

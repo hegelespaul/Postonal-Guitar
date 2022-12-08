@@ -531,8 +531,7 @@ function playchord(coordenadas) {
 
     setupSamples(samplePaths).then((response) => {
         const samples = response;
-        for (i = 0; i < 6; i++) {
-            if (samples[i] != undefined)
+        for (i = 0; i < samples.length; i++) {
                 playSample(samples[i], 0);
         }
     });
