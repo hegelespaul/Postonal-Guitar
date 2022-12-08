@@ -523,10 +523,10 @@ function playchord(coordenadas) {
         gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
     }
 
-
-    for (var sch = 0; sch < chorArr.length; sch++) {
-        chorArr[sch].send();
-    }
+    chorArr.forEach((e)=> e.send());
+    // for (var sch = 0; sch < chorArr.length; sch++) {
+    //     chorArr[sch].send();
+    // }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
