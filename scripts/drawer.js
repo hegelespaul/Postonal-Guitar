@@ -501,7 +501,6 @@ function playchord(coordenadas) {
         samplePaths.push(src_i);
     }
 
-
     async function getFile(filePath) {
         const response = await fetch(filePath);
         const arrayBuffer = await response.arrayBuffer();
@@ -532,9 +531,9 @@ function playchord(coordenadas) {
 
     setupSamples(samplePaths).then((response) => {
         const samples = response;
-        for(i=0;i <6; i++){
+        for (i = 0; i < 6; i++) {
             if (samples[i] != undefined)
-            playSample(samples[i], 0);
+                playSample(samples[i], 0);
         }
     });
 
