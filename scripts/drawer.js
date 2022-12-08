@@ -519,11 +519,12 @@ function playchord(coordenadas) {
         playSound.connect(gainNode);
         gainNode.connect(audioContext.destination);
         gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
-        playSound.start(audioContext.currentTime);
+        playSound.start(audioContext.currentTime+0.3);
         gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
     }
 
     chorArr.forEach((e)=> e.send());
+    console.log(chorArr)
     // for (var sch = 0; sch < chorArr.length; sch++) {
     //     chorArr[sch].send();
     // }
