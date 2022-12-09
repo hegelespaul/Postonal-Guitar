@@ -1,7 +1,8 @@
 const afinacion = [4, 11, 7, 2, 9, 4];
+// var numtonot = ['C', 'C#','D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B']
+var numtonot = [0,1,2,3,4,5,6,7,8,9,10,11]
 let serie;
 notas = []
-console.log(notas);
 var buttons = [];
 var coord = [];
 let mtx = [];
@@ -78,7 +79,7 @@ function dibujaTodo() {
     for (var i = 0; i < 12; i++) {
         var li = document.createElement("li");
         let btn = document.createElement("button");
-        btn.innerHTML = (i + 9) % 12;
+        btn.innerHTML = numtonot[(i + 9) % 12];
         li.appendChild(btn);
         li.setAttribute("style", "--j:" + i);
         btn.setAttribute("id", (i + 9) % 12);
@@ -271,7 +272,7 @@ var dibujaDiapason = (notas) => {
                             playchord(notaSampler);
                         });
                     diapason.append("text")
-                        .text(notas[n])
+                        .text(numtonot[notas[n]])
                         .attr('x', 17.75 * j)
                         .attr('y', 10 * i + 12.5)
                         .attr("font-size", "6px")
@@ -454,7 +455,7 @@ function dibujaMatrix() {
                     .attr('fill', pallete[(pisada[i][2] + 3) % 12])
 
                 diagramas.append("text")
-                    .text(pisada[i][2])
+                    .text(numtonot[pisada[i][2]])
                     .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
                     .attr('y', 10 * pisada[i][0] + 3.8 + adjustY)
                     .attr('fill', 'white')
