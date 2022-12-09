@@ -1,6 +1,6 @@
 const afinacion = [4, 11, 7, 2, 9, 4];
-// var numtonot = ['C', 'C#','D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B']
-var numtonot = [0,1,2,3,4,5,6,7,8,9,10,11]
+// var numtonot = ['C', 'C#','D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
+var numtonot = [0,1,2,3,4,5,6,7,8,9,10,11];
 let serie;
 notas = []
 var buttons = [];

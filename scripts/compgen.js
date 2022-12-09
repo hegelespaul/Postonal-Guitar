@@ -2,6 +2,8 @@
 
 const afinacion = [4, 11, 7, 2, 9, 4];
 const afinacionMIDI = [64, 59, 55, 50, 45, 40];
+// var numtonot = ['C', 'C#','D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
+var numtonot = [0,1,2,3,4,5,6,7,8,9,10,11];
 let pallete = ["rgb(0,231,6,0.5)", "rgb(0,255,173,0.5)", "rgb(0,107,255,0.5)", "rgb(49,1,250,0.5)", "rgb(131,1,205,0.5)", "rgb(63,0,87,0.5)", "rgb(103,4,81,0.5)", "rgb(215,1,2,0.5)", "rgb(227,67,3,0.5)", "rgb(255,136,0,0.5)", "rgb(236,255,0,0.5)", "rgb(154,243,4,0.5)"];
 
 
@@ -265,7 +267,7 @@ function puntodePartida(list) {
                         .attr('fill', pallete[(pisada[i][2] + 3) % 12])
 
                     diagramas.append("text")
-                        .text(pisada[i][2])
+                        .text(numtonot[pisada[i][2]])
                         .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
                         .attr('y', 10 * pisada[i][0] + 3.8 + adjustY)
                         .attr('fill', 'white')
@@ -753,7 +755,7 @@ function allElements(list) {
                             .attr('fill', pallete[(pisada[i][2] + 3) % 12])
 
                         diagramas.append("text")
-                            .text(pisada[i][2])
+                            .text(numtonot[pisada[i][2]])
                             .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
                             .attr('y', 10 * pisada[i][0] + 3.8 + adjustY)
                             .attr('fill', 'white')
@@ -1237,7 +1239,7 @@ class menuBotones {
 
         for (var i = 0; i < 12; i++) {
             let btn = document.createElement("button");
-            btn.append(i);
+            btn.append(numtonot[i]);
             btn.id = i;
             btn.value = "OFF";
             btn.classList.add('btnOffC');
