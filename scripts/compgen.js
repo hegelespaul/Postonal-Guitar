@@ -1291,6 +1291,7 @@ class menuBotones {
                             chordInTime = (listaF[index - 1].map(i => Number(i)));
                             ChFp = dodeca(chordInTime);
                             var g = document.createElement('div');
+                            g.setAttribute("style", "font-size: 18px; margin: 5px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;");
                             g.id = 'g' + index;
                             f.append(g);
                             document.getElementById('g' + index).append(allFpNames[getIndexOfArray(allFp, formaPrimaIn)] + ' | ');
@@ -1318,6 +1319,7 @@ class menuBotones {
                             } chordInTime = (listaF[index - 1].map(i => Number(i)));
                             ChFp = dodeca(chordInTime);
                             var g = document.createElement('div');
+                            g.setAttribute("style", "font-size: 18px; margin: 5px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;");
                             g.id = 'g' + index;
                             f.append(g);
                             document.getElementById('g' + index).append(allFpNames[getIndexOfArray(allFp, formaPrimaIn)] + ' | ');
