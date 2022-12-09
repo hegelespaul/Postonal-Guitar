@@ -5,56 +5,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles.css">
     <title>Guitarra Postonal en Línea</title>
     <link rel="icon" type="image/x-icon"
         href="https://cdn.glitch.global/70964b8d-ef22-4c2d-8136-29d0fdc59108/android-chrome-192x192.png?v=1650666448695">
+    <link rel="stylesheet" href="./styles.css">
+    <title>Document</title>
+    <script src="https://unpkg.com/d3-3d/build/d3-3d.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
         integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pca-js@1.0.0/pca.min.js"></script>
+    <script src='https://cdn.plot.ly/plotly-2.14.0.min.js'></script>
     <script src="./scripts/decifrador2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/amplifyjs/1.1.2/amplify.min.js"
         integrity="sha512-CO88rRyfqavT831UMU0+YzJlz3gJ6O5JMj8iduxhuLPdMe7nmTDIopHpkOyedbRwC5IFy9gIBHkKuS6bcPa+9Q=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </head>
 
-<body>
+
+<body> 
     &nbsp
-    <section class="head">
-        Generador de Pisadas
-        &nbsp
-    </section>
-    &nbsp
-    <section class="head2">
-        &nbsp
-        <tag id="forma"></tag>
-        <tag id="acorde"></tag>
-    </section>
-
-    <section class="operations">
-        <button id="newChord" onclick=complementoW()>Complemento</button>
-        <button id="newChord" onclick=transponerW()>Transponer</button>
-        <input  type="number" id="tIndex" value="0" min="-6" max="6" onkeydown="return false" />
-        <button id="newChord" onclick=inversionW()>Inversión</button>
-    </section>
-
-    <section class="selector" id="selector">
-        <section class="drawerForm">
-        </section>
-        <ul id="list" style="list-style: none;"></ul>
-    </section>
-
+  <section class="head">Visualizador de Formas Primas</section>
+  &nbsp
     <section class="drawer">
-        <section class="drawerDiapason">
-        </section>
-        <section class="drawerDiagrama">
-        </section>
+        <div id="myDiv" class="Graph"></div>
     </section>
-    
-    <script src="./scripts/calc.js"></script>
-    <script src="./scripts/drawer.js"></script>
+
+    <svg id="svg" ></svg>
+
+
+    <script src="./scripts/analyser.js"></script>
 </body>
 
 </html>
