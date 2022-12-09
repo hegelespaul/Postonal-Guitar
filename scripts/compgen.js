@@ -27,6 +27,10 @@ let puntoPartidaFinal;
 let puntoArray;
 
 
+function notenum(){
+var btn = Document.getElementById("stickyBtn");
+}
+
 window.addEventListener('load', init, false);
 function init() {
     try {

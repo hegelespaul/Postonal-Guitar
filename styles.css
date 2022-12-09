@@ -595,6 +595,39 @@ h1 {
   height: 40em;
 }
 
+.sticky{
+  text-align: end;
+  width: 97%;
+  position:sticky;
+  top: 10px;
+  margin: 10px;
+}
+
+#stickyBtn {
+  background-color: rgb(249, 250, 251);
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  /* padding: .75rem 1rem; */
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 110px;
+  height: 30px;
+  margin: 10px;
+  margin-top: 0px;
+  margin-left: 0px;
+}
+
 @media only screen and (max-width: 600px) {
 
   .selector {
