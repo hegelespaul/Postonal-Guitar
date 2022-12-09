@@ -628,6 +628,12 @@ h1 {
     height: 2.5em;
   }
 
+  #tIndex {
+    width: 3.5em;
+    height: 3.5em;
+
+  }
+
   #menusDrawer {
     width: 300px;
   }
@@ -635,6 +641,19 @@ h1 {
   #menusDrawer button {
     margin-left: 7px;
     margin-bottom: 15px;
+  }
+
+  #myDiv{
+    position: relative;
+    margin-top: -150px;
+    scale: 0.8;
+    z-index: 0;
+  }
+
+  .head{
+    display: block;
+    z-index: 10;
+    position:relative;
   }
 }
 
