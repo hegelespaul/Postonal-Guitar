@@ -5,6 +5,7 @@ body::-webkit-scrollbar {
 body {
   -ms-overflow-style: none;
   scrollbar-width: none;
+  height: fit-content;
 }
 
 .head {
@@ -115,6 +116,7 @@ body {
   flex-flow: wrap;
   text-align: center;
   justify-content: center;
+  height: auto;
 }
 
 .svg-container {
