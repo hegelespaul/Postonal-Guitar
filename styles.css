@@ -596,6 +596,7 @@ h1 {
 }
 
 .sticky{
+  z-index: 10;
   text-align: end;
   width: 97%;
   position:sticky;
@@ -604,6 +605,7 @@ h1 {
 }
 
 #stickyBtn {
+  z-index: 10;
   background-color: rgb(249, 250, 251);
   border: 0;
   border-radius: .5rem;

@@ -1,6 +1,6 @@
 const afinacion = [4, 11, 7, 2, 9, 4];
 // var numtonot = ['C', 'C#','D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
-var numtonot = [0,1,2,3,4,5,6,7,8,9,10,11];
+// var numtonot = [0,1,2,3,4,5,6,7,8,9,10,11];
 let serie;
 notas = []
 var buttons = [];
@@ -10,6 +10,8 @@ let pisadas = [];
 let audioContext;
 let pallete = ["rgb(0,231,6,0.5)", "rgb(0,255,173,0.5)", "rgb(0,107,255,0.5)", "rgb(49,1,250,0.5)", "rgb(131,1,205,0.5)", "rgb(63,0,87,0.5)", "rgb(103,4,81,0.5)", "rgb(215,1,2,0.5)", "rgb(227,67,3,0.5)", "rgb(255,136,0,0.5)", "rgb(236,255,0,0.5)", "rgb(154,243,4,0.5)"];
 let complemento;
+const numtonot = [['0', 'C'], ['1', 'C#'], ['2', 'D'], ['3', 'Eb'], ['4', 'E'], ['5', 'F'], ['6', 'F#'], ['7', 'G'], ['8', 'Ab'], ['9', 'A'], ['10', 'Bb'], ['11', 'B']];
+
 
 window.addEventListener('load', init, false);
 function init() {
@@ -22,6 +24,45 @@ function init() {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
+
+function numnot() {
+
+    var btn = document.getElementById("stickyBtn");
+    var elements;
+    var btnOn = document.getElementsByClassName('btnOn')
+    var btnOff = document.getElementsByClassName('btnOff')
+    var count = btnOn.length + btnOff.length;
+
+    if (btn.value == 'OFF') {
+ 
+        for(var i = 0; i < count; i++){
+            n = '"' + (i%12).toString() + '"';
+            elements = document.querySelectorAll("[id=" + n + "]");
+            elements.forEach((f)=>{
+                f.innerHTML = f.innerHTML.replace(numtonot[i % 12][0], numtonot[i % 12][1]);
+            });
+        }
+
+        btn.value = 'ON';
+        btn.innerHTML = 'Notas';
+
+    }
+
+    else if(btn.value == 'ON'){
+
+        for(var i = 0; i < count; i++){
+            n = '"' + (i%12).toString() + '"';
+            elements = document.querySelectorAll("[id=" + n + "]");
+            elements.forEach((f)=>{
+                f.innerHTML = f.innerHTML.replace(numtonot[i % 12][1], numtonot[i % 12][0]);
+            });
+        }
+
+        btn.value = 'OFF';
+        btn.innerHTML = 'Números';
+
+    }
+}
 
 function dibujaTodo() {
     serie = notas;
@@ -79,7 +120,7 @@ function dibujaTodo() {
     for (var i = 0; i < 12; i++) {
         var li = document.createElement("li");
         let btn = document.createElement("button");
-        btn.innerHTML = numtonot[(i + 9) % 12];
+        btn.innerHTML = numtonot[(i + 9) % 12][0];
         li.appendChild(btn);
         li.setAttribute("style", "--j:" + i);
         btn.setAttribute("id", (i + 9) % 12);
@@ -272,9 +313,10 @@ var dibujaDiapason = (notas) => {
                             playchord(notaSampler);
                         });
                     diapason.append("text")
-                        .text(numtonot[notas[n]])
+                        .text(numtonot[notas[n]][0])
                         .attr('x', 17.75 * j)
                         .attr('y', 10 * i + 12.5)
+                        .attr('id',numtonot[notas[n]][0])
                         .attr("font-size", "6px")
                         .attr('fill', 'white')
                         .attr("font-family", "sans-serif")
@@ -455,9 +497,10 @@ function dibujaMatrix() {
                     .attr('fill', pallete[(pisada[i][2] + 3) % 12])
 
                 diagramas.append("text")
-                    .text(numtonot[pisada[i][2]])
+                    .text(numtonot[pisada[i][2]][0])
                     .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
                     .attr('y', 10 * pisada[i][0] + 3.8 + adjustY)
+                    .attr('id', numtonot[pisada[i][2]][0])
                     .attr('fill', 'white')
                     .attr("font-size", "10px")
                     .attr("font-family", "sans-serif")

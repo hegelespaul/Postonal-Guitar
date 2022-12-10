@@ -3,7 +3,7 @@
 const afinacion = [4, 11, 7, 2, 9, 4];
 const afinacionMIDI = [64, 59, 55, 50, 45, 40];
 // var numtonot = ['C', 'C#','D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
-var numtonot = [0,1,2,3,4,5,6,7,8,9,10,11];
+const numtonot = [['0', 'C'], ['1', 'C#'], ['2', 'D'], ['3', 'Eb'], ['4', 'E'], ['5', 'F'], ['6', 'F#'], ['7', 'G'], ['8', 'Ab'], ['9', 'A'], ['10', 'Bb'], ['11', 'B']];
 let pallete = ["rgb(0,231,6,0.5)", "rgb(0,255,173,0.5)", "rgb(0,107,255,0.5)", "rgb(49,1,250,0.5)", "rgb(131,1,205,0.5)", "rgb(63,0,87,0.5)", "rgb(103,4,81,0.5)", "rgb(215,1,2,0.5)", "rgb(227,67,3,0.5)", "rgb(255,136,0,0.5)", "rgb(236,255,0,0.5)", "rgb(154,243,4,0.5)"];
 
 
@@ -27,8 +27,43 @@ let puntoPartidaFinal;
 let puntoArray;
 
 
-function notenum(){
-var btn = Document.getElementById("stickyBtn");
+function numnot() {
+
+    var btn = document.getElementById("stickyBtn");
+    var elements;
+    var btnOn = document.getElementsByClassName('btnOnC')
+    var btnOff = document.getElementsByClassName('btnOffC')
+    var count = btnOn.length + btnOff.length;
+
+    if (btn.value == 'OFF') {
+ 
+        for(var i = 0; i < count; i++){
+            n = '"' + (i%12).toString() + '"';
+            elements = document.querySelectorAll("[id=" + n + "]");
+            elements.forEach((f)=>{
+                f.innerHTML = f.innerHTML.replace(numtonot[i % 12][0], numtonot[i % 12][1]);
+            });
+        }
+
+        btn.value = 'ON';
+        btn.innerHTML = 'Notas';
+
+    }
+
+    else if(btn.value == 'ON'){
+
+        for(var i = 0; i < count; i++){
+            n = '"' + (i%12).toString() + '"';
+            elements = document.querySelectorAll("[id=" + n + "]");
+            elements.forEach((f)=>{
+                f.innerHTML = f.innerHTML.replace(numtonot[i % 12][1], numtonot[i % 12][0]);
+            });
+        }
+
+        btn.value = 'OFF';
+        btn.innerHTML = 'Números';
+
+    }
 }
 
 window.addEventListener('load', init, false);
@@ -271,7 +306,8 @@ function puntodePartida(list) {
                         .attr('fill', pallete[(pisada[i][2] + 3) % 12])
 
                     diagramas.append("text")
-                        .text(numtonot[pisada[i][2]])
+                        .text(numtonot[pisada[i][2]][0])
+                        .attr('id',numtonot[pisada[i][2]][0])
                         .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
                         .attr('y', 10 * pisada[i][0] + 3.8 + adjustY)
                         .attr('fill', 'white')
@@ -348,7 +384,7 @@ function puntodePartida(list) {
             setupSamples(samplePaths).then((response) => {
                 const samples = response;
                 for (i = 0; i < samples.length; i++) {
-                        playSample(samples[i], 0);
+                    playSample(samples[i], 0);
                 }
             });
 
@@ -759,9 +795,10 @@ function allElements(list) {
                             .attr('fill', pallete[(pisada[i][2] + 3) % 12])
 
                         diagramas.append("text")
-                            .text(numtonot[pisada[i][2]])
+                            .text(numtonot[pisada[i][2]][0])
                             .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
                             .attr('y', 10 * pisada[i][0] + 3.8 + adjustY)
+                            .attr('id', numtonot[pisada[i][2]][0])
                             .attr('fill', 'white')
                             .attr("font-size", "10px")
                             .attr("font-family", "sans-serif")
@@ -866,7 +903,7 @@ function allElements(list) {
             setupSamples(samplePaths).then((response) => {
                 const samples = response;
                 for (i = 0; i < samples.length; i++) {
-                        playSample(samples[i], 0);
+                    playSample(samples[i], 0);
                 }
             });
 
@@ -1157,24 +1194,24 @@ function allElements(list) {
                             var src_i = "../sounds/" + acorde + ".mp3";
                             samplePaths.push(src_i);
                         }
-                    
+
                         async function getFile(filePath) {
                             const response = await fetch(filePath);
                             const arrayBuffer = await response.arrayBuffer();
                             const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
                             return audioBuffer;
                         }
-                    
+
                         async function setupSamples(paths) {
                             const audioBuffers = [];
-                    
+
                             for (const path of paths) {
                                 const sample = await getFile(path);
                                 audioBuffers.push(sample);
                             }
                             return audioBuffers;
                         }
-                    
+
                         function playSample(audioBuffer, time) {
                             var sampleSource = audioContext.createBufferSource();
                             var gainNode = audioContext.createGain();
@@ -1185,11 +1222,11 @@ function allElements(list) {
                             sampleSource.start(time);
                             gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
                         }
-                    
+
                         setupSamples(samplePaths).then((response) => {
                             const samples = response;
                             for (i = 0; i < samples.length; i++) {
-                                    playSample(samples[i], 0);
+                                playSample(samples[i], 0);
                             }
                         });
                     }
@@ -1243,7 +1280,7 @@ class menuBotones {
 
         for (var i = 0; i < 12; i++) {
             let btn = document.createElement("button");
-            btn.append(numtonot[i]);
+            btn.append(numtonot[i][0]);
             btn.id = i;
             btn.value = "OFF";
             btn.classList.add('btnOffC');
