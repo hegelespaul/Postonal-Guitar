@@ -9,6 +9,8 @@ body {
 }
 
 .head {
+  position: relative;
+  z-index: 10;
   text-align: center;
   font-style: normal;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
@@ -417,6 +419,7 @@ svg text {
   display: flex;
   width: auto;
   margin: auto;
+  margin-top: -60px;
   height: auto;
 }
 
@@ -632,6 +635,61 @@ h1 {
   margin-left: 0px;
 }
 
+.zoom_in{
+  background-color: rgb(249, 250, 251);
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  /* padding: .75rem 1rem; */
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 40px;
+  height: 30px;
+  margin: 10px;
+  margin-top: 0px;
+  margin-left: 0px;
+
+}
+.zoom_out{
+  background-color: rgb(249, 250, 251);
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  /* padding: .75rem 1rem; */
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 40px;
+  height: 30px;
+  margin: 10px;
+  margin-top: 0px;
+  margin-left: 0px;
+
+}
+
+.zoombtn{
+  display:none;
+}
+
 @media only screen and (max-width: 600px) {
 
   .selector {
@@ -682,16 +740,29 @@ h1 {
 
   #myDiv{
     position: relative;
-    margin-top: 30px;
+    margin-top: -60px;
     scale: 1;
     z-index: 0;
   }
 
   .head{
-    margin-top: -20px;
     display: block;
     z-index: 10;
     position:relative;
+  }
+
+  .head2{
+    margin-top: -50px;
+    margin-bottom: 30px;;
+  }
+
+  .zoombtn{
+    display:flex;
+    justify-content: center;
+  }
+
+  .Graph {
+    box-shadow: none;
   }
 }
 

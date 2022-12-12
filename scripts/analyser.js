@@ -567,65 +567,7 @@ var trace1 = {
         type: 'scatter3d',
 };
 
-if(isMobile() == false){
-
-var layout = {
-
-        scene: {
-                xaxis: {
-                        visible: true,
-                        title: {
-                                text: 'Número de notas',
-                                font: {
-                                        family: 'Verdana, sans-serif',
-                                        size: 12,
-                                        color: '#7f7f7f'
-                                }
-                        },
-                },
-                yaxis: {
-                        title: {
-                                text: 'Promedio del vector interválico',
-                                font: {
-                                        family: 'Verdana, sans-serif',
-                                        size: 12,
-                                        color: '#7f7f7f'
-                                }
-                        },
-                        visible: true,
-                },
-                zaxis: {
-
-                        title: {
-                                text: 'Suma de forma prima',
-                                font: {
-                                        family: 'Verdana, sans-serif',
-                                        size: 12,
-                                        color: '#7f7f7f'
-                                }
-                        },
-                        visible: true,
-                },
-                camera: {
-                        eye: {
-                                x: -1.5,
-                                y: -1.75,
-                                z: 1,
-                        }
-                }
-        },
-        plot_bgcolor: "red",
-        paper_bgcolor: "white",
-        width: 1280,
-        height: 720,
-        hovermode: 'closest',
-        // title: 'Espacio latente de formas primas'
-};
-}
-
-
-
-if(isMobile() == true){
+if (screen.width > 700) {
 
         var layout = {
 
@@ -653,7 +595,63 @@ if(isMobile() == true){
                                 visible: true,
                         },
                         zaxis: {
-        
+                                title: {
+                                        text: 'Suma de forma prima',
+                                        font: {
+                                                family: 'Verdana, sans-serif',
+                                                size: 12,
+                                                color: '#7f7f7f'
+                                        }
+                                },
+                                visible: true,
+                        },
+                        camera: {
+                                eye: {
+                                        x: -1.5,
+                                        y: -1.75,
+                                        z: 1,
+                                }
+                        }
+                },
+                plot_bgcolor: "red",
+                paper_bgcolor: "white",
+                width: 1280,
+                height: 720,
+                hovermode: 'closest',
+                // title: 'Espacio latente de formas primas'
+        };
+}
+
+
+if (screen.width < 700) {
+
+        var layout = {
+
+                scene: {
+                        xaxis: {
+                                visible: true,
+                                title: {
+                                        text: 'Número de notas',
+                                        font: {
+                                                family: 'Verdana, sans-serif',
+                                                size: 12,
+                                                color: '#7f7f7f'
+                                        }
+                                },
+                        },
+                        yaxis: {
+                                title: {
+                                        text: 'Promedio del vector interválico',
+                                        font: {
+                                                family: 'Verdana, sans-serif',
+                                                size: 12,
+                                                color: '#7f7f7f'
+                                        }
+                                },
+                                visible: true,
+                        },
+                        zaxis: {
+
                                 title: {
                                         text: 'Suma de forma prima',
                                         font: {
@@ -688,38 +686,11 @@ amplify.store("allFpNames", names);
 
 var data = [trace1];
 
-var config = {responsive: true}
-
+var config = { responsive: true, displayModeBar: false, scrollZoom: true }
 
 Plotly.newPlot('myDiv', data, layout, config);
 
 myPlot.on('plotly_click', function (data) {
-        
-        var pts;
-        for (var i = 0; i < data.points.length; i++) {
-                pts = data.points[i][Object.keys(data.points[i])[8]];
-        }
-        var indexfP = names.indexOf(pts)
-        // console.log(fP[indexfP]);
-        function NewTab() {
-                var w = window.open(
-                        "/diagramGen.html", "_blank"
-                        );
-                pisadas = fP[indexfP];
-                // console.log(pisadas);
-                amplify.store("pisadas", pisadas);
-                origTitle = names[indexfP];
-                amplify.store("name", origTitle);
-                w.onload = function () { this.document.title = origTitle; }
-        }
-        NewTab();
-
-       
-});
-
-if(isMobile() == true){
-
-myPlot.on('plotly_hover', function(data){
 
         var pts;
         for (var i = 0; i < data.points.length; i++) {
@@ -730,7 +701,7 @@ myPlot.on('plotly_hover', function(data){
         function NewTab() {
                 var w = window.open(
                         "/diagramGen.html", "_blank"
-                        );
+                );
                 pisadas = fP[indexfP];
                 // console.log(pisadas);
                 amplify.store("pisadas", pisadas);
@@ -740,8 +711,96 @@ myPlot.on('plotly_hover', function(data){
         }
         NewTab();
 
+
 });
+
+
+if (isMobile() == true) {
+
+        let pos = 0
+
+        const zoomInBtn = document.querySelectorAll('.zoom_in');
+        zoomInBtn.forEach(btn => btn.addEventListener('click', () => {
+
+                if (pos < 1.50){
+                pos = pos + 0.20
+
+                var update = {
+                        scene: {
+                                camera: {
+                                        eye: {
+                                                x: -2.5 + pos,
+                                                y: -1.75 + pos,
+                                        }
+                                }
+                        },
+                }
+
+                Plotly.relayout('myDiv', update);
+        }
+        if(pos == 1.20){
+                console.log('disabled')
+                zoomInBtn.disabled = true
+        } 
+                     
+
+        }));
+
+        const zoomOutBtn = document.querySelectorAll('.zoom_out');
+        zoomOutBtn.forEach(btn => btn.addEventListener('click', () => {
+
+                if (pos > -1.50){
+                pos = pos - 0.20
+              
+
+                var update = {
+                        scene: {
+                                camera: {
+                                        eye: {
+                                                x: -2.5 + pos,
+                                                y: -1.75 + pos
+                                        }
+                                }
+                        },
+                }
+
+                Plotly.relayout('myDiv', update);
+        }
+
+        if(pos == -1.20){
+                console.log('disabled')
+                zoomInBtn.disabled = true
+        } 
+
+        }));
+
+        myPlot.on('plotly_hover', function (data) {
+
+                var pts;
+                for (var i = 0; i < data.points.length; i++) {
+                        pts = data.points[i][Object.keys(data.points[i])[8]];
+                }
+                var indexfP = names.indexOf(pts)
+                // console.log(fP[indexfP]);
+                function NewTab() {
+                        var w = window.open(
+                                "/diagramGen.html", "_blank"
+                        );
+                        pisadas = fP[indexfP];
+                        // console.log(pisadas);
+                        amplify.store("pisadas", pisadas);
+                        origTitle = names[indexfP];
+                        amplify.store("name", origTitle);
+                        w.onload = function () { this.document.title = origTitle; }
+                }
+                 setTimeout(NewTab,1200)  
+
+        });
 }
+
+
+
+
 
 
 // var origin = [480, 300], j = 10, scale = 20, scatter = [], yLine = [], xGrid = [], beta = 0, alpha = 0, key = function(d){ return d.id; }, startAngle = Math.PI/4;
