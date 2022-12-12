@@ -670,9 +670,10 @@ if (screen.width < 700) {
                                 }
                         }
                 },
+                dragmode: 'false',
                 plot_bgcolor: "red",
                 paper_bgcolor: "white",
-                width: 400,
+                width: 450,
                 height: 500,
                 hovermode: 'closest',
                 // title: 'Visualizador de formas primas'
@@ -722,80 +723,153 @@ if (isMobile() == true) {
         const zoomInBtn = document.querySelectorAll('.zoom_in');
         zoomInBtn.forEach(btn => btn.addEventListener('click', () => {
 
-                if (pos < 1.50){
-                pos = pos + 0.20
+                if (pos < 1.50) {
+                        pos = pos + 0.20
 
-                var update = {
-                        scene: {
-                                camera: {
-                                        eye: {
-                                                x: -2.5 + pos,
-                                                y: -1.75 + pos,
+                        var update = {
+                                scene: {
+                                        camera: {
+                                                eye: {
+                                                        x: -2.5 + pos,
+                                                        y: -1.75 + pos,
+                                                }
+                                        },
+                                        xaxis: {
+                                                visible: true,
+                                                title: {
+                                                        text: 'Número de notas',
+                                                        font: {
+                                                                family: 'Verdana, sans-serif',
+                                                                size: 12,
+                                                                color: '#7f7f7f'
+                                                        }
+                                                },
+                                        },
+                                        yaxis: {
+                                                title: {
+                                                        text: 'Promedio del vector interválico',
+                                                        font: {
+                                                                family: 'Verdana, sans-serif',
+                                                                size: 12,
+                                                                color: '#7f7f7f'
+                                                        }
+                                                },
+                                                visible: true,
+                                        },
+                                        zaxis: {
+
+                                                title: {
+                                                        text: 'Suma de forma prima',
+                                                        font: {
+                                                                family: 'Verdana, sans-serif',
+                                                                size: 12,
+                                                                color: '#7f7f7f'
+                                                        }
+                                                },
+                                                visible: true,
                                         }
                                 }
-                        },
-                }
+                        }
 
-                Plotly.relayout('myDiv', update);
-        }
-        if(pos == 1.20){
-                console.log('disabled')
-                zoomInBtn.disabled = true
-        } 
-                     
+                        Plotly.relayout('myDiv', update);
+                }
 
         }));
 
         const zoomOutBtn = document.querySelectorAll('.zoom_out');
         zoomOutBtn.forEach(btn => btn.addEventListener('click', () => {
 
-                if (pos > -1.50){
-                pos = pos - 0.20
-              
+                if (pos > -1.1) {
+                        pos = pos - 0.20
 
-                var update = {
-                        scene: {
-                                camera: {
-                                        eye: {
-                                                x: -2.5 + pos,
-                                                y: -1.75 + pos
-                                        }
-                                }
-                        },
+
+                        var update = {
+                                scene: {
+                                        camera: {
+                                                eye: {
+                                                        x: -2.5 + pos,
+                                                        y: -1.75 + pos
+                                                }
+                                        },
+                                        xaxis: {
+                                                visible: true,
+                                                title: {
+                                                        text: 'Número de notas',
+                                                        font: {
+                                                                family: 'Verdana, sans-serif',
+                                                                size: 9,
+                                                                color: '#7f7f7f'
+                                                        }
+                                                },
+                                        },
+                                        yaxis: {
+                                                title: {
+                                                        text: 'Promedio del vector interválico',
+                                                        font: {
+                                                                family: 'Verdana, sans-serif',
+                                                                size: 9,
+                                                                color: '#7f7f7f'
+                                                        }
+                                                },
+                                                visible: true,
+                                        },
+                                        zaxis: {
+
+                                                title: {
+                                                        text: 'Suma de forma prima',
+                                                        font: {
+                                                                family: 'Verdana, sans-serif',
+                                                                size: 9,
+                                                                color: '#7f7f7f'
+                                                        }
+                                                },
+                                                visible: true,
+                                        },
+                                },
+                        }
+
+                        Plotly.relayout('myDiv', update);
                 }
-
-                Plotly.relayout('myDiv', update);
-        }
-
-        if(pos == -1.20){
-                console.log('disabled')
-                zoomInBtn.disabled = true
-        } 
 
         }));
 
+        var pts;
+        var indexfP;
+
         myPlot.on('plotly_hover', function (data) {
 
-                var pts;
                 for (var i = 0; i < data.points.length; i++) {
                         pts = data.points[i][Object.keys(data.points[i])[8]];
                 }
-                var indexfP = names.indexOf(pts)
-                // console.log(fP[indexfP]);
-                function NewTab() {
-                        var w = window.open(
-                                "/diagramGen.html", "_blank"
-                        );
-                        pisadas = fP[indexfP];
-                        // console.log(pisadas);
-                        amplify.store("pisadas", pisadas);
-                        origTitle = names[indexfP];
-                        amplify.store("name", origTitle);
-                        w.onload = function () { this.document.title = origTitle; }
-                }
-                 setTimeout(NewTab,1200)  
+                indexfP = names.indexOf(pts);
+                document.getElementById('go').style.display = 'block';
 
         });
+
+        myPlot.on('plotly_unhover', function () {
+                indexfP = 'none';
+                document.getElementById('go').style.display = 'none';
+        });
+
+        function go() {
+
+                if (indexfP != 'none') {
+                        // console.log(fP[indexfP]);
+                        function NewTab() {
+                                var w = window.open(
+                                        "/diagramGen.html", "_blank"
+                                );
+                                pisadas = fP[indexfP];
+                                // console.log(pisadas);
+                                amplify.store("pisadas", pisadas);
+                                origTitle = names[indexfP];
+                                amplify.store("name", origTitle);
+                                w.onload = function () { this.document.title = origTitle; }
+                        }
+                        NewTab();
+                }
+        }
+
 }
 
 
