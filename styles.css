@@ -9,8 +9,15 @@ body {
 }
 
 .head {
-  position: relative;
-  z-index: 10;
+  margin-bottom: auto;
+  text-align: center;
+  font-style: normal;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+  font-size: 40px;
+}
+
+.headv {
+  margin-bottom: auto;
   text-align: center;
   font-style: normal;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
@@ -628,7 +635,7 @@ h1 {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  width: 110px;
+  width: 80px;
   height: 30px;
   margin: 10px;
   margin-top: 0px;
@@ -770,15 +777,10 @@ h1 {
     z-index: 0;
   }
 
-  .head{
+  .headv{
     display: block;
     z-index: 10;
     position:relative;
-  }
-
-  .head2{
-    margin-top: -50px;
-    margin-bottom: 30px;;
   }
 
   .zoombtn{
