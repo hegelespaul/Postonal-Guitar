@@ -17,6 +17,9 @@ body {
 }
 
 .headv {
+  display: block;
+  position: relative;
+  z-index: 10;
   margin-bottom: auto;
   text-align: center;
   font-style: normal;
