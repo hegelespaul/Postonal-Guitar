@@ -873,3 +873,46 @@ color: red;
   font-size: smaller;
   width: 70%;
 }
+
+.ejemplos{
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 2%;
+  width: 70%;
+}
+
+.ejemplos object{
+  width: 70%;
+  height: auto;
+}
+
+.ejemplosAudio{
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: auto;
+  margin-top: 2%;
+  width: 80%;
+}
+
+@media only screen and (max-width: 1024px) {
+
+  .ejemplos{
+    flex-flow: column;
+    width: 90%;
+  }
+
+  .ejemplos object{
+    width: 100%;
+    height: 100%;
+  }
+  
+  .ejemplosAudio{
+    width: 90%;
+    justify-content: flex-start;
+  }
+
+}
