@@ -36,11 +36,11 @@ function numnot() {
     var count = btnOn.length + btnOff.length;
 
     if (btn.value == 'OFF') {
- 
-        for(var i = 0; i < count; i++){
-            n = '"' + (i%12).toString() + '"';
+
+        for (var i = 0; i < count; i++) {
+            n = '"' + (i % 12).toString() + '"';
             elements = document.querySelectorAll("[id=" + n + "]");
-            elements.forEach((f)=>{
+            elements.forEach((f) => {
                 f.innerHTML = f.innerHTML.replace(numtonot[i % 12][0], numtonot[i % 12][1]);
             });
         }
@@ -50,12 +50,12 @@ function numnot() {
 
     }
 
-    else if(btn.value == 'ON'){
+    else if (btn.value == 'ON') {
 
-        for(var i = 0; i < count; i++){
-            n = '"' + (i%12).toString() + '"';
+        for (var i = 0; i < count; i++) {
+            n = '"' + (i % 12).toString() + '"';
             elements = document.querySelectorAll("[id=" + n + "]");
-            elements.forEach((f)=>{
+            elements.forEach((f) => {
                 f.innerHTML = f.innerHTML.replace(numtonot[i % 12][1], numtonot[i % 12][0]);
             });
         }
@@ -303,17 +303,29 @@ function puntodePartida(list) {
                         .attr('r', 6)
                         .attr('stroke', 'none')
                         .attr('stroke-width', 1)
-                        .attr('fill', pallete[(pisada[i][2] + 3) % 12])
+                        .attr('fill', pallete[(pisada[i][2] + 3) % 12]);
 
-                    diagramas.append("text")
-                        .text(numtonot[pisada[i][2]][0])
-                        .attr('id',numtonot[pisada[i][2]][0])
-                        .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
-                        .attr('y', 10 * pisada[i][0] + 3.8 + adjustY)
-                        .attr('fill', 'white')
-                        .attr("font-size", "10px")
-                        .attr("font-family", "sans-serif")
-                        .style("text-anchor", "middle");
+                    if (document.getElementById("stickyBtn").value == 'OFF') {
+                        diagramas.append("text")
+                            .text(numtonot[pisada[i][2]][0])
+                            .attr('id', numtonot[pisada[i][2]][0])
+                            .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
+                            .attr('y', 10 * pisada[i][0] + 3.8 + adjustY)
+                            .attr('fill', 'white')
+                            .attr("font-size", "10px")
+                            .attr("font-family", "sans-serif")
+                            .style("text-anchor", "middle");
+                    } else if (document.getElementById("stickyBtn").value == 'ON') {
+                        diagramas.append("text")
+                            .text(numtonot[pisada[i][2]][1])
+                            .attr('id', numtonot[pisada[i][2]][0])
+                            .attr('x', 38 * ((Math.abs(fretMin - pisada[i][1]) % 5) + 1) - 9)
+                            .attr('y', 10 * pisada[i][0] + 3.8 + adjustY)
+                            .attr('fill', 'white')
+                            .attr("font-size", "10px")
+                            .attr("font-family", "sans-serif")
+                            .style("text-anchor", "middle");
+                    };
                 }
 
 
@@ -1280,7 +1292,12 @@ class menuBotones {
 
         for (var i = 0; i < 12; i++) {
             let btn = document.createElement("button");
-            btn.append(numtonot[i][0]);
+
+            if (document.getElementById("stickyBtn").value == 'OFF') {
+                btn.append(numtonot[i][0]);
+            } else if (document.getElementById("stickyBtn").value == 'ON') {
+                btn.append(numtonot[i][1]);
+            };
             btn.id = i;
             btn.value = "OFF";
             btn.classList.add('btnOffC');
