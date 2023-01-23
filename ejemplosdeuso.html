@@ -28,7 +28,7 @@
     </section>
 
     <section class="ejemplosAudio">
-        <audio controls>
+        <audio controls  id="myAudio">
             <source src="examples/Ivelin.mp3">
         </audio>
     </section>
@@ -39,11 +39,17 @@
     </section>
 
     <section class="ejemplosAudio">
-        <audio controls>
+        <audio controls  id="myAudio2">
             <source src="examples/Aidee.mp3">
         </audio>
     </section>
 
+    <script>
+        var audio = document.getElementById("myAudio");
+        audio.volume = 0.7;
+        var audio2 = document.getElementById("myAudio2");
+        audio2.volume = 0.6;
+      </script>
 
 </body>
 
