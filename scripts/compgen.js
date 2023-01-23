@@ -46,7 +46,7 @@ function numnot() {
         }
 
         btn.value = 'ON';
-        btn.innerHTML = 'Notas';
+        btn.innerHTML = 'Números';
 
     }
 
@@ -61,7 +61,7 @@ function numnot() {
         }
 
         btn.value = 'OFF';
-        btn.innerHTML = 'Números';
+        btn.innerHTML = 'Notas';
 
     }
 }
