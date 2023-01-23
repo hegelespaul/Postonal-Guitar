@@ -52,7 +52,7 @@ body {
   border-width: 1px;
 }
 
-#tIndex{
+#tIndex {
   background-color: rgb(249, 250, 251);
   box-sizing: border-box;
   border: 0.01;
@@ -610,11 +610,11 @@ h1 {
   height: 40em;
 }
 
-.sticky{
+.sticky {
   z-index: 10;
   text-align: end;
   width: 97%;
-  position:sticky;
+  position: sticky;
   top: 10px;
   margin: 10px;
 }
@@ -645,7 +645,7 @@ h1 {
   margin-left: 0px;
 }
 
-.zoom_in{
+.zoom_in {
   background-color: rgb(249, 250, 251);
   border: 0;
   border-radius: .5rem;
@@ -670,7 +670,7 @@ h1 {
   margin-left: 0px;
 }
 
-.zoom_out{
+.zoom_out {
   background-color: rgb(249, 250, 251);
   border: 0;
   border-radius: .5rem;
@@ -695,7 +695,7 @@ h1 {
   margin-left: 0px;
 }
 
-#go{
+#go {
   display: none;
   background-color: rgb(249, 250, 251);
   border: 0;
@@ -721,8 +721,8 @@ h1 {
   margin-left: 0px;
 }
 
-.zoombtn{
-  display:none;
+.zoombtn {
+  display: none;
 }
 
 @media only screen and (max-width: 600px) {
@@ -773,21 +773,21 @@ h1 {
     margin-bottom: 15px;
   }
 
-  #myDiv{
+  #myDiv {
     position: relative;
     margin-top: -60px;
     scale: 1;
     z-index: 0;
   }
 
-  .headv{
+  .headv {
     display: block;
     z-index: 10;
-    position:relative;
+    position: relative;
   }
 
-  .zoombtn{
-    display:flex;
+  .zoombtn {
+    display: flex;
     justify-content: center;
   }
 
@@ -817,4 +817,58 @@ h1 {
     margin-left: 16%;
     width: 90%;
   }
+}
+
+/* ///////////////////////////////////// */
+
+.h1text {
+  display: flex;
+  justify-content: center;
+  text-align: left;
+  width: 70%;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.welcometxt{
+  display: flex;
+  justify-content: flex-start;
+  margin: auto;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 70%;
+}
+
+.welcomelist{
+  display: block;
+  justify-content: center;
+  text-align: left;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  width: 70%;
+}
+
+.welcomelist ul {
+  list-style-type:circle;
+}
+
+.welcomelist a{
+  color: #000;
+}
+.welcomelist a:hover{
+color: red;
+}
+
+.footerIn{
+  display: flex;
+  justify-content: flex-end;
+  text-align: justify;
+  margin: auto;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: smaller;
+  width: 70%;
 }
