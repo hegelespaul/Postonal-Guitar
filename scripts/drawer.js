@@ -8,7 +8,8 @@ var coord = [];
 let mtx = [];
 let pisadas = [];
 let audioContext;
-let pallete = ["rgb(0,231,6,0.5)", "rgb(0,255,173,0.5)", "rgb(0,107,255,0.5)", "rgb(49,1,250,0.5)", "rgb(131,1,205,0.5)", "rgb(63,0,87,0.5)", "rgb(103,4,81,0.5)", "rgb(215,1,2,0.5)", "rgb(227,67,3,0.5)", "rgb(255,136,0,0.5)", "rgb(236,255,0,0.5)", "rgb(154,243,4,0.5)"];
+let pallete = ["rgb(0,231,6,0.7)", "rgb(0,255,173,0.7)", "rgb(0,107,255,0.7)", "rgb(49,1,250,0.7)", "rgb(131,1,205,0.7)", "rgb(63,0,87,0.7)", "rgb(103,4,81,0.7)", "rgb(215,1,2,0.7)", "rgb(227,67,3,0.7)", "rgb(255,136,0,0.7)", "rgb(220,220,20,0.7)", "rgb(154,243,4,0.7)"];
+let palletemenu = ["rgb(0,231,6,0.5)", "rgb(0,255,173,0.5)", "rgb(0,107,255,0.5)", "rgb(49,1,250,0.5)", "rgb(131,1,205,0.5)", "rgb(63,0,87,0.5)", "rgb(103,4,81,0.5)", "rgb(215,1,2,0.5)", "rgb(227,67,3,0.5)", "rgb(255,136,0,0.5)", "rgb(220,220,20,0.5)", "rgb(154,243,4,0.5)"];
 let complemento;
 const numtonot = [['0', 'C'], ['1', 'C#'], ['2', 'D'], ['3', 'Eb'], ['4', 'E'], ['5', 'F'], ['6', 'F#'], ['7', 'G'], ['8', 'Ab'], ['9', 'A'], ['10', 'Bb'], ['11', 'B']];
 
@@ -109,7 +110,7 @@ function dibujaTodo() {
             vert = vert.flat();
             formas.append("polygon")
                 .attr("points", vert)
-                .style("fill", "white")
+                .style("fill", "none")
                 .style("stroke", "gray")
                 .style("strokeWidth", "10px");
         }
@@ -126,7 +127,8 @@ function dibujaTodo() {
         btn.setAttribute("id", (i + 9) % 12);
         btn.setAttribute("class", "btnOff");
         btn.setAttribute("value", 0);
-        btn.style.background = pallete[i];
+        btn.style.background = palletemenu[i];
+        btn.style.color = 'white';
         ul.appendChild(li);
         buttons.push(btn)
     }
@@ -298,7 +300,7 @@ var dibujaDiapason = (notas) => {
                         .attr('r', 4.4)
                         .attr('stroke', 'none')
                         .attr('stroke-width', 0.5)
-                        .attr('fill', pallete[(posiciones + 3) % 12])
+                        .attr('fill', palletemenu[(posiciones + 3) % 12])
                         .on("mouseover", function (d) {
                             d3.select(this).style("stroke", "red").style("cursor", "pointer");
                         }).on("mouseout", function (d) {
