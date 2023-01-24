@@ -876,8 +876,9 @@ color: red;
 
 .lic{
   font-size: xx-small;
-  text-align: right;
+  text-align: justify;
   align-items: baseline;
+  margin: auto;
 }
 
 .ejemplos{
