@@ -921,4 +921,10 @@ color: red;
     justify-content: flex-start;
   }
 
+  .lic{
+    font-size: xx-small;
+    text-align: justify;
+    align-items: baseline;
+  }
+
 }
