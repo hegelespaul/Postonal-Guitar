@@ -874,6 +874,12 @@ color: red;
   width: 70%;
 }
 
+.lic{
+  font-size: xx-small;
+  text-align: right;
+  align-items: baseline;
+}
+
 .ejemplos{
   display: flex;
   flex-flow: row;
