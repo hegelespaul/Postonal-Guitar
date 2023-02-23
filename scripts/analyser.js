@@ -476,9 +476,9 @@ fP.forEach((n) => {
 data.forEach((n) => {
         indV = [];
         for (var i = 0; i < n.length; i++) {
-                indV.push(n[i] * i + 1)
+                indV.push(n[i] * (i + 1))
         }
-        y.push(indV.reduce((x, y) => (x + y) / 6, 0))
+        y.push(indV.reduce((x, y) => (x + y) / 6, 0));
 });
 
 //SUMA EN FORMA PRIMA
