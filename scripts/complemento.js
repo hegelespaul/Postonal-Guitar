@@ -3,6 +3,12 @@ let all = [];
 let dat = amplify.store("complemento");
 let chunkIndx = [];
 
+
+if (dat.length == 6) {
+  chunkIndx = [];
+  chunkIndx.push(3);
+}
+
 if (dat.length == 7) {
   chunkIndx = [];
   chunkIndx.push(4);

@@ -682,11 +682,11 @@ function complementoW() {
         complemento.splice(complemento.indexOf(serie[h]), 1);
     }
 
-    if (serie.length < 6) {
+    if (serie.length < 7) {
         var w = window.open(
             "/complemento.html", "_blank");
         amplify.store("complemento", complemento);
-    } else if (serie.length == 6) {
+    } else if (serie.length == 7) {
         var compbtn = complemento;
 
         for (var t = 0; t < buttons.length; t++) {
