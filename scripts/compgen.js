@@ -161,11 +161,9 @@ function puntodePartida(list) {
 
         mtx = [];
         let mtx2 = [];
+        var myGridF = [];
         acomodo[0].forEach(function (x) {
-            var myGrid = [];
-
             var myGrid = [...Array(list[0].length)].map((e) => Array());
-
             x.forEach(function (y) {
                 for (var c = 0; c < list[0].length; c++) {
                     if (y[2] == list[0][c]) {
@@ -173,10 +171,12 @@ function puntodePartida(list) {
                     }
                 }
             });
-
             myGrid = cartesianProduct(myGrid);
+            myGridF.push(myGrid)
+        });
 
-            myGrid.forEach(function (e) {
+        for (var k = 0; k < myGridF.length; k++) {
+            myGridF[k].forEach(function (e) {
                 mtx.push(e);
                 for (var c = 0; c < e.length; c++) {
                     for (var d = 0; d < e.length; d++) {
@@ -187,8 +187,8 @@ function puntodePartida(list) {
                 }
                 mtx = _.difference(mtx, mtx2);
             });
-            mtx = Array.from(new Set(mtx.map(JSON.stringify)), JSON.parse);
-        });
+        }
+        mtx = Array.from(new Set(mtx.map(JSON.stringify)), JSON.parse);
         // console.log(mtx)
         puntoArray = [...mtx];
         // console.log(puntoArray)
@@ -491,11 +491,9 @@ function allElements(list) {
 
             let mtx = [];
             let mtx2 = [];
+            var myGridF = [];
             acomodo[a].forEach(function (x) {
-                var myGrid = [];
-
                 var myGrid = [...Array(list[a].length)].map((e) => Array());
-
                 x.forEach(function (y) {
                     for (var c = 0; c < list[a].length; c++) {
                         if (y[2] == list[a][c]) {
@@ -503,10 +501,12 @@ function allElements(list) {
                         }
                     }
                 });
-
                 myGrid = cartesianProduct(myGrid);
+                myGridF.push(myGrid);
+            });
 
-                myGrid.forEach(function (e) {
+            for (var k = 0; k < myGridF.length; k++) {
+                myGridF[k].forEach(function (e) {
                     mtx.push(e);
                     for (var c = 0; c < e.length; c++) {
                         for (var d = 0; d < e.length; d++) {
@@ -517,8 +517,9 @@ function allElements(list) {
                     }
                     mtx = _.difference(mtx, mtx2);
                 });
-                mtx = Array.from(new Set(mtx.map(JSON.stringify)), JSON.parse);
-            });
+            }
+            mtx = Array.from(new Set(mtx.map(JSON.stringify)), JSON.parse);
+
             result.push(mtx)
         }
         // console.log(result);

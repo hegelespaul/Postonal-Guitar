@@ -35,11 +35,11 @@ function numnot() {
     var count = btnOn.length + btnOff.length;
 
     if (btn.value == 'OFF') {
- 
-        for(var i = 0; i < count; i++){
-            n = '"' + (i%12).toString() + '"';
+
+        for (var i = 0; i < count; i++) {
+            n = '"' + (i % 12).toString() + '"';
             elements = document.querySelectorAll("[id=" + n + "]");
-            elements.forEach((f)=>{
+            elements.forEach((f) => {
                 f.innerHTML = f.innerHTML.replace(numtonot[i % 12][0], numtonot[i % 12][1]);
             });
         }
@@ -49,12 +49,12 @@ function numnot() {
 
     }
 
-    else if(btn.value == 'ON'){
+    else if (btn.value == 'ON') {
 
-        for(var i = 0; i < count; i++){
-            n = '"' + (i%12).toString() + '"';
+        for (var i = 0; i < count; i++) {
+            n = '"' + (i % 12).toString() + '"';
             elements = document.querySelectorAll("[id=" + n + "]");
-            elements.forEach((f)=>{
+            elements.forEach((f) => {
                 f.innerHTML = f.innerHTML.replace(numtonot[i % 12][1], numtonot[i % 12][0]);
             });
         }
@@ -318,7 +318,7 @@ var dibujaDiapason = (notas) => {
                         .text(numtonot[notas[n]][0])
                         .attr('x', 17.75 * j)
                         .attr('y', 10 * i + 12.5)
-                        .attr('id',numtonot[notas[n]][0])
+                        .attr('id', numtonot[notas[n]][0])
                         .attr("font-size", "6px")
                         .attr('fill', 'white')
                         .attr("font-family", "sans-serif")
@@ -366,10 +366,10 @@ function generadorDiagramas() {
             }
         });
     }
-    console.log(s1);
-
+    var myGridF = [];
+    var myGrid;
     s1.forEach(function (x) {
-        var myGrid = [...Array(notas.length)].map((e) => Array());
+        myGrid = [...Array(notas.length)].map((e) => Array());
 
         x.forEach(function (y) {
             for (var c = 0; c < notas.length; c++) {
@@ -380,8 +380,12 @@ function generadorDiagramas() {
         });
 
         myGrid = cartesianProduct(myGrid);
+        myGridF.push(myGrid)
+    });
 
-        myGrid.forEach(function (e) {
+    for (var k = 0; k < myGridF.length; k++) {
+        myGridF[k].forEach(function (e) {
+            mtx2 = []
             mtx.push(e);
             for (var c = 0; c < e.length; c++) {
                 for (var d = 0; d < e.length; d++) {
@@ -392,8 +396,8 @@ function generadorDiagramas() {
             }
             mtx = _.difference(mtx, mtx2);
         });
-        mtx = Array.from(new Set(mtx.map(JSON.stringify)), JSON.parse);
-    });
+    }
+    mtx = Array.from(new Set(mtx.map(JSON.stringify)), JSON.parse);
     console.log(mtx);
 }
 
@@ -578,7 +582,7 @@ function playchord(coordenadas) {
     setupSamples(samplePaths).then((response) => {
         const samples = response;
         for (i = 0; i < samples.length; i++) {
-                playSample(samples[i], 0);
+            playSample(samples[i], 0);
         }
     });
 
