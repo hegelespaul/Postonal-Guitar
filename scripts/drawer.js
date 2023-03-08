@@ -786,7 +786,7 @@ function inversionW() {
         var p1 = parseInt(seriefPn);
         var res = [];
         notes.forEach(function (unaNota) {
-            var nuevoValor = (unaNota - p1) * -1 + p1;
+            var nuevoValor = (unaNota) * -1 + p1;
             res.push((nuevoValor + 12) % 12);
         });
         return res;
@@ -803,7 +803,7 @@ function inversionW() {
             serieEv.push((seriefP[j] + seriefPnt) % 12);
         }
         if (seriefPn.includes("'") == false) {
-            serieEv.push((seriefP[j] + parseInt(seriefPn)) % 12);
+            serieEv.push(seriefP[j]);
         }
     }
 
