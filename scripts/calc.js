@@ -87,7 +87,7 @@ function dodeca(notes) {
         return rev;
     }
 
-    console.log("retrogrado", reverse(), "</br>");
+    // console.log("retrogrado", reverse(), "</br>");
 
     /////////////////////////////////////////
 
@@ -100,7 +100,7 @@ function dodeca(notes) {
         });
         return res;
     }
-    console.log("inversion", inv(), "</br>");
+    // console.log("inversion", inv(), "</br>");
 
     /////////////////////////////////////////
 

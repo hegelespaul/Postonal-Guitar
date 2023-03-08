@@ -94,7 +94,7 @@ function dibujaTodo() {
         //     .attr('opacity', 0.5);
         coord.push([x, y]);
     }
-    console.log(coord);
+    // console.log(coord);
 
     function polygon() {
         var formas = d3.select('.drawerForm').classed("svg-container", true).append("svg")
@@ -142,7 +142,7 @@ function dibujaTodo() {
                 this.setAttribute("value", 1);
                 this.setAttribute("class", "btnOn");
                 notas.push(JSON.parse(this.id));
-                console.log(notas);
+                // console.log(notas);
                 d3.select('.drawerDiagrama').selectAll("svg").remove();
                 d3.select('.drawerDiapason').selectAll("svg").remove();
                 d3.select('.drawerForm').selectAll("svg").remove();
@@ -162,7 +162,7 @@ function dibujaTodo() {
                 this.setAttribute("value", 0);
                 this.setAttribute("class", "btnOff");
                 notas.splice(notas.indexOf(JSON.parse(this.id)), 1);
-                console.log(notas);
+                // console.log(notas);
 
                 if (notas.length == 0) {
                     d3.select('.drawerDiagrama').selectAll("svg").remove();
@@ -195,7 +195,7 @@ function dibujaTodo() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 var dibujaDiapason = (notas) => {
-    console.log(complemento)
+    // console.log(complemento)
     var diapason = d3.select('.drawerDiapason').classed("svg-container", true).append('svg')
         .attr("preserveAspectRatio", "xMidYMid meet")
         .attr("viewBox", "4 0 400 100")
@@ -398,7 +398,7 @@ function generadorDiagramas() {
         });
     }
     mtx = Array.from(new Set(mtx.map(JSON.stringify)), JSON.parse);
-    console.log(mtx);
+    // console.log(mtx);
 }
 
 
@@ -530,7 +530,7 @@ function dibujaMatrix() {
                         pisada[i][0].toString() + "-" + pisada[i][1].toString(),
                     ]);
                 }
-                console.log(pisada);
+                // console.log(pisada);
                 playchord(pisadaSound);
                 d3.event.stopPropagation();
             });
@@ -711,6 +711,7 @@ function inversionW() {
     serie = [];
 
     function permutaciones(notes) {
+        var fPrR2;
         var formaPrimaIn2;
         var tricorde = notes;
         var permu = [];
@@ -719,7 +720,6 @@ function inversionW() {
         var formaPrimaOri = [];
 
         for (var e = 0; e < tricorde.length; e++) {
-            var fPrR2;
             var tri0 = [];
             var retro0 = [];
             var tri0sum;
@@ -745,7 +745,6 @@ function inversionW() {
                 retro0Max = Math.max(...retro0);
                 retro0Min = Math.min(...retro0);
                 retro0sum = retro0Max - retro0Min;
-
             });
 
             formaPrimaCal.push(tri0sum, retro0sum);
@@ -778,15 +777,13 @@ function inversionW() {
         return [formaPrimaIn2, formaPrimaOri[namIndx[lastcomp.indexOf(formaPrimaIndex)]]];
     }
 
-
-    for (var i = 0; i < buttons.length; i++) {
-        if (buttons[i].className == 'btnOn') {
-            serie.push((parseInt(buttons[i].id)));
-        }
-    }
+    serie = fPrR.split(")")
+    serie = serie[0].substring(1)
+    serie = serie.split(",")
+    serie = serie.map(x => parseInt(x));
 
     function inv(notes) {
-        var p1 = notes[0];
+        var p1 = parseInt(seriefPn);
         var res = [];
         notes.forEach(function (unaNota) {
             var nuevoValor = (unaNota - p1) * -1 + p1;
@@ -796,20 +793,17 @@ function inversionW() {
     }
 
     let seriefP = permutaciones(serie)[0];
-    let seriefPn = permutaciones(serie)[1];
-
-    // console.log(seriefP);
-
+    let seriefPn = fPrR.split(")")[1];
     let serieEv = [];
     let invS;
 
-
     for (var j = 0; j < seriefP.length; j++) {
         if (seriefPn.includes("'") == true) {
-            serieEv.push((seriefP[j] + parseInt(seriefPn[1])) % 12)
+            var seriefPnt = parseInt(seriefPn.split("'")[1]);
+            serieEv.push((seriefP[j] + seriefPnt) % 12);
         }
         if (seriefPn.includes("'") == false) {
-            serieEv.push((seriefP[j] + parseInt(seriefPn[0])) % 12)
+            serieEv.push((seriefP[j] + parseInt(seriefPn)) % 12);
         }
     }
 
@@ -820,21 +814,14 @@ function inversionW() {
         invS = inv(serieEv);
     }
 
-    // console.log(serieEv)
-
-    // console.log(serie, seriefP, invS)
-
     for (var t = 0; t < buttons.length; t++) {
         if (buttons[t].className == "btnOn") {
             buttons[t].click();
         }
     }
 
-    for (var t = 0; t < buttons.length; t++) {
-
-        if (invS.includes(parseInt(buttons[t].id)) == true) {
-            buttons[t].click()
-        }
+    for (var t = 0; t < invS.length; t++) {
+       buttons[(invS[t]+3)%12].click();
     }
     serie = invS;
     amplify.store("pisadas", serie)
