@@ -110,13 +110,14 @@ function cosSimAcomodadorTrp(A) {
         resultado.splice(cuerda - 1, 1, A[i]);
     }
 
+    // console.log(resultado)
     resultado = resultado.flat();
     resultado.splice(2, 1);
-    resultado.splice(5, 1);
+    resultado.splice(4, 1);
+    resultado.splice(6, 1);
     resultado.splice(8, 1);
-    resultado.splice(11, 1);
-    resultado.splice(14, 1);
-    resultado.splice(17, 1);
+    resultado.splice(10, 1);
+    resultado.splice(12, 1);
 
     // console.log(resultado)
     return resultado
@@ -201,8 +202,9 @@ function chordNm(chordValues) {
     var resultMax = [];
     var Tr = [];
 
-    cosinesim(vectorInt(chordValues), cualidades[0][1]);
+    // console.log(cosinesim(vectorInt(chordValues), cualidades[0][1]))
     var permus = transA0(chordValues);
+    // console.log(permus)
 
     for (var p = 0; p < permus[0].length; p++) {
         simAll.push([]);
@@ -211,7 +213,8 @@ function chordNm(chordValues) {
             simAll[p].push(cosinesim(cosSimAcomodador(permus[0][p]), cosSimAcomodador(cualidades[q][2])));
             // console.log(cosSimAcomodador(permus[0][p],p),cosSimAcomodador(cualidades[q][2]),cosinesim(cosSimAcomodador(permus[0][p]), cosSimAcomodador(cualidades[q][2])));
         }
-        // console.log(permus[0][p])
+
+        // // console.log(permus[0][p])
         // console.log(simAll[p]);
         var max = simAll[p].reduce((a, b) => { return Math.max(a, b) });
         //console.log(max);
@@ -221,6 +224,17 @@ function chordNm(chordValues) {
         allMax.forEach((e) => { simAllEval.push(max); simAllCual.push(cualidades[e]); simAllOri.push(permus[1][p]) });
         // console.log(allMax);
     }
+
+    // simAll = [];
+    // for (var q = 0; q < cualidades.length; q++) {
+    // simAll.push(cosinesim(vectorInt(chordValues), cualidades[q][1]));
+    // }
+    // console.log(simAll)
+    // var max = simAll.reduce((a, b) => { return Math.max(a, b) });
+    // var allMax = getAllIndexes(simAll, max);
+    // console.log(allMax)
+    // allMax.forEach((e) => { simAllEval.push(max); simAllCual.push(cualidades[e]); simAllOri.push(chordValues) });
+
 
     for (var z = 0; z < simAllEval.length; z++) {
         Tr.push([]);
@@ -233,6 +247,7 @@ function chordNm(chordValues) {
 
     var maxAll = simAllEval.reduce((a, b) => { return Math.max(a, b) });
     var allChords = getAllIndexes(simAllEval, maxAll);
+    // console.log(maxAll)
 
     for (var allCh = 0; allCh < allChords.length; allCh++) {
         resultMax.push(notesName[simAllOri[allChords[allCh]]] + simAllCual[allChords[allCh]][0]);

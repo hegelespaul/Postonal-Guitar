@@ -603,7 +603,7 @@ function allElements(list) {
                 var next = topnoteArr[(i + 1) % topnoteArr.length];
 
                 for (var j = 0; j < next.length; j++) {
-                    minD[i].push(distance(sfnAcomodador(progresion[i]), next[j])); //////////PROGRESIOONN
+                    minD[i].push(distance(sfnAcomodador(progresion[i]), next[j])); //////////PROGRESIÓN
                     // console.log(next[j])
                 }
 

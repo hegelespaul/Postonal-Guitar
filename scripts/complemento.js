@@ -196,6 +196,7 @@ function permutaciones(notes) {
 
 var perm = heapsPermute(dat);
 console.log(permutaciones(dat));
+console.log(perm)
 
 function NewTab(notasNuevas) {
   amplify.store("pisadas", notasNuevas);
@@ -223,9 +224,12 @@ for (var a = 0; a < chunkIndx.length; a++) {
     chunks.sort(([a, b], [c, d]) => a - c || d - b);
     all.push(chunks)
   }
+  console.log(all)
 
   let lut = {},
     red = all.filter(a => lut[a] ? false : lut[a] = true);
+  
+  console.log(red)
 
   var allFpperm = [];
   for (var i = 0; i < red.length; i++) {
@@ -235,11 +239,13 @@ for (var a = 0; a < chunkIndx.length; a++) {
     }
   }
 
-  let lut2 = {},
-    red2 = allFpperm.filter(a => lut2[a] ? false : lut2[a] = true);
+  // console.log(allFpperm)
 
-  // let red2 = allFpperm
-  // console.log(red2);
+  // let lut2 = {},
+  //   red2 = allFpperm.filter(a => lut2[a] ? false : lut2[a] = true);
+
+  let red2 = allFpperm
+  console.log(red2);
 
   for (var j = 0; j < red2.length; j++) {
     var chordC = d3.select(".listacomplemento").append("div").attr("id", "cuadrito");

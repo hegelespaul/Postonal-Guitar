@@ -472,19 +472,44 @@ fP.forEach((n) => {
         x.push(n.length);
 });
 
-//MEDIA DE VECTOR INTERVÁLICO
+//DESVIACIÓN ESTÁNDAR DEL VECTOR INTERVÁLICO DEFINIDO EN CANTIDAD DE SEMITONOS.
 data.forEach((n) => {
         indV = [];
         for (var i = 0; i < n.length; i++) {
                 indV.push(n[i] * (i + 1))
         }
-        y.push(indV.reduce((x, y) => (x + y) / 6, 0));
+        // indV = indV.reduce((x, y) => (x + y), 0);
+        y.push(dev(indV))
 });
 
-//SUMA EN FORMA PRIMA
+//VALOR MÁXIMO DE LA FORMA PRIMA
 fP.forEach((n) => {
-        z.push(n.reduce((x, y) => x + y, 0))
+        z.push(n[n.length-1])
+        // z.push(n.reduce((x, y) => x + y, 0)/n.length)
+        // z.push(dev(n))
 });
+
+
+function dev(arr){
+        // Creating the mean with Array.reduce
+        let mean = arr.reduce((acc, curr)=>{
+          return acc + curr
+        }, 0) / arr.length;
+         
+        // Assigning (value - mean) ^ 2 to every array item
+        arr = arr.map((k)=>{
+          return (k - mean) ** 2
+        })
+         
+        // Calculating the sum of updated array
+       let sum = arr.reduce((acc, curr)=> acc + curr, 0);
+        
+       // Calculating the variance
+       let variance = sum / arr.length
+        
+       // Returning the standard deviation
+       return Math.sqrt(sum / arr.length)
+      }
 
 ////NORMALIZATION FROM 0 TO 1 
 
@@ -585,7 +610,7 @@ if (screen.width > 700) {
                         },
                         yaxis: {
                                 title: {
-                                        text: 'Promedio del vector interválico',
+                                        text: 'Desviación estándard del vector interválico',
                                         font: {
                                                 family: 'Verdana, sans-serif',
                                                 size: 12,
@@ -596,7 +621,7 @@ if (screen.width > 700) {
                         },
                         zaxis: {
                                 title: {
-                                        text: 'Suma de forma prima',
+                                        text: 'Valor máximo de forma prima',
                                         font: {
                                                 family: 'Verdana, sans-serif',
                                                 size: 12,
