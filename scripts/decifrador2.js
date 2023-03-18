@@ -29,6 +29,7 @@ let cualidades = [
     ['7sus2', [0, 2, 1, 1, 2, 0], [0, 2, 7, 10]],
     ['m7b5', [0, 1, 2, 1, 1, 1], [0, 3, 6, 10]],
     ['dim7', [0, 0, 4, 0, 0, 2], [0, 3, 6, 9]],
+    ['dimmaj7', [1, 0, 2, 1, 1, 1], [0, 3, 6, 11]],
 
     //////////////////////////////////4 NOTAS CASOS CON TENSIONES
     ['add11', [1, 1, 1, 1, 2, 0], [0, 4, 5, 7]],
@@ -204,7 +205,7 @@ function chordNm(chordValues) {
 
     // console.log(cosinesim(vectorInt(chordValues), cualidades[0][1]))
     var permus = transA0(chordValues);
-    // console.log(permus)
+    console.log(permus)
 
     for (var p = 0; p < permus[0].length; p++) {
         simAll.push([]);
