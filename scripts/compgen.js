@@ -938,7 +938,8 @@ function allElements(list) {
 
                 chord = (progresion[i][j][1] + '.' + progresion[i][j][0] + ' ') + chord;
             }
-            chord = '(' + chord + '{ch' + '"' + chordNm(list[i].map(i => Number(i)))[1] + '"' + '} |';
+            // chord = '(' + chord + '{ch' + '"' + chordNm(list[i].map(i => Number(i)))[0] + '"' + '} |'; //MAX cosine chord
+            chord = '(' + chord + '{ch' + '"' + dodeca(list[i].map(i => Number(i))) + '"' + '} |';
             fileContent = fileContent + chord;
         }
         fileContent = fileContent.slice(0, -1);

@@ -15,14 +15,17 @@ let cualidades = [
     ['6', [0, 1, 2, 1, 2, 0], [0, 4, 7, 9]],
     ['m6', [0, 1, 2, 1, 1, 1], [0, 3, 7, 9]],
     ['maj7', [1, 0, 1, 2, 2, 0], [0, 4, 7, 11]],
+    ['maj7b5', [1, 0, 1, 2, 2, 0], [0, 4, 6, 11]],
+    ['maj7#5', [1, 0, 1, 2, 2, 0], [0, 4, 8, 11]],
     ['m7', [0, 1, 2, 1, 2, 0], [0, 3, 7, 10]],
+    ['m7b5', [0, 1, 2, 1, 1, 1], [0, 3, 6, 10]],
+    ['m7#5', [0, 1, 2, 1, 1, 1], [0, 3, 6, 10]],
     ['mMaj7', [1, 0, 1, 3, 1, 0], [0, 3, 7, 11]],
     ['7', [0, 1, 2, 1, 1, 1], [0, 4, 7, 10]],
     ['7#5', [0, 2, 0, 2, 0, 2], [0, 4, 8, 10]],
     ['7b5', [0, 2, 0, 3, 0, 1], [0, 4, 6, 10]],
     ['7sus4', [0, 2, 1, 0, 3, 0], [0, 5, 7, 10]],
     ['7sus2', [0, 2, 1, 1, 2, 0], [0, 2, 7, 10]],
-    ['m7b5', [0, 1, 2, 1, 1, 1], [0, 3, 6, 10]],
     ['dim7', [0, 0, 4, 0, 0, 2], [0, 3, 6, 9]],
 
     //////////////////////////////////4 NOTAS CASOS CON TENSIONES
@@ -140,9 +143,9 @@ function cosinesim(A, B) {
     mA = Math.sqrt(mA);
     mB = Math.sqrt(mB);
     var similarity = (dotproduct) / ((mA) * (mB));
-    var similarityR = roundTo(similarity, 2);
+    var similarityR = roundTo(similarity, 4);
     // console.log(similarity);
-    return similarity;
+    return similarityR;
 }
 
 function vectorInt(acorde) {
@@ -220,7 +223,7 @@ function chordNm(chordValues) {
         //console.log(cualidades[simAll[p].indexOf(max)]);
         var allMax = getAllIndexes(simAll[p], max);
         allMax.forEach((e) => { simAllEval.push(max); simAllCual.push(cualidades[e]); simAllOri.push(permus[1][p]) });
-        // console.log(allMax);
+        console.log(simAll[p][allMax]);
     }
 
     // simAll = [];
@@ -236,7 +239,8 @@ function chordNm(chordValues) {
 
     for (var z = 0; z < simAllEval.length; z++) {
         Tr.push([]);
-        result.push(notesName[simAllOri[z]] + simAllCual[z][0], simAllEval[z]);
+        // result.push(notesName[simAllOri[z]] + simAllCual[z][0], simAllEval[z]);
+        result.push(notesName[simAllOri[z]] + simAllCual[z][0]);
         for (var s = 0; s < simAllCual[z][2].length; s++) {
             Tr[z].push(((simAllCual[z][2][s] + 12) + simAllOri[z]) % 12);
         }
@@ -254,7 +258,7 @@ function chordNm(chordValues) {
     // console.log(permusR);
     // console.log([simAllEval, simAllCual, simAllOri]);
     // console.log(result, resultMax);
-    return [result, resultMax];
+    return [resultMax, result];
 }
 
 // // console.log(chordNm([11, 3, 6, 10])[1]);
