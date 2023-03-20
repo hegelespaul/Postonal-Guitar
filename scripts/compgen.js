@@ -925,7 +925,7 @@ function allElements(list) {
 
 
         let fileContent = `
-\\title "Mi cancion" 
+\\title "Mi tema" 
 \\subtitle "Yo"
 \\tempo 180
 \\instrument 25
@@ -939,7 +939,7 @@ function allElements(list) {
                 chord = (progresion[i][j][1] + '.' + progresion[i][j][0] + ' ') + chord;
             }
             // chord = '(' + chord + '{ch' + '"' + chordNm(list[i].map(i => Number(i)))[0] + '"' + '} |'; //MAX cosine chord
-            chord = '(' + chord + '{ch' + '"' + dodeca(list[i].map(i => Number(i))) + '"' + '} |';
+            chord = '(' + chord + '{ch' + '"' + dodeca(list[i].map(i => Number(i))) + '\n' + '\n' + chordNm(list[i].map(i => Number(i)))[1] + '"' + '} |';
             fileContent = fileContent + chord;
         }
         fileContent = fileContent.slice(0, -1);
@@ -1325,19 +1325,22 @@ class menuBotones {
                             }
                             chordInTime = (listaF[index - 1].map(i => Number(i)));
                             ChFp = dodeca(chordInTime);
-                            var g = document.createElement('div');
-                            g.setAttribute("style", "font-size: 18px; margin: 5px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;");
-                            g.id = 'g' + index;
-                            f.append(g);
-                            document.getElementById('g' + index).append(allFpNames[getIndexOfArray(allFp, formaPrimaIn)] + ' | ');
-                            document.getElementById('g' + index).append(ChFp + ' | ');
-                            document.getElementById('g' + index).append(chordNm(chordInTime)[1]);
+                            // var g = document.createElement('div');
+                            f.setAttribute("style", "font-size: 18px; margin: 5px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;");
+                            // g.id = 'g' + index;
+                            // f.append(g);
+                            // document.getElementById('g' + index).append(allFpNames[getIndexOfArray(allFp, formaPrimaIn)] + ' | ');
+                            // document.getElementById('g' + index).append(ChFp + ' | ');
+                            d3.select(f).html(allFpNames[getIndexOfArray(allFp, formaPrimaIn)] + ' | ' + ChFp + ' | ' + chordNm(chordInTime)[0] + "<span style='color: #ff6666;'>" + chordNm(chordInTime)[1]+ "</span>")
+                            // document.getElementById('g' + index).append(chordNm(chordInTime)[0]);
+                            // document.getElementById('g' + index).append(chordNm(chordInTime)[1]);
 
                         }
                         else if (listaF[index - 1].length < 3) {
-                            if (document.getElementById('g' + index)) {
-                                document.getElementById('g' + index).remove();
-                            }
+                            // if (document.getElementById('g' + index)) {
+                            //     document.getElementById('g' + index).remove();
+                            // }
+                            d3.select(f).html('');
                         }
                     }
 
@@ -1353,18 +1356,22 @@ class menuBotones {
                             }
                             chordInTime = (listaF[index - 1].map(i => Number(i)));
                             ChFp = dodeca(chordInTime);
-                            var g = document.createElement('div');
-                            g.setAttribute("style", "font-size: 18px; margin: 5px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;");
-                            g.id = 'g' + index;
-                            f.append(g);
-                            document.getElementById('g' + index).append(allFpNames[getIndexOfArray(allFp, formaPrimaIn)] + ' | ');
-                            document.getElementById('g' + index).append(ChFp);
-                            document.getElementById('g' + index).append(chordNm(chordInTime)[1]);
+                            // var g = document.createElement('div');
+                            f.setAttribute("style", "font-size: 18px; margin: 5px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;");
+                            // g.id = 'g' + index;
+                            // f.append(g);
+                            // document.getElementById('g' + index).append(allFpNames[getIndexOfArray(allFp, formaPrimaIn)] + ' | ');
+                            // document.getElementById('g' + index).append(ChFp);
+                            // document.getElementById('g' + index).append(chordNm(chordInTime)[0]);
+                            // document.getElementById('g' + index).append(chordNm(chordInTime)[1]);
+                            d3.select(f).html(allFpNames[getIndexOfArray(allFp, formaPrimaIn)] + ' | ' + ChFp + ' | ' + chordNm(chordInTime)[0] + "<span style='color: #ff6666;'>" + chordNm(chordInTime)[1]+ "</span>")
+
                         }
                         else if (listaF[index - 1].length < 3) {
-                            if (document.getElementById('g' + index)) {
-                                document.getElementById('g' + index).remove();
-                            }
+                            // if (document.getElementById('g' + index)) {
+                            //     document.getElementById('g' + index).remove();
+                            // }
+                            d3.select(f).html('');
                         }
                     }
                 }
@@ -1381,18 +1388,22 @@ class menuBotones {
 
                             } chordInTime = (listaF[index - 1].map(i => Number(i)));
                             ChFp = dodeca(chordInTime);
-                            var g = document.createElement('div');
-                            g.setAttribute("style", "font-size: 18px; margin: 5px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;");
-                            g.id = 'g' + index;
-                            f.append(g);
-                            document.getElementById('g' + index).append(allFpNames[getIndexOfArray(allFp, formaPrimaIn)] + ' | ');
-                            document.getElementById('g' + index).append(ChFp);
-                            document.getElementById('g' + index).append(chordNm(chordInTime)[1]);
+                            // var g = document.createElement('div');
+                            f.setAttribute("style", "font-size: 18px; margin: 5px; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;");
+                            // g.id = 'g' + index;
+                            // f.append(g);
+                            // document.getElementById('g' + index).append(allFpNames[getIndexOfArray(allFp, formaPrimaIn)] + ' | ');
+                            // document.getElementById('g' + index).append(ChFp);
+                            // document.getElementById('g' + index).append(chordNm(chordInTime)[0]);
+                            // document.getElementById('g' + index).append(chordNm(chordInTime)[1]);
+                            d3.select(f).html(allFpNames[getIndexOfArray(allFp, formaPrimaIn)] + ' | ' + ChFp + ' | ' + chordNm(chordInTime)[0] + "<span style='color: #ff6666;'>" + chordNm(chordInTime)[1]+ "</span>")
+
                         }
                         else if (listaF[index - 1].length < 3) {
-                            if (document.getElementById('g' + index)) {
-                                document.getElementById('g' + index).remove();
-                            }
+                            // if (document.getElementById('g' + index)) {
+                            //     document.getElementById('g' + index).remove();
+                            // }
+                            d3.select(f).html('');
                         }
                     }
 

@@ -143,7 +143,7 @@ function cosinesim(A, B) {
     mA = Math.sqrt(mA);
     mB = Math.sqrt(mB);
     var similarity = (dotproduct) / ((mA) * (mB));
-    var similarityR = roundTo(similarity, 4);
+    var similarityR = roundTo(similarity, 6)
     // console.log(similarity);
     return similarityR;
 }
@@ -212,18 +212,17 @@ function chordNm(chordValues) {
 
         for (var q = 0; q < cualidades.length; q++) {
             simAll[p].push(cosinesim(cosSimAcomodador(permus[0][p]), cosSimAcomodador(cualidades[q][2])));
-            // console.log(cosSimAcomodador(permus[0][p],p),cosSimAcomodador(cualidades[q][2]),cosinesim(cosSimAcomodador(permus[0][p]), cosSimAcomodador(cualidades[q][2])));
+            // console.log(permus[0][p],q,cualidades[q][0]);
         }
 
         // // console.log(permus[0][p])
-        // console.log(simAll[p]);
         var max = simAll[p].reduce((a, b) => { return Math.max(a, b) });
-        //console.log(max);
+        // console.log(max);
         // console.log(simAll[p].indexOf(max));
         //console.log(cualidades[simAll[p].indexOf(max)]);
         var allMax = getAllIndexes(simAll[p], max);
         allMax.forEach((e) => { simAllEval.push(max); simAllCual.push(cualidades[e]); simAllOri.push(permus[1][p]) });
-        console.log(simAll[p][allMax]);
+        // console.log(simAll[p][allMax]);
     }
 
     // simAll = [];
@@ -255,10 +254,12 @@ function chordNm(chordValues) {
         resultMax.push(notesName[simAllOri[allChords[allCh]]] + simAllCual[allChords[allCh]][0]);
     }
 
+    var index = result.indexOf(resultMax[0])
+    result.splice(index,1);
     // console.log(permusR);
     // console.log([simAllEval, simAllCual, simAllOri]);
     // console.log(result, resultMax);
-    return [resultMax, result];
+    return [result, resultMax];
 }
 
 // // console.log(chordNm([11, 3, 6, 10])[1]);

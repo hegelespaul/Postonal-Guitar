@@ -612,6 +612,7 @@ function formaPrima() {
 
     var paragraph = document.getElementById("forma");
     var paragraph2 = document.getElementById("acorde");
+    var paragraph3 = document.getElementById("cercano");
 
     var text = document.createTextNode(allFpNames[getIndexOfArray(allFp, formaPrimaIn)]
         + ' |  ' + fPrR + ' | ');
@@ -623,11 +624,15 @@ function formaPrima() {
     }
 
     var notext = document.createTextNode(' |  ' + fPrR + ' | ');
-    var chordtext = document.createTextNode(chordNm(notas)[1])
+    var chordtext = document.createTextNode(chordNm(notas)[0])
+    var chordtext2 = document.createTextNode(chordNm(notas)[1])
     document.getElementById("forma").innerHTML = "";
     document.getElementById("acorde").innerHTML = "";
+    document.getElementById("cercano").innerHTML = "";
 
     if (notas.length >= 3) {
+        paragraph3.style.color = '#ff6666'
+        paragraph3.appendChild(chordtext2);
         paragraph2.appendChild(chordtext);
         paragraph.appendChild(text);
     }
