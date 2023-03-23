@@ -854,7 +854,7 @@ function transponerW() {
                 este = ((serie[t] + parseInt(tIndex) % 12));
             }
             if (tINdxT < 0) {
-                este = (((serie[t] + parseInt(tIndex) % 12) + 12) % 12);
+                este = (((serie[t] + parseInt(tIndex)) + 12) % 12);
             }
 
             buttons[(este + 3) % 12].click()
