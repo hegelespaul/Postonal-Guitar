@@ -388,7 +388,7 @@ function puntodePartida(list) {
                 sampleSource.buffer = audioBuffer;
                 sampleSource.connect(gainNode);
                 gainNode.connect(audioContext.destination);
-                gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.5-(0.033*coordenadas.length), audioContext.currentTime);
                 sampleSource.start(time);
                 gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
             }
@@ -767,7 +767,7 @@ function allElements(list) {
                 sampleSource.buffer = audioBuffer;
                 sampleSource.connect(gainNode);
                 gainNode.connect(audioContext.destination);
-                gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.5-(0.033*coordenadas.length), audioContext.currentTime);
                 sampleSource.start(time);
                 gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
             }
@@ -1094,7 +1094,7 @@ function allElements(list) {
                             sampleSource.buffer = audioBuffer;
                             sampleSource.connect(gainNode);
                             gainNode.connect(audioContext.destination);
-                            gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+                            gainNode.gain.setValueAtTime(0.5-(.033*progresion[index].length), audioContext.currentTime);
                             sampleSource.start(time);
                             gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2.5);
                         }
