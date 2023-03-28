@@ -1,5 +1,5 @@
-// var data = [[1, 0, 1, 2, 2, 0], [0, 1, 2, 1, 2, 0], [0, 1, 2, 1, 1, 1], [0, 0, 1, 1, 1, 0]];
-// var names = ['4-20', '4-26', '4-27', '3-11'];
+//////////////////////////////////////////////////////////////////////////////// ESTE CÓDGIO GENERA EL VISUALIZADOR DE FORMAS PRIMAS
+
 let pisadas = [];
 var data = [
         [2, 1, 0, 0, 0, 0],
@@ -265,7 +265,6 @@ var names = [
         '6-Z50'
 ]
 
-
 var fP = [
         [0, 1, 2],
         [0, 1, 3],
@@ -400,71 +399,7 @@ var fP = [
 
 const isMobile = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-// console.log(data);
-
-// function npMean(array) {
-//         var npMeanArray = [];
-//         var result = [];
-
-//         for (var g = 0; g < array[0].length; g++) {
-//                 npMeanArray.push([])
-//         }
-
-//         for (var e = 0; e < array.length; e++) {
-//                 for (var f = 0; f < array[e].length; f++) {
-//                         npMeanArray[f].push(array[e][f]);
-//                 }
-//         }
-
-//         for (var e = 0; e < npMeanArray.length; e++) {
-//                 var val = npMeanArray[e].reduce((a, b) => a + b) / npMeanArray[e].length;
-//                 result.push(val);
-//         }
-
-//         return result;
-// }
-
-// /////////////////////////////////////////////////////////////////REVISAR EJE (SI ES NECESARIO O NO)////////////////////////////////////////////////////////////////////////
-
-// function standardDeviation(array) {
-//         array = array.flat()
-//         var mean = array.reduce((a, b) => a + b) / array.length;
-//         var variance = array.reduce((s, n) => s + (n - mean) ** 2, 0) / (array.length - 1);
-//         return Math.sqrt(variance);
-// }
-
-// var arrayMean = npMean(data);
-// var arrayStandardDeviation = standardDeviation(data);
-
-// function dataNormalice(array) {
-//         var dataNorm = [];
-//         for (var e = 0; e < array.length; e++) {
-//                 dataNorm.push([]);
-//                 for (var f = 0; f < array[e].length; f++) {
-//                         var dataValNorm = array[e][f] - arrayMean[f] / arrayStandardDeviation;    //score
-//                         // var dataValNorm = array[e][f] - arrayMean[f];
-//                         // var dataValNorm = array[e][f];
-//                         dataNorm[e].push(dataValNorm);
-//                 }
-//                 dataNorm[e].sort((a, b) => { return b - a });
-//         };
-
-//         return dataNorm;
-// }
-
-// // console.log(npMean(data), standardDeviation(data), dataNormalice(data));
-// // data = dataNormalice(data)
-// var vectors = PCA.getEigenVectors(data);
-// // console.log(vectors)
-// var Point1 = PCA.computeAdjustedData(data, vectors[0]);
-// var Point2 = PCA.computeAdjustedData(data, vectors[2]);
-// var Point3 = PCA.computeAdjustedData(data, vectors[3]);
-// var x = Point1.formattedAdjustedData;
-// var y = Point2.formattedAdjustedData;
-// var z = Point3.formattedAdjustedData;
-
-
-/////////////////////////////////////////////////////////////////          MY AXIS       ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////          ESTRUCTURACIÓN DE EJES      ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 var x = [], y = [], z = [];
 
 //NUMERO DE NOTAS
@@ -481,14 +416,6 @@ data.forEach((n) => {
         // indV = indV.reduce((x, y) => (x + y), 0);
         y.push(dev(indV))
 });
-
-//VALOR MÁXIMO DE LA FORMA PRIMA
-fP.forEach((n) => {
-        z.push(n[n.length-1])
-        // z.push(n.reduce((x, y) => x + y, 0)/n.length)
-        // z.push(dev(n))
-});
-
 
 function dev(arr){
         // Creating the mean with Array.reduce
@@ -511,7 +438,14 @@ function dev(arr){
        return Math.sqrt(sum / arr.length)
       }
 
-////NORMALIZATION FROM 0 TO 1 
+//VALOR MÁXIMO DE LA FORMA PRIMA
+fP.forEach((n) => {
+        z.push(n[n.length-1])
+        // z.push(n.reduce((x, y) => x + y, 0)/n.length)
+        // z.push(dev(n))
+});
+
+////NORMALIZACIÓN DE 0 TO 1 
 
 function zerotone(arr) {
 
@@ -530,6 +464,10 @@ zerotone(y);
 zerotone(z);
 
 // console.log(x, y, z);
+
+
+////////////////////////////////////////COLORES Y ACOMODO DE INFORMACIÓN
+
 var color = []
 
 for (var i = 0; i < x.flat().length; i++) {
@@ -556,7 +494,7 @@ for (var k = 0; k < fP.length; k++) {
 }
 // console.log(psChords)
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////PLOTEO /////////////////////////////////////////////////////////////////////////////////////
 var myPlot = document.getElementById('myDiv')
 
 var customdata = [];
@@ -706,6 +644,7 @@ if (screen.width < 700) {
 
 }
 
+///////////////////////////////////VARIABLES PARA ABRIR HIPERVÍNCULOS
 
 amplify.store("allFp", fP);
 amplify.store("allFpNames", names);
@@ -739,6 +678,8 @@ myPlot.on('plotly_click', function (data) {
 
 
 });
+
+/////////////////////////////////////////////////////////////////////////VERSIÓN DE TELÉFONO
 
 
 if (isMobile() == true) {
@@ -896,170 +837,3 @@ if (isMobile() == true) {
         }
 
 }
-
-
-
-
-
-
-// var origin = [480, 300], j = 10, scale = 20, scatter = [], yLine = [], xGrid = [], beta = 0, alpha = 0, key = function(d){ return d.id; }, startAngle = Math.PI/4;
-// var svg    = d3.select('svg').call(d3.drag().on('drag', dragged).on('start', dragStart).on('end', dragEnd)).append('g');
-// var color  = d3.scaleOrdinal(d3.schemeCategory20);
-// var mx, my, mouseX, mouseY;
-
-// var grid3d = d3._3d()
-//     .shape('GRID', 20)
-//     .origin(origin)
-//     .rotateY( startAngle)
-//     .rotateX(-startAngle)
-//     .scale(scale);
-
-// var point3d = d3._3d()
-//     .x(function(d){ return d.x; })
-//     .y(function(d){ return d.y; })
-//     .z(function(d){ return d.z; })
-//     .origin(origin)
-//     .rotateY( startAngle)
-//     .rotateX(-startAngle)
-//     .scale(scale);
-
-// var yScale3d = d3._3d()
-//     .shape('LINE_STRIP')
-//     .origin(origin)
-//     .rotateY( startAngle)
-//     .rotateX(-startAngle)
-//     .scale(scale);
-
-// function processData(data, tt){
-
-//     /* ----------- GRID ----------- */
-
-//     var xGrid = svg.selectAll('path.grid').data(data[0], key);
-
-//     xGrid
-//         .enter()
-//         .append('path')
-//         .attr('class', '_3d grid')
-//         .merge(xGrid)
-//         .attr('stroke', 'black')
-//         .attr('stroke-width', 0.3)
-//         .attr('fill', function(d){ return d.ccw ? 'lightgrey' : '#717171'; })
-//         .attr('fill-opacity', 0.9)
-//         .attr('d', grid3d.draw);
-
-//     xGrid.exit().remove();
-
-//     /* ----------- POINTS ----------- */
-
-//     var points = svg.selectAll('circle').data(data[1], key);
-
-//     points
-//         .enter()
-//         .append('circle')
-//         .attr('class', '_3d')
-//         .attr('opacity', 0)
-//         .attr('cx', posPointX)
-//         .attr('cy', posPointY)
-//         .merge(points)
-//         .transition().duration(tt)
-//         .attr('r', 3)
-//         .attr('stroke', function(d){ return d3.color(color(d.id)).darker(3); })
-//         .attr('fill', function(d){ return color(d.id); })
-//         .attr('opacity', 1)
-//         .attr('cx', posPointX)
-//         .attr('cy', posPointY);
-
-//     points.exit().remove();
-
-//     /* ----------- y-Scale ----------- */
-
-//     var yScale = svg.selectAll('path.yScale').data(data[2]);
-
-//     yScale
-//         .enter()
-//         .append('path')
-//         .attr('class', '_3d yScale')
-//         .merge(yScale)
-//         .attr('stroke', 'black')
-//         .attr('stroke-width', .5)
-//         .attr('d', yScale3d.draw);
-
-//     yScale.exit().remove();
-
-//      /* ----------- y-Scale Text ----------- */
-
-//     var yText = svg.selectAll('text.yText').data(data[2][0]);
-
-//     yText
-//         .enter()
-//         .append('text')
-//         .attr('class', '_3d yText')
-//         .attr('dx', '.3em')
-//         .merge(yText)
-//         .each(function(d){
-//             d.centroid = {x: d.rotated.x, y: d.rotated.y, z: d.rotated.z};
-//         })
-//         .attr('x', function(d){ return d.projected.x; })
-//         .attr('y', function(d){ return d.projected.y; })
-//         .text(function(d){ return d[1] <= 0 ? d[1] : ''; });
-
-//     yText.exit().remove();
-
-//     d3.selectAll('._3d').sort(d3._3d().sort);
-// }
-
-// function posPointX(d){
-//     return d.projected.x;
-// }
-
-// function posPointY(d){
-//     return d.projected.y;
-// }
-
-//     function init(){
-//     var cnt = 0;
-//     xGrid = [], scatter = [], yLine = [];
-//     for(var z = -j; z < j; z++){
-//         for(var x = -j; x < j; x++){
-//             xGrid.push([x, 1, z]);
-//             scatter.push({x: x, y: d3.randomUniform(0, -10)(), z: z, id: 'point_' + cnt++});
-//         }
-//     }
-
-//     d3.range(-1, 11, 1).forEach(function(d){ yLine.push([-j, -d, -j]); });
-
-//     var data = [
-//         grid3d(xGrid),
-//         point3d(scatter),
-//         yScale3d([yLine])
-//     ];
-//     processData(data, 1000);
-// }
-
-// function dragStart(){
-//     mx = d3.event.x;
-//     my = d3.event.y;
-// }
-
-// function dragged(){
-//     mouseX = mouseX || 0;
-//     mouseY = mouseY || 0;
-//     beta   = (d3.event.x - mx + mouseX) * Math.PI / 230 ;
-//     alpha  = (d3.event.y - my + mouseY) * Math.PI / 230  * (-1);
-//     var data = [
-//          grid3d.rotateY(beta + startAngle).rotateX(alpha - startAngle)(xGrid),
-//         point3d.rotateY(beta + startAngle).rotateX(alpha - startAngle)(scatter),
-//         yScale3d.rotateY(beta + startAngle).rotateX(alpha - startAngle)([yLine]),
-//     ];
-//     processData(data, 0);
-// }
-
-// function dragEnd(){
-//     mouseX = d3.event.x - mx + mouseX;
-//     mouseY = d3.event.y - my + mouseY;
-// }
-
-// d3.selectAll('button').on('click', init);
-
-// init();
-

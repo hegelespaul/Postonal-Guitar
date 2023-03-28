@@ -1,16 +1,12 @@
-// const { Chord } = require("chord-identifier/lib/music");
+//////////////////////////////////////////////////////////////////////////// ESTE CÓDIGO HACE POSIBLE LA CREACIÓN DEL GENERADOR DE ACOMPAÑAMIENTOS
 
+////////////////////////////////////////////////DECLARACIÓN DE VARIABLES
 const afinacion = [4, 11, 7, 2, 9, 4];
 const afinacionMIDI = [64, 59, 55, 50, 45, 40];
-// var numtonot = ['C', 'C#','D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
 const numtonot = [['0', 'C'], ['1', 'C#'], ['2', 'D'], ['3', 'Eb'], ['4', 'E'], ['5', 'F'], ['6', 'F#'], ['7', 'G'], ['8', 'Ab'], ['9', 'A'], ['10', 'Bb'], ['11', 'B']];
 let pallete = ["rgb(0,231,6,0.7)", "rgb(0,255,173,0.7)", "rgb(0,107,255,0.7)", "rgb(49,1,250,0.7)", "rgb(131,1,205,0.7)", "rgb(63,0,87,0.7)", "rgb(103,4,81,0.7)", "rgb(215,1,2,0.7)", "rgb(227,67,3,0.7)", "rgb(255,136,0,0.7)", "rgb(220,220,20,0.7)", "rgb(154,243,4,0.7)"];
 let palletemenu = ["rgb(0,231,6,0.5)", "rgb(0,255,173,0.5)", "rgb(0,107,255,0.5)", "rgb(49,1,250,0.5)", "rgb(131,1,205,0.5)", "rgb(63,0,87,0.5)", "rgb(103,4,81,0.5)", "rgb(215,1,2,0.5)", "rgb(227,67,3,0.5)", "rgb(255,136,0,0.5)", "rgb(220,220,20,0.5)", "rgb(154,243,4,0.5)"];
 
-
-// let list = [[0, 4, 7, 11], [2, 5, 9, 0], [6, 8, 10, 0], [2, 5, 7, 9], [1, 4, 6, 11], [2, 3, 7, 0], [6, 11, 10, 0], [2, 3, 5, 9]]
-// let list = [[0,1,2],[0,1,3],[0,1,4],[0,1,5],[0,1,6],[0,2,4],[0,2,5],[0,2,6],[0,2,7],[0,3,6],[0,3,7],[0,4,8]]
-// list = [[11, 3, 6, 10], [2, 6, 9, 0], [7, 11, 2, 6], [10, 2, 4, 8], [3, 7, 10, 2], [9, 0, 4, 7], [2, 6, 9, 0], [7, 11, 2, 6], [10, 2, 4, 8], [3, 7, 10, 2], [6, 10, 1, 4], [11, 3, 6, 10], [5, 8, 0, 3], [10, 2, 4, 8], [3, 7, 10, 2], [9, 0, 4, 7], [2, 6, 9, 0], [7, 11, 2, 6], [1, 4, 8, 11], [6, 10, 1, 4], [11, 3, 6, 10], [5, 8, 0, 3], [10, 2, 4, 8], [3, 7, 10, 2], [1, 4, 8, 11], [6, 10, 1, 4]]
 let diapason = [];
 let acordes = [];
 let cuadrantes = [];
@@ -28,6 +24,7 @@ let puntoPartidaFinal;
 let puntoArray;
 
 
+//////////////////////////////////////BOTÓN PARA CAMBIAR DE NÚMERO A NOMBRE DE NOTA
 function numnot() {
 
     var btn = document.getElementById("stickyBtn");
@@ -67,6 +64,8 @@ function numnot() {
     }
 }
 
+
+//////////INCIO DE MOTOR DE AUDIO
 window.addEventListener('load', init, false);
 function init() {
     try {
@@ -77,6 +76,7 @@ function init() {
     }
 }
 
+//////// FUNCIÓN DE PRODUCTO CARTESIANO
 function cartesianProduct(arr) {
     return Array.prototype.reduce.call(
         arr,
@@ -93,8 +93,7 @@ function cartesianProduct(arr) {
     );
 }
 
-
-
+///////////////////////////FUNCIÓN PARA LA SELECCIÓN DE UN PUNTO DE PARTIDA
 function puntodePartida(list) {
 
     let mtx = [];
@@ -190,10 +189,10 @@ function puntodePartida(list) {
         }
         mtx = Array.from(new Set(mtx.map(JSON.stringify)), JSON.parse);
         // console.log(mtx)
-        puntoArray = [...mtx];
+        puntoArray = [...mtx];   /////////////////////////////////////////////////////////////LISTA CON LAS DISPOSICIONES DE VOCES POSIBLES
         // console.log(puntoArray)
 
-
+        /////////////////////////////////////////////////////////////////////////////////////DIBUJADOR DE DIAGRAMAS E INTERFAZ GRÁFICA
         for (var d = 0; d < mtx.length; d++) {
             var trastes = [];
 
@@ -329,7 +328,7 @@ function puntodePartida(list) {
                     };
                 }
 
-
+                /////////////////////////////////////////////////////////////////////////////////INTERACTIVIDAD
                 diagramas.on("mouseover", function (d) {
                     d3.select(this).selectAll("circle").style("stroke", "red");
                     d3.select(this).style("cursor", "pointer")
@@ -356,7 +355,7 @@ function puntodePartida(list) {
             dibujaDiagrama(mtx[d]);
         }
 
-
+        /////////////////////////////////////////////////////////////// FUNCIÓN PARA LA ESCUCHA DE LOS DIAGRAMAS
         function playchord(coordenadas) {
 
             const samplePaths = [];
@@ -414,7 +413,7 @@ function puntoPartida(identifier) {
     puntoPartidaFinal = puntoArray[identifier];
     // console.log(puntoPartidaFinal);
 }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////// CRACIÓN DE LA CONDUCCIÓN DE VOCES
 function allElements(list) {
     let diapason = [];
     acordes = [];
@@ -428,10 +427,7 @@ function allElements(list) {
     chordpoint = [];
     progresion = [];
 
-    // for (var i = 0; i < list.length; i++) {
-    // list[i].sort((a, b) => a - b);
-    // }
-
+    /////////////////////////////////////////////////////////////// CÁLCULO DE TODAS LAS DISPOSICIONES DE VOCES POSIBLES DE CADA ACORDE
     if (list.every(subarr => subarr.length >= 3)) {
 
         document.getElementById("partitura").style.display = 'flex';
@@ -524,59 +520,9 @@ function allElements(list) {
         }
         // console.log(result);
 
-        ///////////////////////////////////////////POR TOP NOTE DISTANCIA EUCLIDEANA  2D/////////////////////////////////////////////////////////////////////////////////
-        // var topnoteArrEv = [];
-        // for (var i = 0; i < result.length; i++) {
-        //     topnoteArr.push([]);
-        //     topnoteArrEv.push([]);
-        //     for (var j = 0; j < result[i].length; j++) {
-        //         topnoteArrEv[i].push([]);
-        //         for (var k = 0; k < result[i][j].length; k++) {
-        //             var topnote = afinacionMIDI[(result[i][j][k][0] - 1)] + result[i][j][k][1];
-        //             topnoteArrEv[i][j].push(topnote);
-        //         }
-        //         var max = topnoteArrEv[i][j].reduce((a, b) => { return Math.max(a, b) });
-        //         topnoteArr[i].push({ s: result[i][j][topnoteArrEv[i][j].indexOf(max)][0], f: result[i][j][topnoteArrEv[i][j].indexOf(max)][1] });
-        //     }
-        // }
-        // // console.log(topnoteArr);
+        progresion.push(puntoPartidaFinal); ////////////// PUNTO DE PARTIDA DESDE DONDE COMENZAR LA PROGRESIÓN
 
-        // for (var i = 0; i < result.length; i++) {
-        //     chordpoint.push([]);
-        //     for (var j = 0; j < result[i].length; j++) {
-        //         chordpoint[i].push([])
-        //         for (var k = 0; k < result[i][j].length; k++) {
-        //             var point = { s: result[i][j][k][0], f: result[i][j][k][1] }
-        //             chordpoint[i][j].push(point);
-        //         }
-        //     }
-        // }
-        // // console.log(chordpoint);
-
-        // var distance = function (a, b) {
-        //     return Math.pow(a.f - b.f, 2) + Math.pow(a.s - b.s, 2);
-        // }
-
-        // progresion.push(result[0][0])
-        // function genera() {
-        //     for (var i = 0; i < topnoteArr.length - 1; i++) {
-        //         var previous = topnoteArr[(i + topnoteArr.length - 1) % topnoteArr.length];
-        //         var next = topnoteArr[(i + 1) % topnoteArr.length];
-
-        //         var treeP = new kdTree(next.flat(), distance, ["s", "f"]);
-        //         var nearP = treeP.nearest(topnoteArr[i+1][0], 1);
-        //         progresion.push(result[(i + 1) % result.length][next.flat().indexOf(nearP[0][0])]);
-        //     }
-        //     console.log('Top Note 2D:',progresion);
-        // }
-
-        // genera()
-        ///////////////////////////////////////////POR TOP NOTE DISTANCIA EUCLIDEANA  3D y SIMILARIDAD COSENO/////////////////////////////////////////////////////////////////////////////////
-
-
-        progresion.push(puntoPartidaFinal); //////////////EL DE MEDICION
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////// CREACIÓN DE LA LÓGICA DE CONDUCCIÓN DE VOCES
         function genera3DCS() {
 
             for (var i = 0; i < result.length; i++) {
@@ -603,7 +549,7 @@ function allElements(list) {
                 var next = topnoteArr[(i + 1) % topnoteArr.length];
 
                 for (var j = 0; j < next.length; j++) {
-                    minD[i].push(distance(sfnAcomodador(progresion[i]), next[j])); //////////PROGRESIÓN
+                    minD[i].push(distance(sfnAcomodador(progresion[i]), next[j])); ////////// ACOMODO EN VECTOR
                     // console.log(next[j])
                 }
 
@@ -620,15 +566,15 @@ function allElements(list) {
 
                 chordSim.push([])
                 for (var j = 0; j < posChord[i].length; j++) {
-                    chordSim[i].push(cosinesim(cosSimAcomodadorTrp(progresion[i]), cosSimAcomodadorTrp(posChord[i][j])))
-                    // console.log(cosSimAcomodador(result[0][0]), cosSimAcomodador(posChord[i][j])); //////////////PROGRESIOONN
+                    chordSim[i].push(cosinesim(cosSimAcomodadorTrp(progresion[i]), cosSimAcomodadorTrp(posChord[i][j])))   ///////////// SIMILITUD COSENO
+                    // console.log(cosSimAcomodador(result[0][0]), cosSimAcomodador(posChord[i][j])); 
                 }
 
 
                 var mostSim = Math.max(...chordSim[i]);
                 var defChord = posChord[i][chordSim[i].indexOf(mostSim)];
                 // console.log(defChord);
-                progresion.push(defChord);
+                progresion.push(defChord);   //////////////////////////////////////////ACORDE SELECCIONADO
                 // console.log(mostSim);
 
             }
@@ -639,67 +585,7 @@ function allElements(list) {
 
         genera3DCS();
 
-        /////////////////////////////////////////////////////////POR COSINE SIMILARITY//////////////////////////////////////////////////////////
-
-        // function generaCos() {
-        //     progresion = [];
-        //     progresion.push(result[0][0]);
-        //     var cosSim = [];
-        //     for (var i = 0; i < result.length - 1; i++) {
-        //         cosSim.push([]);
-        //         var previous = result[(i + result.length - 1) % result.length];
-        //         var next = result[(i + 1) % result.length];
-
-        //         function cosinesim(A, B) {
-        //             var dotproduct = 0;
-        //             var mA = 0;
-        //             var mB = 0;
-        //             for (j = 0; j < A.length; j++) {
-        //                 dotproduct += (A[j] * B[j]);
-        //                 mA += (A[j] * A[j]);
-        //                 mB += (B[j] * B[j]);
-        //             }
-        //             mA = Math.sqrt(mA);
-        //             mB = Math.sqrt(mB);
-        //             var similarity = (dotproduct) / ((mA) * (mB));
-        //             return similarity;
-        //         }
-
-        //         for (var c = 0; c < next.length; c++) {
-        //             var array1 = result[i][0].flat();
-        //             var array2 = next[c].flat();
-
-        //             if (array1.length < 18) {
-        //                 array1.push(Array(18 - array1.length).fill(0));
-        //                 array1 = array1.flat();
-        //             }
-
-        //             if (array2.length < 18) {
-        //                 array2.push(Array(18 - array2.length).fill(0));
-        //                 array2 = array2.flat();
-        //             }
-
-        //             var p = cosinesim(array1, array2);
-        //             cosSim[i].push(p);
-        //         }
-        //     }
-        //     var cosSimIn = [];
-        //     for (var k = 0; k < cosSim.length; k++) {
-        //         // var Max = Math.max(...cosSim[k]);
-        //         // console.log(Max);
-        //         var indexOfMaxValue = cosSim[k].reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
-        //         cosSimIn.push(indexOfMaxValue);
-        //     }
-        //     for (var i = 1; i < result.length; i++) {
-        //         progresion.push(result[i][cosSimIn[i - 1]]);
-        //     }
-        //     console.log('CosSim:', progresion);
-        // }
-
-        // generaCos();
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        //////////////////////////////////////////////////////////////////////////////// DIBUJO DE DIAGRAMAS DE LA PROGRESIÓN
         function dibujaMatrix() {
             let adjustY = 30;
 
@@ -847,36 +733,8 @@ function allElements(list) {
         }
 
         dibujaMatrix();
-
-        // let data = `
-        //   options font-face='times' 
-        //   tabstave notation=true clef=treble key=C tuning=standard 
-        // `
-        // for (var i = 0; i < progresion.length; i++) {
-        //     var chord = '\n notes :w ('
-        //     for (var j = 0; j < progresion[i].length; j++) {
-        //         chord = chord + (progresion[i][j][1] + '/' + progresion[i][j][0] + '.');
-        //     }
-        //     chord = chord.slice(0, chord.length - 1) + chord.slice(chord.length);
-        //     chord = chord + ')';
-        //     data = data + chord
-        // }
-
-        // data = data + '=|=';
-        // // data = data + '\n text :w,Cmaj7,Dm7,F#add9b5,Dmadd11,Esus2add13,Cmadd9,F#b5add11,Dmaddb9'
-
-        // const VF = vextab.Vex.Flow
-
-        // const renderer = new VF.Renderer($('#boo')[0],
-        //     VF.Renderer.Backends.SVG);
-
-        // // Initialize VexTab artist and parser.
-        // const artist = new vextab.Artist(10, 10, 750, { scale: 1 });
-        // const tab = new vextab.VexTab(artist);
-
-        // tab.parse(data);
-        // artist.render(renderer);
-
+        
+        ////////////////////////////////////////////////////////REPRODUCCIÓN DEL AUDIO DE LAS NOTAS
         function playchord(coordenadas) {
 
             const samplePaths = [];
@@ -923,7 +781,8 @@ function allElements(list) {
 
         }
 
-
+        /////////////////////////////////////////////////////////////////////////////////////// CREACIÓN DE PARTITURA
+        //////////////////TEXTO DE ALPHATEX
         let fileContent = `
 \\title "Mi tema" 
 \\subtitle "Yo"
@@ -951,11 +810,11 @@ function allElements(list) {
         // console.log(link)
 
 
-        // load elements
+        // CARGA DE ETIQUETAS HTML QUE ALOJAN LA PARTITURA
         let wrapper = document.querySelector(".at-wrap");
         let main = wrapper.querySelector(".at-main");
 
-        // initialize alphatab
+        // INICIALIZACIÓN DE ALPHATAB
         let settings = {
             file: link,
             notation: {
@@ -977,10 +836,10 @@ function allElements(list) {
         api = new alphaTab.AlphaTabApi(main, settings);
 
 
-
+        ///////////// BOTÓN DE EXPORTAR
         document.getElementById('export').onclick = function (e) {
             const exporter = new alphaTab.exporter.Gp7Exporter();
-            const data = exporter.export(api.score, api.settings); // will return a Uint8Array
+            const data = exporter.export(api.score, api.settings); //  Uint8Array
 
             // trigger download
             const a = document.createElement('a');
@@ -991,7 +850,7 @@ function allElements(list) {
             document.body.removeChild(a);
         };
 
-        // overlay logic
+        // OVERLAY
         const overlay = wrapper.querySelector(".at-overlay");
         api.renderStarted.on(() => {
             overlay.style.display = "flex";
@@ -999,6 +858,8 @@ function allElements(list) {
         api.renderFinished.on(() => {
             overlay.style.display = "none";
         });
+
+        ////////////////////////////////////TRACKS INHABILITADAS////////////////////////////
 
         // // track selector
         // function createTrackItem(track) {
@@ -1039,7 +900,7 @@ function allElements(list) {
         //     });
         // });
 
-        /** Controls **/
+        /** CONTROLES **/
         api.scoreLoaded.on((score) => {
             wrapper.querySelector(".at-song-title").innerText = score.title;
             wrapper.querySelector(".at-song-artist").innerText = score.artist;
@@ -1098,7 +959,7 @@ function allElements(list) {
         };
 
 
-        // player loading indicator
+        // INDICADOR DE CARGA
         const playerIndicator = wrapper.querySelector(
             ".at-controls .at-player-progress"
         );
@@ -1111,7 +972,7 @@ function allElements(list) {
         });
 
 
-        // main player controls
+        // CONTROLES PRINCIPALES
         const playPause = wrapper.querySelector(
             ".at-controls .at-player-play-pause"
         );
@@ -1143,7 +1004,7 @@ function allElements(list) {
             }
         });
 
-        // song position
+        // POSICIÓN DE LA CANCIÓN
         function formatDuration(milliseconds) {
             let seconds = milliseconds / 1000;
             const minutes = (seconds / 60) | 0;
@@ -1170,7 +1031,7 @@ function allElements(list) {
             position = e.currentTime
         });
 
-        /// Mute tracks to use own sounds /////////////////
+        /// MUTEO DE LAS TRACKS PARA AL USO DE SONIDOS PROPIOS /////////////////
         function createTrackItem(track) {
             api.renderTracks([track]);
         }
@@ -1184,7 +1045,7 @@ function allElements(list) {
             });
         });
 
-        ///Coordinate tick to trigger sounds ///////////////////////
+        /// USO DE TICKS PARA DESATAR SONIDOS PROPIOS ///////////////////////
         api.midiEventsPlayedFilter = [alphaTab.midi.MidiEventType.SystemExclusive2];
 
         api.midiEventsPlayed.on(function (e) {
@@ -1248,13 +1109,6 @@ function allElements(list) {
                 }
             }
         });
-        // const boxes = Array.from(document.getElementsByClassName('selectorChords'));
-
-        // boxes.forEach(box => {
-        //     box.remove();
-        // });
-
-        // document.getElementById('menusDrawer').remove();
 
     } else {
         alert('Antes de generar la progresión, necesitas seleccionar un mínimo de 3 notas para cada acorde!');
@@ -1262,7 +1116,7 @@ function allElements(list) {
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// CREACIÓN DE MENÚ PRINCIPAL Y FUNCIONES
 document.getElementById("partitura").style.display = 'none';
 
 function crearMenus() {

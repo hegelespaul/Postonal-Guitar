@@ -1,8 +1,10 @@
+////////////////////////////////////////////////////////////////////ESTE CÓDIGO HACE POSIBLE EL CÁLCULO DE LAS MANERAS DE AGRUPAR EL COMPLMENTO EN FORMAS PRIMAS DE ENTRE TRES Y SEIS NOTAS
+
 let all = [];
-// let dat = [0,5,7,9,3,2,8,11,10];
 let dat = amplify.store("complemento");
 let chunkIndx = [];
 
+/////////////////////////////////////////////////// PARTICIÓN DE DATOS
 
 if (dat.length == 6) {
   chunkIndx = [];
@@ -27,63 +29,7 @@ if (dat.length == 9) {
   chunkIndx.push(6);
 }
 
-// var permArr = [],
-//     usedChars = [];
-
-// function permute(input) {
-//     var i, ch;
-//     for (i = 0; i < input.length; i++) {
-//         ch = input.splice(i, 1)[0];
-//         usedChars.push(ch);
-//         if (input.length == 0) {
-//             permArr.push(usedChars.slice());
-//         }
-//         permute(input);
-//         input.splice(i, 0, ch);
-//         usedChars.pop();
-//     }
-//     return permArr
-// };
-
-// function permute(permutation) {
-//     var length = permutation.length,
-//         result = [permutation.slice()],
-//         c = new Array(length).fill(0),
-//         i = 1, k, p;
-
-//     while (i < length) {
-//       if (c[i] < i) {
-//         k = i % 2 && c[i];
-//         p = permutation[i];
-//         permutation[i] = permutation[k];
-//         permutation[k] = p;
-//         ++c[i];
-//         i = 1;
-//         result.push(permutation.slice());
-//       } else {
-//         c[i] = 0;
-//         ++i;
-//       }
-//     }
-//     return result;
-//   }
-
-// const permutations = arr => {
-//     if (arr.length <= 2) return arr.length === 2 ? [arr, [arr[1], arr[0]]] : arr;
-//     return arr.reduce(
-//         (acc, item, i) =>
-//             acc.concat(
-//                 permutations([...arr.slice(0, i), ...arr.slice(i + 1)]).map(val => [
-//                     item,
-//                     ...val,
-//                 ])
-//             ),
-//         []
-//     );
-// }
-
-//   console.log(permutations(dat))
-
+////////////////////////////////////////////////////////// PERMUTACIONES DE HEAP
 
 var swap = function (array, pos1, pos2) {
   var temp = array[pos1];
@@ -109,6 +55,8 @@ var heapsPermute = function (array, n, results = []) {
   return results;
 };
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////// FUNCIÓN PRINCIPAL //////////////////////////////////////////////////////////////////////////
 
 function permutaciones(notes) {
   var fPrR2;
@@ -178,22 +126,6 @@ function permutaciones(notes) {
   return fPrR2;
 }
 
-// const swap = (arr, i , j) =>{
-//     [arr[i], arr[j]] = [arr[j], arr[i]];
-// }
-
-// var permute = function(nums, start = 0, answer = []){
-//     if (start === nums.length - 1){
-//         answer.push([...nums]);
-//     }
-//     for(let i = start; i < nums.length;i++){
-//         swap(nums, start, i);
-//         permute(nums, start + 1, answer)
-//         swap(nums, start, i);
-//     }
-//     return answer;
-// };
-
 var perm = heapsPermute(dat);
 console.log(permutaciones(dat));
 console.log(perm)
@@ -228,7 +160,7 @@ for (var a = 0; a < chunkIndx.length; a++) {
 
   let lut = {},
     red = all.filter(a => lut[a] ? false : lut[a] = true);
-  
+
   console.log(red)
 
   var allFpperm = [];
@@ -239,17 +171,12 @@ for (var a = 0; a < chunkIndx.length; a++) {
     }
   }
 
-  // console.log(allFpperm)
-
-  // let lut2 = {},
-  //   red2 = allFpperm.filter(a => lut2[a] ? false : lut2[a] = true);
-
   let red2 = allFpperm
   console.log(red2);
 
   for (var j = 0; j < red2.length; j++) {
     var chordC = d3.select(".listacomplemento").append("div").attr("id", "cuadrito");
-    
+
     for (var k = 0; k < red2[j].length; k++) {
 
       var notasF;
@@ -310,41 +237,3 @@ for (var a = 0; a < chunkIndx.length; a++) {
 
 d3.select(".head").append("text").
   text(permutaciones(dat));
-
-// function transA0(acorde) {
-//     var result = [];
-
-//     for (var i = 0; i < acorde.length; i++) {
-//         result.push([]);
-//         for (var j = 0; j < acorde.length; j++) {
-//             result[i].push(Math.abs((acorde[j] + 12) - acorde[i]) % 12);
-//         }
-//         result[i].sort((a, b) => a - b);
-//     }
-//     return [result, acorde];
-// }
-
-
-// const combinations = ( collection, combinationLength ) => {
-//     let head, tail, result = [];
-//     if ( combinationLength > collection.length || combinationLength < 1 ) { return []; }
-//     if ( combinationLength === collection.length ) { return [ collection ]; }
-//     if ( combinationLength === 1 ) { return collection.map( element => [ element ] ); }
-//     for ( let i = 0; i < collection.length - combinationLength + 1; i++ ) {
-//       head = collection.slice( i, i + 1 );
-//       tail = combinations( collection.slice( i + 1 ), combinationLength - 1 );
-//       for ( let j = 0; j < tail.length; j++ ) { result.push( head.concat( tail[ j ] ) ); }
-//     }
-//     return result;
-//   }
-
-//   console.log(combinations([0,1,2,3,4,5,6,7,8,9,10,11], 3))
-
-
-// const rotations = ([l, ...ls], right=[]) =>
-//   l !== void 0 ? [[l, ...ls, ...right], ...rotations(ls, [...right, l])] : []
-
-// const permutations = ([x, ...xs]) =>
-//   x !== void 0 ? permutations(xs).flatMap((p) => rotations([x, ...p])) : [[]]
-
-// console.log(permutations(dat))
