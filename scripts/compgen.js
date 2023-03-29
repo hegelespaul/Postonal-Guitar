@@ -405,7 +405,7 @@ function puntodePartida(list) {
     }
     else {
         alert('Antes de generar la progresión, necesitas seleccionar un mínimo de 3 notas para cada acorde!');
-        console.log(list)
+        // console.log(list)
     }
 }
 
@@ -722,7 +722,7 @@ function allElements(list) {
                                 pisada[i][0].toString() + "-" + pisada[i][1].toString(),
                             ]);
                         }
-                        console.log(pisada);
+                        // console.log(pisada);
                         playchord(pisadaSound);
                         d3.event.stopPropagation();
                     });
@@ -1112,7 +1112,7 @@ function allElements(list) {
 
     } else {
         alert('Antes de generar la progresión, necesitas seleccionar un mínimo de 3 notas para cada acorde!');
-        console.log(list)
+        // console.log(list)
     }
 }
 
@@ -1125,7 +1125,7 @@ function crearMenus() {
     let zona = document.getElementById("menusDrawer");
     zona.appendChild(document.createElement("br"));
     new menuBotones(btnCount);
-    console.log(listaF);
+    // console.log(listaF);
 }
 
 class menuBotones {
@@ -1142,7 +1142,7 @@ class menuBotones {
             return index;
         }
 
-        console.log(listaF);
+        // console.log(listaF);
         let zona = document.getElementById("menusDrawer");
         let f = document.createElement('div');
         f.id = 'f' + btnCount;
@@ -1276,7 +1276,7 @@ function removeChord() {
     if (document.getElementById("menusDrawer").childNodes.length > 0) {
         listaF.pop();
         btnCount = btnCount - 1;
-        console.log(listaF);
+        // console.log(listaF);
         for (var i = 0; i < 16; i++) {
             document.getElementById("menusDrawer").removeChild(document.getElementById("menusDrawer").lastChild);
         }
