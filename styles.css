@@ -725,6 +725,26 @@ h1 {
   display: none;
 }
 
+.yt-container {
+  float: none;
+  clear: both;
+  width: 100%;
+  position: relative;
+  padding-bottom: 28.125%;
+  padding-top: 12.25px;
+  height: 0;
+}
+
+.yt-container iframe,
+.yt-container object,
+.yt-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+}
+
 @media only screen and (max-width: 600px) {
 
   .selector {
@@ -794,6 +814,27 @@ h1 {
   .Graph {
     box-shadow: none;
   }
+
+  .yt-container {
+    float: none;
+    clear: both;
+    width: 100%;
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 25px;
+    height: 0;
+  }
+
+  .yt-container iframe,
+  .yt-container object,
+  .yt-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
 }
 
 @media only screen and (max-width: 1015px) {
@@ -858,7 +899,7 @@ h1 {
 }
 
 .welcomelist a {
-  color: #000;
+  color: #385197;
 }
 
 .welcomelist a:hover {
@@ -930,3 +971,4 @@ h1 {
   }
 
 }
+
