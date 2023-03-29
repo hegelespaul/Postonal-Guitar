@@ -832,7 +832,7 @@ h1 {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.welcometxt{
+.welcometxt {
   display: flex;
   justify-content: flex-start;
   text-align: justify;
@@ -841,7 +841,7 @@ h1 {
   width: 70%;
 }
 
-.welcomelist{
+.welcomelist {
   display: block;
   justify-content: center;
   text-align: left;
@@ -854,17 +854,18 @@ h1 {
 }
 
 .welcomelist ul {
-  list-style-type:circle;
+  list-style-type: circle;
 }
 
-.welcomelist a{
+.welcomelist a {
   color: #000;
 }
-.welcomelist a:hover{
-color: red;
+
+.welcomelist a:hover {
+  color: red;
 }
 
-.footerIn{
+.footerIn {
   display: flex;
   justify-content: flex-end;
   text-align: justify;
@@ -874,14 +875,14 @@ color: red;
   width: 70%;
 }
 
-.lic{
+.lic {
   font-size: xx-small;
   text-align: justify;
   align-items: baseline;
   margin: auto;
 }
 
-.ejemplos{
+.ejemplos {
   display: flex;
   flex-flow: row;
   justify-content: center;
@@ -891,12 +892,12 @@ color: red;
   width: 70%;
 }
 
-.ejemplos object{
+.ejemplos object {
   width: 70%;
   height: auto;
 }
 
-.ejemplosAudio{
+.ejemplosAudio {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -907,22 +908,22 @@ color: red;
 
 @media only screen and (max-width: 1024px) {
 
-  .ejemplos{
+  .ejemplos {
     flex-flow: column;
     width: 90%;
   }
 
-  .ejemplos object{
+  .ejemplos object {
     width: 100%;
     height: 100%;
   }
-  
-  .ejemplosAudio{
+
+  .ejemplosAudio {
     width: 90%;
     justify-content: flex-start;
   }
 
-  .lic{
+  .lic {
     font-size: xx-small;
     text-align: justify;
     align-items: baseline;
