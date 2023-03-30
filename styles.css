@@ -8,6 +8,13 @@ body {
   height: fit-content;
 }
 
+.logo{
+width: 1em;
+margin-right: 0.5em;
+margin-top: -0.3em;
+}
+
+
 .head {
   margin-bottom: auto;
   text-align: center;
