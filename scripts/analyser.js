@@ -497,6 +497,8 @@ for (var k = 0; k < fP.length; k++) {
 //////////////////////////////////////////////////////////////////////////////////////////////////PLOTEO /////////////////////////////////////////////////////////////////////////////////////
 var myPlot = document.getElementById('myDiv')
 
+
+
 var customdata = [];
 for (var i = 0; i < psChords.length; i++) {
         customdata.push([psChords[i], fP[i]]);
@@ -576,8 +578,8 @@ if (screen.width > 700) {
                                 }
                         }
                 },
-                plot_bgcolor: "red",
-                paper_bgcolor: "white",
+                plot_bgcolor: "rgba(0,0,0,0)",
+                paper_bgcolor: "rgba(0,0,0,0)",
                 width: 1280,
                 height: 720,
                 hovermode: 'closest',
@@ -634,8 +636,8 @@ if (screen.width < 700) {
                         }
                 },
                 dragmode: 'false',
-                plot_bgcolor: "red",
-                paper_bgcolor: "white",
+                plot_bgcolor: "rgba(0,0,0,0)",
+                paper_bgcolor: "rgba(0,0,0,0)",
                 width: 450,
                 height: 500,
                 hovermode: 'closest',

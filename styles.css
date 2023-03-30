@@ -457,7 +457,7 @@ svg text {
   display: flex;
   width: auto;
   margin: auto;
-  margin-top: -60px;
+  margin-top: 0;
   height: auto;
 }
 
@@ -467,13 +467,16 @@ svg text {
   position: relative;
 }
 
+.plot-container .plotly{
+border-radius: 25px;
+}
+
 h1 {
   margin-top: -8px;
 }
 
 .Graph {
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-  opacity: 0.9;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 2px 0px;
 }
 
 .Graph:hover {
