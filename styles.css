@@ -927,8 +927,6 @@ h1 {
   margin-bottom: 2%;
   font-family: Arial, Helvetica, sans-serif;
   font-size: xx-large;
-  width: 70%;
-  margin: auto;
 }
 
 .welcometxt {
@@ -936,7 +934,7 @@ h1 {
   justify-content: flex-start;
   text-align: justify;
   font-family: Arial, Helvetica, sans-serif;
-  width: 70%;
+  width: 87.5%;
   margin: auto;
 }
 
@@ -948,7 +946,7 @@ h1 {
   margin-bottom: 2%;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 600;
-  width: 70%;
+  width: 87.5%;
   margin: auto;
 }
 
@@ -970,7 +968,7 @@ h1 {
   text-align: justify;
   font-family: Arial, Helvetica, sans-serif;
   font-size: smaller;
-  width: 70%;
+  width: 98%;
   margin: auto;
 }
 
