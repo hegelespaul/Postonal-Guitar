@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guitarra Postonal en Línea</title>
-    <link rel="icon" type="image/x-icon"
-        href="/assets/LogoMin.svg">
+    <link rel="icon" type="image/x-icon" href="/assets/LogoMin.svg">
     <link rel="stylesheet" href="./styles.css">
     <title>Document</title>
     <script src="/librerias/d3.js"></script>
@@ -19,19 +18,21 @@
 </head>
 
 
-<body> 
-  <h1>&nbsp</h1>
-  <section class="headv">Visualizador de Formas Primas</section>
-  &nbsp
-    <section class="drawer">
-        <div id="myDiv" class="Graph"></div>
+<body>
+    <section class="fakehtml">
+        <h1>&nbsp</h1>
+        <section class="headv">Visualizador de Formas Primas</section>
+        &nbsp
+        <section class="drawer">
+            <div id="myDiv" class="Graph"></div>
+        </section>
+        <section class="zoombtn">
+            <button class="zoom_in">+</button>
+            <button class="zoom_out">-</button>
+            <button onclick=go() id="go">Ir</button>
+        </section>
+        <script src="./scripts/analyser.js"></script>
     </section>
-    <section class="zoombtn">
-    <button class="zoom_in">+</button>
-    <button class="zoom_out">-</button>
-    <button onclick=go() id="go">Ir</button>
-</section>
-    <script src="./scripts/analyser.js"></script>
 </body>
 
 </html>

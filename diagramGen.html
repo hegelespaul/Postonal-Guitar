@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
     <title>Guitarra Postonal en Línea</title>
-    <link rel="icon" type="image/x-icon"
-        href="/assets/LogoMin.svg">
+    <link rel="icon" type="image/x-icon" href="/assets/LogoMin.svg">
     <script src="/librerias/d3.js"></script>
     <script src="/librerias/lodash.js"></script>
     <script src="./scripts/decifrador.js"></script>
@@ -17,42 +16,46 @@
 </head>
 
 <body>
-    <section class="sticky">
-    <button id="stickyBtn" onclick=numnot() value="OFF">Notas</button>
-    </section>
-    <section class="head">
-        Calculador de Diagramas
-    </section>
-    &nbsp
-    <section class="head2">
-        &nbsp
-        <tag id="forma"></tag>
-        <tag id="acorde"></tag>
-        <tag id="cercano"></tag>
-    </section>
+    <section class="fakehtml">
+        <section class="fakebodyapps">
+            <section class="sticky">
+                <button id="stickyBtn" onclick=numnot() value="OFF">Notas</button>
+            </section>
+            <section class="head">
+                Calculador de Diagramas
+            </section>
+            &nbsp
+            <section class="head2">
+                &nbsp
+                <tag id="forma"></tag>
+                <tag id="acorde"></tag>
+                <tag id="cercano"></tag>
+            </section>
 
-    <section class="operations">
-        <button id="newChord" onclick=complementoW()>Complemento</button>
-        <button id="newChord" onclick=transponerW()>Transponer</button>
-        <input  type="number" id="tIndex" value="0" min="-6" max="6" onkeydown="return false" />
-        <button id="newChord" onclick=inversionW()>Inversión</button>
-    </section>
+            <section class="operations">
+                <button id="newChord" onclick=complementoW()>Complemento</button>
+                <button id="newChord" onclick=transponerW()>Transponer</button>
+                <input type="number" id="tIndex" value="0" min="-6" max="6" onkeydown="return false" />
+                <button id="newChord" onclick=inversionW()>Inversión</button>
+            </section>
 
-    <section class="selector" id="selector">
-        <section class="drawerForm">
-        </section>
-        <ul id="list" style="list-style: none;"></ul>
-    </section>
+            <section class="selector" id="selector">
+                <section class="drawerForm">
+                </section>
+                <ul id="list" style="list-style: none;"></ul>
+            </section>
 
-    <section class="drawer">
-        <section class="drawerDiapason">
-        </section>
-        <section class="drawerDiagrama">
+            <section class="drawer">
+                <section class="drawerDiapason">
+                </section>
+                <section class="drawerDiagrama">
+                </section>
+            </section>
+
+            <!-- <script src="./scripts/calc.js"></script> -->
+            <script src="./scripts/drawer.js"></script>
         </section>
     </section>
-    
-    <!-- <script src="./scripts/calc.js"></script> -->
-    <script src="./scripts/drawer.js"></script>
 </body>
 
 </html>

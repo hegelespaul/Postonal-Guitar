@@ -50,9 +50,16 @@ margin-top: -0.3em;
 }
 
 .fakebody{
-  width: 70%;
-  background-color: #fff;
-  margin:auto
+  width: 80%;
+  background-color: #ffffffea;
+  margin:auto;
+}
+
+.fakebodyapps{
+  width: 80%;
+  background-color: #ffffffea;
+  margin:auto;
+  height: 10000vh;
 }
 
 .selector {
@@ -466,6 +473,7 @@ h1 {
 
 .Graph {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+  opacity: 0.9;
 }
 
 .Graph:hover {

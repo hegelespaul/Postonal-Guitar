@@ -7,8 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles.css">
   <title>Guitarra Postonal en Línea</title>
-  <link rel="icon" type="image/x-icon"
-        href="/assets/LogoMin.svg">
+  <link rel="icon" type="image/x-icon" href="/assets/LogoMin.svg">
   <script src="/scripts/decifrador.js"></script>
   <script src="librerias/fontawesome.js"></script>
   <script src="librerias/d3.js"></script>
@@ -19,99 +18,101 @@
 </head>
 
 <body>
-  <section class="sticky">
-    <button id="stickyBtn" onclick=numnot() value="OFF">Notas</button>
-    </section>
-  <section class="head">Generador de Acompañamientos</section>
-  &nbsp
-  <section class="selectorChords">
+  <section class="fakehtml">
+    <section class="fakebodyapps">
+      <section class="sticky">
+        <button id="stickyBtn" onclick=numnot() value="OFF">Notas</button>
+      </section>
+      <section class="head">Generador de Acompañamientos</section>
+      &nbsp
+      <section class="selectorChords">
 
-  <button id="newChord" onclick=eraseChords(),crearMenus()>Nuevo Acorde</button>
-  <button id="newChord" onclick=eraseChords(),removeChord()>Borrar Último</button>
-  <button id="newChord" onclick=eraseChords(),puntodePartida(listaF)>Generar</button>
+        <button id="newChord" onclick=eraseChords(),crearMenus()>Nuevo Acorde</button>
+        <button id="newChord" onclick=eraseChords(),removeChord()>Borrar Último</button>
+        <button id="newChord" onclick=eraseChords(),puntodePartida(listaF)>Generar</button>
 
-</section>
-  <section id="menusDrawer"></section>
-  <br><br>
+      </section>
+      <section id="menusDrawer"></section>
+      <br><br>
 
-  <section class="drawer">
-    <section class="drawerDiagrama">
-    </section>
+      <section class="drawer">
+        <section class="drawerDiagrama">
+        </section>
 
-    <!-- <div class="vexbox">
+        <!-- <div class="vexbox">
             <div id="boo"></div>
         </div> -->
-  </section>
-  <div class="at-wrap" data-text="true" id="partitura">
-    <div class="at-overlay">
-      <div class="at-overlay-content">
-        Music sheet is loading
-      </div>
-    </div>
-    <div class="at-content">
-      <button id="export"><i class="fa fa-download"></i> Export</button>
-      <!-- <div class="at-sidebar">
+      </section>
+      <div class="at-wrap" data-text="true" id="partitura">
+        <div class="at-overlay">
+          <div class="at-overlay-content">
+            Music sheet is loading
+          </div>
+        </div>
+        <div class="at-content">
+          <button id="export"><i class="fa fa-download"></i> Export</button>
+          <!-- <div class="at-sidebar">
             <div class="at-sidebar-content">
               <div class="at-track-list"></div>
             </div>
           </div> -->
-      <div class="at-viewport">
-        <div class="at-main"></div>
-      </div>
-    </div>
-    <div class="at-controls">
-      <div class="at-controls-left">
-        <a class="btn at-player-stop disabled">
-          <i class="fa fa-step-backward"></i>
-        </a>
-        <a class="btn at-player-play-pause disabled">
-          <i class="fa fa-play"></i>
-        </a>
-        <span class="at-player-progress">0%</span>
-        <div class="at-song-info">
-          <span class="at-song-title"></span>
-          <span class="at-song-artist"></span>
+          <div class="at-viewport">
+            <div class="at-main"></div>
+          </div>
         </div>
-        <div class="at-song-position">00:00 / 00:00</div>
-      </div>
-      <div class="at-controls-right">
-        <a class="btn toggle at-count-in">
-          <i class="fa fa-share-square-o"></i>
-        </a>
-        <a class="btn at-metronome">
-          <i class="fa fa-hourglass-half"></i>
-        </a>
-        <a class="btn at-loop">
-          <i class="fa fa-retweet"></i>
-        </a>
-        <a class="btn at-print">
-          <i class="fa fa-print"></i>
-        </a>
-        <div class="at-zoom">
-          <i class="fa fa-search"></i>
-          <select>
-            <option value="25">25%</option>
-            <option value="50">50%</option>
-            <option value="75">75%</option>
-            <option value="90">90%</option>
-            <option value="100" selected>100%</option>
-            <option value="110">110%</option>
-            <option value="125">125%</option>
-            <option value="150">150%</option>
-            <option value="200">200%</option>
-          </select>
+        <div class="at-controls">
+          <div class="at-controls-left">
+            <a class="btn at-player-stop disabled">
+              <i class="fa fa-step-backward"></i>
+            </a>
+            <a class="btn at-player-play-pause disabled">
+              <i class="fa fa-play"></i>
+            </a>
+            <span class="at-player-progress">0%</span>
+            <div class="at-song-info">
+              <span class="at-song-title"></span>
+              <span class="at-song-artist"></span>
+            </div>
+            <div class="at-song-position">00:00 / 00:00</div>
+          </div>
+          <div class="at-controls-right">
+            <a class="btn toggle at-count-in">
+              <i class="fa fa-share-square-o"></i>
+            </a>
+            <a class="btn at-metronome">
+              <i class="fa fa-hourglass-half"></i>
+            </a>
+            <a class="btn at-loop">
+              <i class="fa fa-retweet"></i>
+            </a>
+            <a class="btn at-print">
+              <i class="fa fa-print"></i>
+            </a>
+            <div class="at-zoom">
+              <i class="fa fa-search"></i>
+              <select>
+                <option value="25">25%</option>
+                <option value="50">50%</option>
+                <option value="75">75%</option>
+                <option value="90">90%</option>
+                <option value="100" selected>100%</option>
+                <option value="110">110%</option>
+                <option value="125">125%</option>
+                <option value="150">150%</option>
+                <option value="200">200%</option>
+              </select>
+            </div>
+            <div class="at-layout">
+              <select>
+                <option value="horizontal">Horizontal</option>
+                <option value="page" selected>Page</option>
+              </select>
+            </div>
+          </div>
         </div>
-        <div class="at-layout">
-          <select>
-            <option value="horizontal">Horizontal</option>
-            <option value="page" selected>Page</option>
-          </select>
-        </div>
       </div>
-    </div>
-  </div>
 
-  <!-- <template id="at-track-template">
+      <!-- <template id="at-track-template">
         <div class="at-track">
           <div class="at-track-icon">
             <i class="fas fa-guitar"></i>
@@ -123,7 +124,9 @@
       </template> -->
 
 
-  <script src="./scripts/compgen.js"></script>
+      <script src="./scripts/compgen.js"></script>
+    </section>
+  </section>
 </body>
 
 </html>
