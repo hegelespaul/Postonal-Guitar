@@ -5,7 +5,6 @@ body::-webkit-scrollbar {
 body {
   -ms-overflow-style: none;
   scrollbar-width: none;
-  height: fit-content;
 }
 
 .logo{
@@ -47,6 +46,7 @@ margin-top: -0.3em;
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
+  background-position: bottom right;
 }
 
 .fakebody{
@@ -59,7 +59,7 @@ margin-top: -0.3em;
   width: 80%;
   background-color: #ffffffea;
   margin:auto;
-  height: 10000vh;
+  min-height: 100vh;
 }
 
 .selector {
