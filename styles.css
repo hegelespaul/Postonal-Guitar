@@ -62,6 +62,13 @@ margin-top: -0.3em;
   min-height: 100vh;
 }
 
+.hr2{
+  border: 0;
+  height: 2px;
+  background-image: linear-gradient(to right, transparent, #CCC, transparent);  
+}
+
+
 .selector {
   display: flex;
   justify-content: center;
@@ -790,6 +797,10 @@ h1 {
     margin-bottom: 30%;
   }
 
+  .hr2{
+    display: none;
+  }
+
   .drawerDiapason.svg-container {
     display: none;
   }
@@ -881,6 +892,10 @@ h1 {
   .selector {
     margin-top: 10%;
     margin-bottom: 15%;
+  }
+
+  .hr2{
+    display: none;
   }
 
   .drawerDiapason.svg-container {
@@ -984,25 +999,24 @@ h1 {
 .ejemplos {
   display: flex;
   flex-flow: row;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   margin: auto;
   margin-top: 2%;
-  width: 70%;
+  width: 100%;
 }
 
 .ejemplos object {
-  width: 70%;
+  width: 100%;
   height: auto;
+
 }
 
-.ejemplosAudio {
+.ejemplos audio {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  flex-flow: column;
+  align-items:center;
   margin: auto;
-  margin-top: 2%;
-  width: 80%;
 }
 
 @media only screen and (max-width: 1024px) {
@@ -1019,7 +1033,11 @@ h1 {
 
   .ejemplosAudio {
     width: 90%;
-    justify-content: flex-start;
+    justify-content: space-evenly;
+  }
+
+  .hr2{
+    display:none;
   }
 
   .lic {
