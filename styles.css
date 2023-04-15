@@ -53,6 +53,7 @@ margin-top: -0.3em;
   width: 80%;
   background-color: #ffffffea;
   margin:auto;
+  min-height: 100vh;
 }
 
 .fakebodyapps{
