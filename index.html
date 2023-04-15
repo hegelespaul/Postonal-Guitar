@@ -2,149 +2,151 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guitarra Postonal en Línea</title>
-    <link rel="icon" type="image/x-icon" href="/assets/LogoMin.svg">
-    <link rel="stylesheet" href="./styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <title>Guitarra Postonal en Línea</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guitarra Postonal en Línea</title>
+  <link rel="icon" type="image/x-icon" href="/assets/LogoMin.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <title>Guitarra Postonal en Línea</title>
 </head>
 
 
 <body>
-    <section class="fakehtml">
-        <section class="fakebody">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" id="smallNavbar">
+    <div class="container-fluid">
+      <img src="/assets/Logo.svg" alt="Logo" width="30" height="30" class="d-inline-block me-4"><a class="navbar-brand"
+        href="/index.html"><span class="small">Guitarra Postonal en Línea</span></a>
+      <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon small"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Aplicativos
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/diagramGen.html">Calculador de Diagramas</a></li>
+              <li><a class="dropdown-item" href="/compGen.html">Generador de Acompañamientos</a></li>
+              <li><a class="dropdown-item" href="/visualizador.html">Visualizador de Formas Primas</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/assets/Tesina.pdf" target="_blank">Tesina</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/ejemplosdeuso.html">Ejemplos de Uso</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/contacto.html">Contacto y Comentarios</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section class="fakehtml">
+    <section class="fakebody">
 
-            <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom" id="fullNavbar">
-                <a href="/"
-                    class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                    <img src="/assets/Logo.svg" alt="Logo" width="30" height="30" class="d-inline-block align-middle me-4">
-                    <span class="fs-4">Guitarra Postonal en Línea</span>
-                </a>
+      <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom" id="fullNavbar">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+          <img src="/assets/Logo.svg" alt="Logo" width="30" height="30" class="d-inline-block align-middle me-4">
+          <span class="fs-5">Guitarra Postonal en Línea</span>
+        </a>
 
-                <ul class="nav nav-pills">
-                    <li class="nav-item"><a href="#" class="nav-link" aria-current="page">Home</a></li>
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle nav-link" type="button" id="dropdownMenu2" data-bs-toggle="dropdown"
-                            aria-expanded="false">Aplicativos
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><button class="dropdown-item nav-link" type="button"><a href="/diagramGen.html" class="nav-link" target="_blank">Calculador de Diagramas</a></button></li>
-                            <li><button class="dropdown-item nav-link" type="button"><a href="/compGen.html" class="nav-link" target="_blank">Generador de Acompañamientos</a></button></li>
-                            <li><button class="dropdown-item nav-link" type="button"><a href="/visualizador.html" class="nav-link" target="_blank">Visualizador de Formas Primas</a></button></li>
-                        </ul>
-                    </div>
-                    <li class="nav-item"><a href="/assets/Tesina.pdf" class="nav-link" target="_blank">Tesina</a></li>
-                    <li class="nav-item"><a href="/ejemplosdeuso.html" class="nav-link">Ejemplos de Uso</a></li>
-                    <li class="nav-item"><a href="/contacto.html" class="nav-link">Contacto y Comentarios</a></li>
-                </ul>
-            </header>
+        <ul class="nav nav-pills">
+          <li class="nav-item"><a href="#" class="nav-link" aria-current="page">Home</a></li>
+          <div class="dropdown">
+            <button class="btn dropdown-toggle nav-link" type="button" id="dropdownMenu2" data-bs-toggle="dropdown"
+              aria-expanded="false">Aplicativos
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><button class="dropdown-item nav-link" type="button"><a href="/diagramGen.html" class="nav-link"
+                    target="_blank">Calculador de Diagramas</a></button></li>
+              <li><button class="dropdown-item nav-link" type="button"><a href="/compGen.html" class="nav-link"
+                    target="_blank">Generador de Acompañamientos</a></button></li>
+              <li><button class="dropdown-item nav-link" type="button"><a href="/visualizador.html" class="nav-link"
+                    target="_blank">Visualizador de Formas Primas</a></button></li>
+            </ul>
+          </div>
+          <li class="nav-item"><a href="/assets/Tesina.pdf" class="nav-link" target="_blank">Tesina</a></li>
+          <li class="nav-item"><a href="/ejemplosdeuso.html" class="nav-link">Ejemplos de Uso</a></li>
+          <li class="nav-item"><a href="/contacto.html" class="nav-link">Contacto y Comentarios</a></li>
+        </ul>
+      </header>
 
+      <h1 class="h1text"><img src="/assets/Logo.svg" class="logo">Guitarra Postonal en Línea</h1>
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light" id="smallNavbar">
-                <div class="container-fluid">
-                  <img src="/assets/Logo.svg" alt="Logo" width="30" height="30" class="d-inline-block align-middle me-4"><a class="navbar-brand" href="/index.html">Guitarra Postonal en Línea</a>
-                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                      <li class="nav-item">
-                        <a class="nav-link" href="/index.html">Home</a>
-                      </li>
-                      <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Aplicativos
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="#">Calculador de Diagramas</a></li>
-                          <li><a class="dropdown-item" href="#">Generador de Acompañamientos</a></li>
-                          <li><a class="dropdown-item" href="#">Visualizador de Formas Primas</a></li>
-                        </ul>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/assets/Tesina.pdf" target="_blank">Tesina</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/ejemplosdeuso.html">Ejemplos de Uso</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/contacto.html">Contacto y Comentarios</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </nav>              
+      <section class="welcometxt">
+        <p>Gracias por visitar guitarra postonal en línea. El sitio aún se encuentra en construcción.
+          Puedes navegar los aplicativos que aloja dando click a los enlaces a continuación mostrados, así
+          como
+          entender a grandes rasgos sus funcionamientos a partir de sus video tutoriales correspondientes. De
+          igual forma, mediante este
+          <a href="/ejemplosdeuso.html" target="_blank">enlace</a>, es posible acceder a un breve compendio de
+          materiales musicales creados usando estas herramientas.
+        </p>
+      </section>
 
-            <h1 class="h1text"><img src="/assets/Logo.svg" class="logo">Guitarra Postonal en Línea</h1>
+      <section class="welcomelist">
+        <a href="./diagramGen.html" target="_blank" class="linkapp">Calculador de Diagramas</a></li>&nbsp;
+        <div class="yt-container">
+          <iframe width="560" height="315"
+            src="https://www.youtube.com/embed/pRGg_PW1H5M?rel=0&controls=1&modestbranding=1&showinfo=0"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        </br></br></br>
+        <a href="./compGen.html" target="_blank" class="linkapp">Generador de Acompañamientos</a></li>&nbsp;
+        <div class="yt-container">
+          <iframe width="560" height="315"
+            src="https://www.youtube.com/embed/poGFCMcZO6o?rel=0&controls=0&modestbranding=1&showinfo=0"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        </br></br></br>
+        <a href="./visualizador.html" target="_blank" class="linkapp">Visualizador de Formas Primas</a></li>
+        &nbsp;
+        <div class="yt-container">
+          <iframe width="560" height="315"
+            src="https://www.youtube.com/embed/FJdWIm0KZbo?rel=0&controls=0&modestbranding=1&showinfo=0"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+      </section>
+      </br></br></br>
+      <section class="footerIn">
+        <footer>Para cualquier duda o comentario, favor de ponerse en contacto a través de este
+          <a href="mailto:hepv12@gmail.com">enlace</a>.
+          <br>
+          <section class="lic">
+            Este obra está bajo una <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">licencia
+              de Creative Commons
+              Reconocimiento-NoComercial-CompartirIgual 4.0 Internacional</a>. <a rel="license"
+              href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Licencia de Creative Commons"
+                style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" width="7.4%"></a>
+          </section>
 
-            <section class="welcometxt">
-                <p>Gracias por visitar guitarra postonal en línea. El sitio aún se encuentra en construcción.
-                    Puedes navegar los aplicativos que aloja dando click a los enlaces a continuación mostrados, así
-                    como
-                    entender a grandes rasgos sus funcionamientos a partir de sus video tutoriales correspondientes. De
-                    igual forma, mediante este
-                    <a href="/ejemplosdeuso.html" target="_blank">enlace</a>, es posible acceder a un breve compendio de
-                    materiales musicales creados usando estas herramientas.
-                </p>
-            </section>
-
-            <section class="welcomelist">
-                <a href="./diagramGen.html" target="_blank" class="linkapp">Calculador de Diagramas</a></li>&nbsp;
-                <div class="yt-container">
-                    <iframe width="560" height="315"
-                        src="https://www.youtube.com/embed/pRGg_PW1H5M?rel=0&controls=1&modestbranding=1&showinfo=0"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                </div>
-                </br></br></br>
-                <a href="./compGen.html" target="_blank" class="linkapp">Generador de Acompañamientos</a></li>&nbsp;
-                <div class="yt-container">
-                    <iframe width="560" height="315"
-                        src="https://www.youtube.com/embed/poGFCMcZO6o?rel=0&controls=0&modestbranding=1&showinfo=0"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                </div>
-                </br></br></br>
-                <a href="./visualizador.html" target="_blank" class="linkapp">Visualizador de Formas Primas</a></li>
-                &nbsp;
-                <div class="yt-container">
-                    <iframe width="560" height="315"
-                        src="https://www.youtube.com/embed/FJdWIm0KZbo?rel=0&controls=0&modestbranding=1&showinfo=0"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                </div>
-            </section>
-            </br></br></br>
-            <section class="footerIn">
-                <footer>Para cualquier duda o comentario, favor de ponerse en contacto a través de este
-                    <a href="mailto:hepv12@gmail.com">enlace</a>.
-                    <br>
-                    <section class="lic">
-                        Este obra está bajo una <a rel="license"
-                            href="http://creativecommons.org/licenses/by-nc-sa/4.0/">licencia de Creative Commons
-                            Reconocimiento-NoComercial-CompartirIgual 4.0 Internacional</a>. <a rel="license"
-                            href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img
-                                alt="Licencia de Creative Commons" style="border-width:0"
-                                src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" width="7.4%"></a>
-                    </section>
-
-                </footer>
-            </section>
-        </section>
+        </footer>
+      </section>
     </section>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
-        integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
-        integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
-        crossorigin="anonymous"></script>
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+    integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
+    integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
