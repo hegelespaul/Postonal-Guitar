@@ -1004,7 +1004,7 @@ h1 {
 .ejemplos {
   display: flex;
   flex-flow: row;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   margin: auto;
   margin-top: 2%;
