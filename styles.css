@@ -1,4 +1,6 @@
-iframe { overflow:hidden; }
+#smallNavbar{
+  display: none;
+}
 
 body::-webkit-scrollbar {
   display: none;
@@ -1049,4 +1051,15 @@ h1 {
     align-items: baseline;
   }
 
+}
+
+@media only screen and (max-width: 800px) {
+
+  #smallNavbar{
+    display: block;
+  }
+
+  #fullNavbar{
+    display: none !important;;
+  }
 }
