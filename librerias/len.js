@@ -52,7 +52,7 @@ var ConveyThis_Initializer = class{
 					tempScript.innerHTML = child.innerHTML;
 				}
 				if (child.src.includes('hide_conveythis_logo: 0,')){
-					child.src.prelace('hide_conveythis_logo: 0,','hide_conveythis_logo: 1,')
+					child.src.replace('hide_conveythis_logo: 0,','hide_conveythis_logo: 1,')
 				}
 				tempScript.type = "text/javascript";
 				document.body.appendChild(tempScript); 
