@@ -37,8 +37,6 @@ var ConveyThis_Initializer = class{
 
 		let element = document.createElement("div");
 		element.innerHTML = code;
-        element.innerHTML.replace('hide_conveythis_logo: 0,', 'hide_conveythis_logo: 1,');
-        console.log(element)
 
 		let children = element.childNodes;
 		
