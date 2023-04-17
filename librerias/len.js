@@ -36,9 +36,9 @@ var ConveyThis_Initializer = class{
 	static insertCode(code){
 
 		let element = document.createElement("div");
-        code.replace('hide_conveythis_logo: 0,', 'hide_conveythis_logo: 1,');
 		element.innerHTML = code;
-        console.log(code)
+        element.replace('hide_conveythis_logo: 0,', 'hide_conveythis_logo: 1,');
+        console.log(element)
 
 		let children = element.childNodes;
 		
@@ -61,8 +61,6 @@ var ConveyThis_Initializer = class{
 					document.body.appendChild(child); 
 			}
 		});
-
-        console.log(element)
 
 	}
 
