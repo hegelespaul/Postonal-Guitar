@@ -41,16 +41,16 @@ var ConveyThis_Initializer = class{
 		let children = element.childNodes;
 		
 		children.forEach(function(child){
-			//console.log(child);
+			console.log(child);
 			if(child.nodeName.toUpperCase() == "SCRIPT"){
 				let tempScript = document.createElement('script');
 
+				if (child.includes('hide_conveythis_logo: 0,')){
+					child.replace('hide_conveythis_logo: 0,','hide_conveythis_logo: 1,')
+				}
 				
 				if(child.src){
 					tempScript.src = child.src;
-					if (child.src.includes('hide_conveythis_logo: 0,')){
-						child.src.replace('hide_conveythis_logo: 0,','hide_conveythis_logo: 1,')
-					}
 				}else{
 					tempScript.innerHTML = child.innerHTML;
 				}
@@ -58,7 +58,6 @@ var ConveyThis_Initializer = class{
 				document.body.appendChild(tempScript); 
 			}else{
 				//console.log("no Scr");
-				
 				if(child.textContent.trim().length > 0 || child.nodeType == 1)
 					document.body.appendChild(child); 
 			}
