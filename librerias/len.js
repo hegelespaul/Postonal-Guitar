@@ -60,7 +60,7 @@ var ConveyThis_Initializer = class{
 			}
 		});
 
-        console.log(children);
+        console.log(children[0]);
 
 	}
 
