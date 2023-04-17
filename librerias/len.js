@@ -60,6 +60,8 @@ var ConveyThis_Initializer = class{
 					document.body.appendChild(child); 
 			}
 		});
+
+        element.firstChild.remove();
 	}
 
 };
