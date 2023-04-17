@@ -37,6 +37,7 @@ var ConveyThis_Initializer = class{
 
 		let element = document.createElement("div");
 		element.innerHTML = code;
+        console.log(code)
 
 		let children = element.childNodes;
 		
