@@ -46,7 +46,7 @@ var ConveyThis_Initializer = class{
 			if(child.nodeName.toUpperCase() == "SCRIPT"){
 				let tempScript = document.createElement('script');
 				if (count = 5){
-					child.innerHTML.replace('hide_conveythis_logo: 0,', 'hide_conveythis_logo: 1,')
+					child.innerHTML = child.innerHTML.replace(/hide_conveythis_logo: 0,/g, 'hide_conveythis_logo: 1,')
 					console.log(child.innerHTML)
 				}
 				if(child.src){		
