@@ -43,9 +43,9 @@ var ConveyThis_Initializer = class{
 		children.forEach(function(child){
 			console.log(child);
 
-			if (child.includes('hide_conveythis_logo: 0,')){
-				child.replace('hide_conveythis_logo: 0,','hide_conveythis_logo: 1,')
-			}
+			// if (child.includes('hide_conveythis_logo: 0,')){
+			// 	child.replace('hide_conveythis_logo: 0,','hide_conveythis_logo: 1,')
+			// }
 			if(child.nodeName.toUpperCase() == "SCRIPT"){
 				let tempScript = document.createElement('script');
 
