@@ -39,7 +39,7 @@ var ConveyThis_Initializer = class{
 		element.innerHTML = code;
 
 		let children = element.childNodes;
-		console.log(children[0]);
+		console.log(children);
 		
 		children.forEach(function(child){
 			//console.log(child);
