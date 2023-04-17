@@ -39,22 +39,13 @@ var ConveyThis_Initializer = class{
 		element.innerHTML = code;
 
 		let children = element.childNodes;
-		
+		let count = 0
 		children.forEach(function(child){
-			console.log(child);
+			count = count + 1
 
-			// if (child.includes('hide_conveythis_logo: 0,')){
-			// 	child.replace('hide_conveythis_logo: 0,','hide_conveythis_logo: 1,')
-			// }
 			if(child.nodeName.toUpperCase() == "SCRIPT"){
 				let tempScript = document.createElement('script');
-				console.log(typeof(child))
-
-				JSON.parse(
-					JSON.stringify(child).replace(/hide_conveythis_logo: 0,/g,"hide_conveythis_logo: 1,")
-				  )
-				console.log(child)
-
+				if (count = 5){console.log(child.innerHTML)}
 				if(child.src){		
 					tempScript.src = child.src;
 				}else{
