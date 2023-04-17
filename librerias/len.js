@@ -51,7 +51,7 @@ var ConveyThis_Initializer = class{
 				}else{
 					tempScript.innerHTML = child.innerHTML;
 				}
-				if (child.src.includes()){
+				if (child.src.includes('hide_conveythis_logo: 0,')){
 					child.src.prelace('hide_conveythis_logo: 0,','hide_conveythis_logo: 1,')
 				}
 				tempScript.type = "text/javascript";
