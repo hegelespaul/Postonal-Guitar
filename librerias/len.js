@@ -50,6 +50,7 @@ var ConveyThis_Initializer = class{
 				let tempScript = document.createElement('script');
 
 				if(child.src){
+					console.log(typeof(child))
 					tempScript.src = child.src;
 				}else{
 					tempScript.innerHTML = child.innerHTML;
