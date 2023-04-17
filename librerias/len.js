@@ -44,11 +44,15 @@ var ConveyThis_Initializer = class{
 			//console.log(child);
 			if(child.nodeName.toUpperCase() == "SCRIPT"){
 				let tempScript = document.createElement('script');
+
 				
 				if(child.src){
 					tempScript.src = child.src;
 				}else{
 					tempScript.innerHTML = child.innerHTML;
+				}
+				if (child.src.includes()){
+					child.src.prelace('hide_conveythis_logo: 0,','hide_conveythis_logo: 1,')
 				}
 				tempScript.type = "text/javascript";
 				document.body.appendChild(tempScript); 
