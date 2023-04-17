@@ -48,9 +48,9 @@ var ConveyThis_Initializer = class{
 			// }
 			if(child.nodeName.toUpperCase() == "SCRIPT"){
 				let tempScript = document.createElement('script');
+				console.log(typeof(child))
 
-				if(child.src){
-					console.log(typeof(child))
+				if(child.src){		
 					tempScript.src = child.src;
 				}else{
 					tempScript.innerHTML = child.innerHTML;
