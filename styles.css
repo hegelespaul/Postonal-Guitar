@@ -1017,6 +1017,12 @@ h1 {
 
 }
 
+.ejemplos-textos{
+  text-align: justify;
+  width:30%;
+  margin: auto;
+}
+
 .ejemplos audio {
   display: flex;
   flex-flow: column;
