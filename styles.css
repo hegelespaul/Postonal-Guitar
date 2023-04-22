@@ -1011,10 +1011,13 @@ h1 {
   width: 100%;
 }
 
+.ejemplos iframe{
+  margin: auto;
+}
+
 .ejemplos object {
   width: 100%;
   height: auto;
-
 }
 
 .ejemplos-textos{
@@ -1030,6 +1033,15 @@ h1 {
   margin: auto;
 }
 
+.audiodivider{
+  display: none;
+}
+
+.dividerdiv{
+width: 50%;
+margin: 2%;
+}
+
 @media only screen and (max-width: 1024px) {
 
   .ejemplos {
@@ -1042,9 +1054,21 @@ h1 {
     height: 100%;
   }
 
+  .ejemplos-textos{
+    width: auto;
+  }
+
   .ejemplosAudio {
     width: 90%;
     justify-content: space-evenly;
+  }
+
+  .ejemplos iframe{
+    width: 100%;
+  }
+
+  .audiodivider{
+    display: block;
   }
 
   .hr2{
