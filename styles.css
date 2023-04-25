@@ -1010,6 +1010,16 @@ h1 {
   margin-top: 2%;
   width: 100%;
 }
+.ejemplos-titulos {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 2%;
+  width: 100%;
+  color:#111827;
+}
 
 .ejemplos iframe{
   margin: auto;
