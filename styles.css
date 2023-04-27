@@ -1015,6 +1015,13 @@ h1 {
   margin-top: 2%;
   width: 100%;
 }
+
+.ejemplos-bienvenida{
+  width: 80%;
+  margin: auto;
+  text-align: justify;
+}
+
 .ejemplos-titulos {
   display: flex;
   flex-flow: row;
