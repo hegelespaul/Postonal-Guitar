@@ -78,11 +78,11 @@ margin-top: -0.3em;
   display: flex;
   position: relative;
   justify-content: center;
-  width: auto;
+  width: 100%;
   margin: auto;
-  margin-top: 3%;
-  margin-bottom: 3%;
-  height: 20vh;
+  margin-top: 3em;
+  margin-bottom: 3em;
+  height: 12em;
 }
 
 .selector button:hover {
@@ -169,12 +169,11 @@ margin-top: -0.3em;
   flex-flow: wrap;
   text-align: center;
   justify-content: center;
-  height: auto;
 }
 
 .svg-container {
   display: inline-block;
-  position: relative;
+  position: inherit;
   width: 90%;
   text-align: center;
   margin: auto;
