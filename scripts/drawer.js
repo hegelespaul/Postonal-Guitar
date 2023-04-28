@@ -624,7 +624,7 @@ function formaPrima() {
     }
 
     var notext = document.createTextNode(' |  ' + fPrR + ' | ');
-    var chordtext = document.createTextNode(chordNm(notas)[0])
+    var chordtext = document.createTextNode(chordNm(notas)[0]+ ",")
     var chordtext2 = document.createTextNode(chordNm(notas)[1])
     document.getElementById("forma").innerHTML = "";
     document.getElementById("acorde").innerHTML = "";
