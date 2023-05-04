@@ -69,7 +69,7 @@ div.essential_audio > div:nth-child(1) div.load:after {
 
 /* 2.c) The Player Button – Playing */
 div.essential_audio > div:nth-child(1) div.play {
-	background-color: #000!important;
+	background-color: #c7854f!important;
 }
 div.essential_audio > div:nth-child(1) div.play:after {
 	content: url("data:image/svg+xml; utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><rect fill='%23FFF' x='17' y='8' width='3' height='14' /><rect fill='%23FFF' x='10' y='8' width='3' height='14' /></svg>");
