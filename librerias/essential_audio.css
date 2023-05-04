@@ -2,7 +2,19 @@
 
 /********** Essential Audio Player 1.0.3 CSS **********/
 
+.mainaudiocontainer{
+	display: flex;
+	justify-content: center;
+}
 
+#audio-container{
+	position: absolute;
+	width: 25vw;
+	margin: auto;
+	text-align: center;
+	justify-content: center;
+	justify-self: center;
+}
 
 /****************************************/
 /*                                      */
@@ -15,8 +27,7 @@
 div.essential_audio {
 	position: relative;
 	z-index: 0;
-	width: 50%;
-	margin: auto;
+	width: 100%;
 }
 
 
